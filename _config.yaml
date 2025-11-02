@@ -7,6 +7,3 @@ url: "https://0xm0t0k0.github.io"
 plugins:
   - jekyll-feed
   - jekyll-seo-tag
-collections:
-  posts:
-    output: true

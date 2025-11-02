@@ -1,4 +1,4 @@
-// --- Subtle neon glowing cursor ---
+// --- Smooth glowing cursor ---
 const cursor = document.querySelector(".cursor-light");
 let x = 0, y = 0;
 let targetX = 0, targetY = 0;
@@ -9,7 +9,6 @@ document.addEventListener("mousemove", e => {
 });
 
 function animateCursor() {
-  // Smooth follow / gravity feel
   x += (targetX - x) * 0.15;
   y += (targetY - y) * 0.15;
   if (cursor) {
@@ -30,10 +29,7 @@ function typeBootLine() {
   const bootScreen = document.getElementById("boot-sequence");
   const mainContent = document.getElementById("main-content");
   
-  if (!bootText || !bootScreen || !mainContent) {
-    console.error("Boot elements not found");
-    return;
-  }
+  if (!bootText || !bootScreen || !mainContent) return;
 
   let line = 0;
   let char = 0;
@@ -51,7 +47,6 @@ function typeBootLine() {
         setTimeout(type, 400);
       }
     } else {
-      // After boot animation finishes
       setTimeout(() => {
         bootScreen.style.opacity = "0";
         setTimeout(() => {
@@ -65,5 +60,5 @@ function typeBootLine() {
   type();
 }
 
-// Start boot animation immediately (defer already waits for DOM)
+// Start immediately (defer waits for DOM)
 typeBootLine();

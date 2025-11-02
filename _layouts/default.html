@@ -49,8 +49,6 @@
   <div id="boot-sequence" class="boot">
     <pre id="boot-text"></pre>
   </div>
-  <div class="grid"></div>
-
 
   <!-- Main Content -->
   <div id="main-content" style="display:none;">
@@ -58,16 +56,7 @@
       <h1 class="title">{{ site.title }}</h1>
       <p class="desc">{{ site.description }}</p>
     </header>
-    <section class="posts">
-  {% for post in site.posts %}
-    <article class="post">
-      <h2><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h2>
-      <p class="date">{{ post.date | date: "%B %d, %Y" }}</p>
-      <p>{{ post.excerpt | strip_html | truncate: 150 }}</p>
-    </article>
-  {% endfor %}
-</section>
-
+    {{ content }}
   </div>
 
   <!-- Glowing Cursor -->
