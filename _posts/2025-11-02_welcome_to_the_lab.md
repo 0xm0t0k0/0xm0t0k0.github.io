@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Welcome to the Lab"
-date: 2025-11-01
+date: 2025-11-02
 ---
 
 # Welcome, human (probably)
