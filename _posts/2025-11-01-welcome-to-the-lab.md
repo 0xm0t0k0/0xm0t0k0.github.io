@@ -4,9 +4,9 @@ title: "Welcome to the Lab"
 date: 2025-11-01
 ---
 
-# Welcome, human (probably)
+# 0xm0t0k0
 
-You’ve entered **0xm0t0k0’s Cryptography & CS Lab**, where I test algorithms, break ciphers, and occasionally write obscure theoretical art papers about the **art** of solving puzzles in any shape or form.
+You’ve entered **my Cryptography & CS Lab**, where I test algorithms, break ciphers, and occasionally write obscure theoretical art papers about the **art** of solving puzzles in any shape or form.
 
 Future posts will dive into:
 - Fine Arts & Hacking

@@ -8,19 +8,21 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
-<!-- NEW: Noise overlay -->
+<!-- Noise overlay -->
 <div class="noise-overlay"></div>
 
-<!-- NEW: Digital grid -->
+<!-- Digital grid -->
 <div class="digital-grid"></div>
 
-<!-- Boot Sequence -->
+<!-- Boot Sequence - ONLY ON HOMEPAGE -->
+{% if page.url == "/" %}
 <div id="boot-sequence" class="boot">
 <pre id="boot-text"></pre>
 </div>
+{% endif %}
 
 <!-- Main Content -->
-<div id="main-content" style="display:none;">
+<div id="main-content" {% if page.url != "/" %}style="display:block;"{% else %}style="display:none;"{% endif %}>
 <header>
 <h1 class="title">{{ site.title }}</h1>
 <p class="desc">{{ site.description }}</p>
@@ -70,6 +72,63 @@ canvas.width = window.innerWidth;
 </script>
 
 <!-- Boot & Cursor Script -->
-<script src="{{ '/assets/js/cursor.js' | relative_url }}"></script>
+<script>
+{% if page.url == "/" %}
+// Only run boot animation on homepage
+document.addEventListener("DOMContentLoaded", () => {
+  const bootLines = [">Great to see you. I'm 0xm0t0k0 aka 0xth00rf1nn aka c1nn4m0nr0ls"];
+  const bootText = document.getElementById("boot-text");
+  const bootScreen = document.getElementById("boot-sequence");
+  const mainContent = document.getElementById("main-content");
+  
+  let line = 0, char = 0;
+  
+  function typeBootLine() {
+    if (line < bootLines.length) {
+      if (char < bootLines[line].length) {
+        bootText.textContent += bootLines[line].charAt(char);
+        char++;
+        setTimeout(typeBootLine, 30);
+      } else {
+        bootText.textContent += "\n";
+        line++;
+        char = 0;
+        setTimeout(typeBootLine, 400);
+      }
+    } else {
+      setTimeout(() => {
+        bootScreen.style.opacity = "0";
+        setTimeout(() => {
+          bootScreen.style.display = "none";
+          mainContent.style.display = "block";
+        }, 1000);
+      }, 600);
+    }
+  }
+  
+  typeBootLine();
+});
+{% endif %}
+
+// Cursor animation - runs on all pages
+const cursor = document.querySelector(".cursor-light");
+let x = 0, y = 0, targetX = 0, targetY = 0;
+
+document.addEventListener("mousemove", e => {
+  targetX = e.clientX;
+  targetY = e.clientY;
+});
+
+function animateCursor() {
+  x += (targetX - x) * 0.15;
+  y += (targetY - y) * 0.15;
+  if (cursor) {
+    cursor.style.left = `${x}px`;
+    cursor.style.top = `${y}px`;
+  }
+  requestAnimationFrame(animateCursor);
+}
+animateCursor();
+</script>
 </body>
 </html>
