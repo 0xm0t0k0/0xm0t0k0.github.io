@@ -14,6 +14,9 @@
 <!-- Digital grid -->
 <div class="digital-grid"></div>
 
+<!-- Grid highlight that follows cursor -->
+<div class="grid-highlight"></div>
+
 <!-- Boot Sequence - ONLY ON HOMEPAGE -->
 {% if page.url == "/" %}
 <div id="boot-sequence" class="boot">
@@ -40,40 +43,9 @@
 <!-- Glowing Cursor -->
 <div class="cursor-light"></div>
 
-<!-- Matrix Canvas Script -->
+<!-- Scripts -->
 <script>
-document.addEventListener("DOMContentLoaded", () => {
-const canvas = document.createElement("canvas");
-canvas.id = "matrix";
-document.body.prepend(canvas);
-const ctx = canvas.getContext("2d");
-canvas.height = window.innerHeight;
-canvas.width = window.innerWidth;
-const chars = "0123456789ABCDEF⧫⌘∑∫λΩ⊕⊗⟡";
-const drops = Array(Math.floor(canvas.width / 14)).fill(1);
-function draw() {
-ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
-ctx.fillRect(0, 0, canvas.width, canvas.height);
-ctx.fillStyle = "#39ff14";
-ctx.font = "15px monospace";
-for (let i = 0; i < drops.length; i++) {
-const text = chars.charAt(Math.floor(Math.random() * chars.length));
-ctx.fillText(text, i * 14, drops[i] * 18);
-if (drops[i] * 18 > canvas.height && Math.random() > 0.975) drops[i] = 0;
-drops[i]++;
-}
-}
-setInterval(draw, 35);
-window.addEventListener("resize", () => {
-canvas.height = window.innerHeight;
-canvas.width = window.innerWidth;
-});
-});
-</script>
-
-<!-- Boot & Cursor Script -->
-<script>
-{% if page.url == "/" %}
+{% if page.layout == "default" and page.url == "/" %}
 // Only run boot animation on homepage
 document.addEventListener("DOMContentLoaded", () => {
   const bootLines = [">Great to see you. I'm 0xm0t0k0 aka 0xth00rf1nn aka c1nn4m0nr0ls"];
@@ -112,11 +84,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // Cursor animation - runs on all pages
 const cursor = document.querySelector(".cursor-light");
+const gridHighlight = document.querySelector(".grid-highlight");
 let x = 0, y = 0, targetX = 0, targetY = 0;
 
 document.addEventListener("mousemove", e => {
   targetX = e.clientX;
   targetY = e.clientY;
+  
+  // Update grid highlight immediately
+  if (gridHighlight) {
+    gridHighlight.style.left = `${e.clientX}px`;
+    gridHighlight.style.top = `${e.clientY}px`;
+  }
 });
 
 function animateCursor() {
