@@ -97,13 +97,21 @@ body::after {
 /* Cursor glow / flashlight */
 .cursor-light {
   position: fixed;
-  width: 150px;
-  height: 150px;
-  border-radius: 50%;
+  top: 0;
+  left: 0;
+  width: 200px;        /* slightly larger aura */
+  height: 200px;
   pointer-events: none;
-  background: radial-gradient(circle, rgba(57,255,20,0.4) 0%, transparent 80%);
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(0, 255, 100, 0.18) 0%,   /* soft neon center */
+    rgba(0, 255, 100, 0.08) 35%,
+    transparent 70%
+  );
+  mix-blend-mode: screen;
+  filter: blur(40px);   /* makes it glow rather than shine */
   transform: translate(-50%, -50%);
-  transition: 0.04s linear;
-  z-index: 1001;
-  filter: blur(2px);
+  transition: transform 0.05s ease-out;
+  z-index: 9999;
 }
