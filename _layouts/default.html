@@ -6,43 +6,19 @@
 <link rel="stylesheet" href="{{ '/assets/css/custom.css' | relative_url }}">
 <link rel="icon" href="{{ '/assets/images/favicon.png' | relative_url }}">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<!-- Matrix-style background -->
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-const canvas = document.createElement("canvas");
-canvas.id = "matrix";
-document.body.prepend(canvas);
-const ctx = canvas.getContext("2d");
-canvas.height = window.innerHeight;
-canvas.width = window.innerWidth;
-const chars = "0xm0t0k0";
-const drops = Array(Math.floor(canvas.width / 14)).fill(1);
-function draw() {
-ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
-ctx.fillRect(0, 0, canvas.width, canvas.height);
-ctx.fillStyle = "#39ff14"; 
-ctx.font = "15px JetBrains Mono";
-for (let i = 0; i < drops.length; i++) {
-const text = chars.charAt(Math.floor(Math.random() * chars.length));
-ctx.fillText(text, i * 14, drops[i] * 18);
-if (drops[i] * 18 > canvas.height && Math.random() > 0.975) drops[i] = 0;
-drops[i]++;
-        }
-      }
-function resize() {
-canvas.height = window.innerHeight;
-canvas.width = window.innerWidth;
-      }
-window.addEventListener("resize", resize);
-setInterval(draw, 35);
-    });
-</script>
 </head>
 <body>
+<!-- NEW: Noise overlay -->
+<div class="noise-overlay"></div>
+
+<!-- NEW: Digital grid -->
+<div class="digital-grid"></div>
+
 <!-- Boot Sequence -->
 <div id="boot-sequence" class="boot">
 <pre id="boot-text"></pre>
 </div>
+
 <!-- Main Content -->
 <div id="main-content" style="display:none;">
 <header>
@@ -58,8 +34,42 @@ setInterval(draw, 35);
 {{ content }}
 </main>
 </div>
+
 <!-- Glowing Cursor -->
 <div class="cursor-light"></div>
-<script src="{{ '/assets/js/cursor.js' | relative_url }}" defer></script>
+
+<!-- Matrix Canvas Script -->
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+const canvas = document.createElement("canvas");
+canvas.id = "matrix";
+document.body.prepend(canvas);
+const ctx = canvas.getContext("2d");
+canvas.height = window.innerHeight;
+canvas.width = window.innerWidth;
+const chars = "0123456789ABCDEF⧫⌘∑∫λΩ⊕⊗⟡";
+const drops = Array(Math.floor(canvas.width / 14)).fill(1);
+function draw() {
+ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+ctx.fillRect(0, 0, canvas.width, canvas.height);
+ctx.fillStyle = "#39ff14";
+ctx.font = "15px monospace";
+for (let i = 0; i < drops.length; i++) {
+const text = chars.charAt(Math.floor(Math.random() * chars.length));
+ctx.fillText(text, i * 14, drops[i] * 18);
+if (drops[i] * 18 > canvas.height && Math.random() > 0.975) drops[i] = 0;
+drops[i]++;
+}
+}
+setInterval(draw, 35);
+window.addEventListener("resize", () => {
+canvas.height = window.innerHeight;
+canvas.width = window.innerWidth;
+});
+});
+</script>
+
+<!-- Boot & Cursor Script -->
+<script src="{{ '/assets/js/cursor.js' | relative_url }}"></script>
 </body>
 </html>

@@ -3,7 +3,7 @@ layout: default
 title: "Home"
 ---
 
-## Latest Logs
+## Latest Posts
 
 {% for post in site.posts %}
 - [{{ post.title }}]({{ post.url }})

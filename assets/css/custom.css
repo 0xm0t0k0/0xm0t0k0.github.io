@@ -6,9 +6,35 @@ body {
   margin: 0;
   text-shadow: 0 0 4px #39ff14, 0 0 10px #39ff14;
   animation: flicker 2.5s infinite;
+  position: relative;
 }
 
-/* CRT subtle scanlines */
+/* ========== CRT AMBIENT GLOW ========== */
+/* Dark gradient with vintage terminal glass effect */
+body::before {
+  content: "";
+  position: fixed;
+  top: -10%;
+  left: -10%;
+  width: 120%;
+  height: 120%;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(57, 255, 20, 0.03) 0%,
+    rgba(0, 0, 0, 0.8) 50%,
+    rgba(0, 0, 0, 0.95) 100%
+  );
+  pointer-events: none;
+  z-index: 1;
+  animation: ambientPulse 8s ease-in-out infinite;
+}
+
+@keyframes ambientPulse {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 0.8; }
+}
+
+/* ========== CRT SCANLINES ========== */
 body::after {
   content: "";
   position: fixed;
@@ -21,19 +47,97 @@ body::after {
     to bottom,
     rgba(0, 0, 0, 0) 0px,
     rgba(0, 0, 0, 0) 1px,
-    rgba(0, 0, 0, 0.08) 2px
+    rgba(0, 0, 0, 0.1) 2px,
+    rgba(0, 0, 0, 0) 3px
   );
   z-index: 999;
-  mix-blend-mode: multiply;
+  opacity: 0.4;
+  animation: scanlineMove 8s linear infinite;
 }
 
-/* subtle glow flicker animation */
+@keyframes scanlineMove {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(4px); }
+}
+
+/* ========== DYNAMIC NOISE TEXTURE ========== */
+/* Creates the "alive" CRT feeling */
+.noise-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 998;
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  animation: noiseAnim 0.2s steps(10) infinite;
+}
+
+@keyframes noiseAnim {
+  0% { transform: translate(0, 0); }
+  10% { transform: translate(-5%, -5%); }
+  20% { transform: translate(-10%, 5%); }
+  30% { transform: translate(5%, -10%); }
+  40% { transform: translate(-5%, 15%); }
+  50% { transform: translate(-10%, 5%); }
+  60% { transform: translate(15%, 0); }
+  70% { transform: translate(0, 10%); }
+  80% { transform: translate(-15%, 0); }
+  90% { transform: translate(10%, 5%); }
+  100% { transform: translate(5%, 0); }
+}
+
+/* ========== ANIMATED DIGITAL GRID ========== */
+.digital-grid {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 2;
+  background-image:
+    linear-gradient(rgba(57, 255, 20, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(57, 255, 20, 0.03) 1px, transparent 1px);
+  background-size: 50px 50px;
+  animation: gridMove 20s linear infinite;
+  opacity: 0.5;
+}
+
+@keyframes gridMove {
+  0% { background-position: 0 0, 0 0; }
+  100% { background-position: 50px 50px, 50px 50px; }
+}
+
+/* Subtle grid accent lines */
+.digital-grid::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image:
+    linear-gradient(rgba(57, 255, 20, 0.06) 2px, transparent 2px),
+    linear-gradient(90deg, rgba(57, 255, 20, 0.06) 2px, transparent 2px);
+  background-size: 200px 200px;
+  animation: gridMoveSlow 40s linear infinite;
+}
+
+@keyframes gridMoveSlow {
+  0% { background-position: 0 0, 0 0; }
+  100% { background-position: 200px 200px, 200px 200px; }
+}
+
+/* ========== SCREEN FLICKER ========== */
 @keyframes flicker {
   0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% { opacity: 1; }
   20%, 24%, 55% { opacity: 0.96; }
 }
 
-/* Matrix background - CONSOLIDATED */
+/* ========== MATRIX BACKGROUND ========== */
 #matrix {
   position: fixed;
   top: 0;
@@ -45,7 +149,7 @@ body::after {
   pointer-events: none;
 }
 
-/* Main content - CONSOLIDATED */
+/* ========== MAIN CONTENT ========== */
 #main-content {
   position: relative;
   z-index: 100;
@@ -57,12 +161,13 @@ body::after {
 .title {
   text-align: center;
   font-size: 2rem;
-  text-shadow: 0 0 10px #39ff14, 0 0 25px #39ff14;
+  text-shadow: 0 0 10px #39ff14, 0 0 25px #39ff14, 0 0 40px #39ff14;
   display: inline-block;
   position: relative;
+  margin: 0 auto;
+  display: block;
 }
 
-/* blinking cursor next to title */
 .title::after {
   content: "_";
   display: inline-block;
@@ -74,29 +179,14 @@ body::after {
   50% { opacity: 0; }
 }
 
-/* Boot screen - OLD, can remove if using #boot-sequence */
-.boot {
-  position: fixed;
-  inset: 0;
-  background: #000;
-  color: #39ff14;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-  text-shadow: 0 0 8px #39ff14;
-}
-
-.boot pre {
-  width: 80%;
-  white-space: pre-wrap;
-  overflow-wrap: break-word;
+.desc {
+  text-align: center;
+  opacity: 0.8;
   font-size: 0.9rem;
-  line-height: 1.4;
-  text-shadow: 0 0 10px #39ff14;
+  margin-top: 0.5rem;
 }
 
-/* Boot sequence styling - MAIN ONE */
+/* ========== BOOT SEQUENCE ========== */
 #boot-sequence {
   position: fixed;
   top: 0;
@@ -109,22 +199,50 @@ body::after {
   align-items: center;
   justify-content: center;
   transition: opacity 1s ease;
-  pointer-events: none; /* ADD THIS - prevents blocking after fade */
+  pointer-events: none;
 }
 
 #boot-text {
-  color: #39ff14; /* Changed to match your theme */
+  color: #39ff14;
   font-family: 'JetBrains Mono', monospace;
   font-size: 18px;
   text-shadow: 0 0 8px #39ff14;
   margin: 0;
   white-space: pre-wrap;
+  pointer-events: none;
 }
 
-/* Posts section */
+/* ========== POSTS SECTION ========== */
 .posts {
   position: relative;
   z-index: 101;
+  max-width: 800px;
+  margin: 2rem auto;
+}
+
+.posts h2 {
+  text-shadow: 0 0 10px #39ff14, 0 0 20px #39ff14;
+  border-bottom: 2px solid #39ff14;
+  padding-bottom: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.post {
+  margin: 2rem 0;
+  padding: 1.5rem;
+  border-left: 3px solid #39ff14;
+  background: rgba(57, 255, 20, 0.02);
+  transition: all 0.3s ease;
+}
+
+.post:hover {
+  background: rgba(57, 255, 20, 0.05);
+  border-left-width: 5px;
+  transform: translateX(5px);
+}
+
+.post h2, .post h3 {
+  margin-top: 0;
 }
 
 .post a {
@@ -134,64 +252,35 @@ body::after {
   color: #39ff14;
   text-decoration: none;
   transition: all 0.3s ease;
+  text-shadow: 0 0 5px #39ff14;
 }
 
 .post a:hover {
   text-shadow: 0 0 15px #39ff14, 0 0 30px #39ff14;
 }
 
-/* Cursor glow / flashlight */
+.post .date {
+  color: #39ff14;
+  opacity: 0.6;
+  font-size: 0.85rem;
+  margin: 0.5rem 0;
+}
+
+/* ========== CURSOR GLOW ========== */
 .cursor-light {
   position: fixed;
   width: 150px;
   height: 150px;
   border-radius: 50%;
   pointer-events: none;
-  background: radial-gradient(circle, rgba(57,255,20,0.4) 0%, transparent 80%);
+  background: radial-gradient(circle, rgba(57, 255, 20, 0.4) 0%, transparent 80%);
   transform: translate(-50%, -50%);
   transition: 0.04s linear;
   z-index: 1001;
   filter: blur(2px);
 }
 
-/* Grid */
-.grid {
-  pointer-events: none;
-}
-
-.posts a, 
-main a,
-#main-content a {
-  color: #39ff14;
-  text-decoration: none;
-  position: relative;
-  z-index: 102;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.posts a:hover,
-main a:hover,
-#main-content a:hover {
-  text-shadow: 0 0 15px #39ff14, 0 0 30px #39ff14;
-}
-
-.posts ul, 
-main ul,
-#main-content ul {
-  list-style: none;
-  padding: 0;
-}
-
-.posts li,
-main li,
-#main-content li {
-  margin: 1rem 0;
-  padding: 0.5rem;
-  border-left: 2px solid #39ff14;
-  padding-left: 1rem;
-}
-
+/* ========== NAVIGATION ========== */
 nav {
   margin: 1rem 0;
   text-align: center;
@@ -204,10 +293,33 @@ nav {
   border: 1px solid #39ff14;
   display: inline-block;
   transition: all 0.3s ease;
+  text-shadow: 0 0 5px #39ff14;
 }
 
 .home-link:hover {
   background: rgba(57, 255, 20, 0.1);
   text-shadow: 0 0 15px #39ff14;
   box-shadow: 0 0 10px #39ff14;
+}
+
+/* ========== LIST STYLING ========== */
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+li {
+  margin: 1rem 0;
+  padding: 0.5rem 0 0.5rem 1rem;
+  border-left: 2px solid #39ff14;
+}
+
+li a {
+  color: #39ff14;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+li a:hover {
+  text-shadow: 0 0 10px #39ff14;
 }
