@@ -11,7 +11,7 @@
 <!-- Noise overlay -->
 <div class="noise-overlay"></div>
 
-<!-- Digital grid -->
+<!-- Digital grid (static, dense) -->
 <div class="digital-grid"></div>
 
 <!-- Grid highlight that follows cursor -->
@@ -25,15 +25,15 @@
 {% endif %}
 
 <!-- Main Content -->
-<div id="main-content" {% if page.url != "/" %}style="display:block;"{% else %}style="display:none;"{% endif %}>
+<div id="main-content" {% unless page.url == "/" %}style="display:block;"{% else %}style="display:none;"{% endunless %}>
 <header>
 <h1 class="title">{{ site.title }}</h1>
 <p class="desc">{{ site.description }}</p>
-{% if page.url != "/" %}
+{% unless page.url == "/" %}
 <nav>
 <a href="{{ '/' | relative_url }}" class="home-link">← Back to Lab</a>
 </nav>
-{% endif %}
+{% endunless %}
 </header>
 <main>
 {{ content }}
@@ -45,13 +45,41 @@
 
 <!-- Scripts -->
 <script>
+// Grid highlight and cursor animation - runs on all pages
+const cursor = document.querySelector(".cursor-light");
+const gridHighlight = document.querySelector(".grid-highlight");
+let x = 0, y = 0, targetX = 0, targetY = 0;
+
+document.addEventListener("mousemove", e => {
+  targetX = e.clientX;
+  targetY = e.clientY;
+  
+  // Update grid highlight immediately
+  if (gridHighlight) {
+    gridHighlight.style.left = `${e.clientX}px`;
+    gridHighlight.style.top = `${e.clientY}px`;
+  }
+});
+
+function animateCursor() {
+  x += (targetX - x) * 0.15;
+  y += (targetY - y) * 0.15;
+  if (cursor) {
+    cursor.style.left = `${x}px`;
+    cursor.style.top = `${y}px`;
+  }
+  requestAnimationFrame(animateCursor);
+}
+animateCursor();
+
 {% if page.layout == "default" and page.url == "/" %}
-// Only run boot animation on homepage
-document.addEventListener("DOMContentLoaded", () => {
+(function() {
   const bootLines = [">Great to see you. I'm 0xm0t0k0 aka 0xth00rf1nn aka c1nn4m0nr0ls"];
   const bootText = document.getElementById("boot-text");
   const bootScreen = document.getElementById("boot-sequence");
   const mainContent = document.getElementById("main-content");
+  
+  if (!bootText || !bootScreen || !mainContent) return;
   
   let line = 0, char = 0;
   
@@ -79,35 +107,8 @@ document.addEventListener("DOMContentLoaded", () => {
   }
   
   typeBootLine();
-});
+})();
 {% endif %}
-
-// Cursor animation - runs on all pages
-const cursor = document.querySelector(".cursor-light");
-const gridHighlight = document.querySelector(".grid-highlight");
-let x = 0, y = 0, targetX = 0, targetY = 0;
-
-document.addEventListener("mousemove", e => {
-  targetX = e.clientX;
-  targetY = e.clientY;
-  
-  // Update grid highlight immediately
-  if (gridHighlight) {
-    gridHighlight.style.left = `${e.clientX}px`;
-    gridHighlight.style.top = `${e.clientY}px`;
-  }
-});
-
-function animateCursor() {
-  x += (targetX - x) * 0.15;
-  y += (targetY - y) * 0.15;
-  if (cursor) {
-    cursor.style.left = `${x}px`;
-    cursor.style.top = `${y}px`;
-  }
-  requestAnimationFrame(animateCursor);
-}
-animateCursor();
 </script>
 </body>
 </html>
