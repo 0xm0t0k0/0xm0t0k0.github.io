@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{{ page.title | default: site.title }}</title>
@@ -9,9 +8,8 @@
   <!-- Font -->
   <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
 
+  <!-- Styles -->
   <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
-</head>
-
 </head>
 
 <body>
@@ -23,23 +21,57 @@
   <!-- Main Content -->
   <div id="main-content" style="display:none;">
     <header>
-      <h1 class="size-title">0xm0t0k0<span class="cursor"></span></h1>
+      <h1 class="site-title">0xm0t0k0<span class="cursor"></span></h1>
       <p class="desc">{{ site.description }}</p>
     </header>
     {{ content }}
   </div>
 
-  <!-- Glowing Cursor -->
-  <div class="cursor-light"></div>
-  <script src="{{ '/assets/css/cursor.js' | relative_url }}" defer></script>
-  <div class="cursor-light"></div>
-<script>
-  const light = document.querySelector('.cursor-light');
-  document.addEventListener('mousemove', (e) => {
-    light.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
-  });
-</script>
+  <!-- Particle Cursor -->
+  <canvas id="cursorCanvas"></canvas>
 
+  <script>
+    const canvas = document.getElementById('cursorCanvas');
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    document.addEventListener('mousemove', (e) => {
+      for (let i = 0; i < 4; i++) {
+        particles.push({
+          x: e.clientX,
+          y: e.clientY,
+          size: Math.random() * 3 + 1,
+          velX: (Math.random() - 0.5) * 2,
+          velY: (Math.random() - 0.5) * 2,
+          alpha: 1
+        });
+      }
+    });
+
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      for (let i = 0; i < particles.length; i++) {
+        const p = particles[i];
+        p.x += p.velX;
+        p.y += p.velY + 0.5; // gravity-like drift
+        p.alpha -= 0.015;
+        ctx.fillStyle = `rgba(0,255,153,${p.alpha})`;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        ctx.fill();
+      }
+      particles = particles.filter(p => p.alpha > 0);
+      requestAnimationFrame(animate);
+    }
+    animate();
+  </script>
 </body>
 </html>
 
