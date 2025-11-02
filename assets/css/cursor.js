@@ -1,0 +1,45 @@
+// --- Glowing cursor ---
+document.addEventListener("mousemove", e => {
+  const cursor = document.querySelector(".cursor-light");
+  if (cursor) {
+    cursor.style.left = `${e.clientX}px`;
+    cursor.style.top = `${e.clientY}px`;
+  }
+});
+
+// --- Boot animation ---
+const bootLines = [
+  ">Great to see you. I'm 0xm0t0k0 aka 0xth00rf1nn aka c1nn4m0nr0ls"
+];
+
+const bootText = document.getElementById("boot-text");
+const bootScreen = document.getElementById("boot-sequence");
+const mainContent = document.getElementById("main-content");
+
+let line = 0;
+let char = 0;
+
+function typeBootLine() {
+  if (line < bootLines.length) {
+    if (char < bootLines[line].length) {
+      bootText.textContent += bootLines[line].charAt(char);
+      char++;
+      setTimeout(typeBootLine, 30);
+    } else {
+      bootText.textContent += "\n";
+      line++;
+      char = 0;
+      setTimeout(typeBootLine, 400);
+    }
+  } else {
+    setTimeout(() => {
+      bootScreen.style.opacity = "0";
+      setTimeout(() => {
+        bootScreen.style.display = "none";
+        mainContent.style.display = "block";
+      }, 1000);
+    }, 600);
+  }
+}
+
+window.addEventListener("load", typeBootLine);

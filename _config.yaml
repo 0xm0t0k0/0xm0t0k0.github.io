@@ -1,0 +1,9 @@
+title: "0xm0t0k0's cryptography & cs lab"
+description: "Notes on cryptography, algorithms, CTF write-ups, data structures and my journey into computer science. Plus some interesting intesection between art & hacking."
+theme: jekyll-theme-hacker
+markdown: kramdown
+baseurl: ""
+url: "https://0xm0t0k0.github.io"
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag

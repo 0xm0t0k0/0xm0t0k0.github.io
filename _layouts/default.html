@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{{ page.title }} | {{ site.title }}</title>
+  <link rel="stylesheet" href="{{ '/assets/css/custom.css' | relative_url }}">
+  <link rel="icon" href="{{ '/assets/images/favicon.png' | relative_url }}">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Matrix-style background -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const canvas = document.createElement("canvas");
+      canvas.id = "matrix";
+      document.body.prepend(canvas);
+      const ctx = canvas.getContext("2d");
+      canvas.height = window.innerHeight;
+      canvas.width = window.innerWidth;
+
+      const chars = "0123456789ABCDEF⧫⌘∑∫λΩ⊕⊗⟡";
+      const drops = Array(Math.floor(canvas.width / 14)).fill(1);
+
+      function draw() {
+        ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = "#00ffcc";
+        ctx.font = "15px JetBrains Mono";
+        for (let i = 0; i < drops.length; i++) {
+          const text = chars.charAt(Math.floor(Math.random() * chars.length));
+          ctx.fillText(text, i * 14, drops[i] * 18);
+          if (drops[i] * 18 > canvas.height && Math.random() > 0.975) drops[i] = 0;
+          drops[i]++;
+        }
+      }
+
+      function resize() {
+        canvas.height = window.innerHeight;
+        canvas.width = window.innerWidth;
+      }
+
+      window.addEventListener("resize", resize);
+      setInterval(draw, 35);
+    });
+  </script>
+</head>
+
+<body>
+  <!-- Boot Sequence -->
+  <div id="boot-sequence" class="boot">
+    <pre id="boot-text"></pre>
+  </div>
+
+  <!-- Main Content -->
+  <div id="main-content" style="display:none;">
+    <header>
+      <h1 class="title">{{ site.title }}</h1>
+      <p class="desc">{{ site.description }}</p>
+    </header>
+    {{ content }}
+  </div>
+
+  <!-- Glowing Cursor -->
+  <div class="cursor-light"></div>
+  <script src="{{ '/assets/css/cursor.js' | relative_url }}" defer></script>
+</body>
+</html>
+
