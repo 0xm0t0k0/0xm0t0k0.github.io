@@ -1,117 +1,73 @@
 body {
-  background-color: #000;
-  color: #39ff14;
-  font-family: "JetBrains Mono", monospace;
-  overflow-x: hidden;
+  background: radial-gradient(ellipse at center, #020202 0%, #000000 100%);
+  color: #00ff88;
+  font-family: 'Fira Code', monospace;
+  text-shadow: 0 0 5px rgba(0, 255, 136, 0.6);
+  overflow: hidden;
+  height: 100vh;
   margin: 0;
-  text-shadow: 0 0 4px #39ff14, 0 0 10px #39ff14;
-  animation: flicker 2.5s infinite;
+  position: relative;
 }
 
-/* CRT subtle scanlines */
-body::after {
+/* --- Subtle CRT scanlines --- */
+body::before {
   content: "";
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
+  right: 0;
+  bottom: 0;
   background: repeating-linear-gradient(
     to bottom,
-    rgba(0, 0, 0, 0) 0px,
-    rgba(0, 0, 0, 0) 1px,
-    rgba(0, 0, 0, 0.08) 2px
+    rgba(255, 255, 255, 0.03),
+    rgba(255, 255, 255, 0.03) 1px,
+    transparent 2px,
+    transparent 3px
   );
-  z-index: 999;
-  mix-blend-mode: multiply;
+  pointer-events: none;
+  mix-blend-mode: overlay;
+  opacity: 0.08;
+  z-index: 2;
 }
 
-/* subtle glow flicker animation */
-@keyframes flicker {
-  0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% { opacity: 1; }
-  20%, 24%, 55% { opacity: 0.96; }
+/* --- CRT glow around screen edges --- */
+body::after {
+  content: "";
+  position: absolute;
+  top: -10%;
+  left: -10%;
+  width: 120%;
+  height: 120%;
+  background: radial-gradient(circle, rgba(0, 255, 136, 0.15), transparent 70%);
+  mix-blend-mode: screen;
+  filter: blur(80px);
+  z-index: 0;
+  pointer-events: none;
+  animation: pulse 10s infinite ease-in-out;
 }
 
-/* Matrix background */
-#matrix {
-  position: fixed;
+@keyframes pulse {
+  0%, 100% { opacity: 0.07; }
+  50% { opacity: 0.12; }
+}
+
+/* --- Animated digital grid --- */
+.grid {
+  position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: 0;
-  opacity: 0.12;
+  background-image:
+    linear-gradient(rgba(0, 255, 136, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 255, 136, 0.04) 1px, transparent 1px);
+  background-size: 50px 50px;
+  animation: moveGrid 30s linear infinite;
+  z-index: 1;
   pointer-events: none;
 }
 
-/* Main content */
-#main-content {
-  position: relative;
-  z-index: 10;
-  padding: 1rem;
-}
-
-.title {
-  text-align: center;
-  font-size: 2rem;
-  text-shadow: 0 0 10px #39ff14, 0 0 25px #39ff14;
-  display: inline-block;
-  position: relative;
-}
-
-/* blinking cursor next to title */
-.title::after {
-  content: "_";
-  display: inline-block;
-  margin-left: 4px;
-  animation: blink-cursor 1s step-end infinite;
-}
-
-@keyframes blink-cursor {
-  50% { opacity: 0; }
-}
-
-/* Boot screen */
-.boot {
-  position: fixed;
-  inset: 0;
-  background: #000;
-  color: #39ff14;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-  text-shadow: 0 0 8px #39ff14;
-}
-
-.boot pre {
-  width: 80%;
-  white-space: pre-wrap;
-  overflow-wrap: break-word;
-  font-size: 0.9rem;
-  line-height: 1.4;
-  text-shadow: 0 0 10px #39ff14;
-}
-
-/* Cursor glow / flashlight */
-.cursor-light {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 200px;        /* slightly larger aura */
-  height: 200px;
-  pointer-events: none;
-  border-radius: 50%;
-  background: radial-gradient(
-    circle,
-    rgba(0, 255, 100, 0.18) 0%,   /* soft neon center */
-    rgba(0, 255, 100, 0.08) 35%,
-    transparent 70%
-  );
-  mix-blend-mode: screen;
-  filter: blur(40px);   /* makes it glow rather than shine */
-  transform: translate(-50%, -50%);
-  transition: transform 0.05s ease-out;
-  z-index: 9999;
+@keyframes moveGrid {
+  from { background-position: 0 0, 0 0; }
+  to { background-position: 50px 50px, 50px 50px; }
 }
