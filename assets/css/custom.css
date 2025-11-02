@@ -1,51 +1,14 @@
 body {
   background-color: #000;
-  color: #00ff99;
-  font-family: 'Fira Code', monospace;
+  color: #39ff14;
+  font-family: "JetBrains Mono", monospace;
+  overflow-x: hidden;
   margin: 0;
-  padding: 0;
-  overflow: hidden;
-  cursor: none;
+  text-shadow: 0 0 4px #39ff14, 0 0 10px #39ff14;
+  animation: flicker 2.5s infinite;
 }
 
-/* Site title */
-.site-title {
-  text-align: center;
-  font-size: 3rem;
-  margin-top: 20vh;
-  color: #00ff99;
-  text-shadow: 0 0 10px #00ff99, 0 0 20px #00ff99;
-}
-
-/* Blinking cursor */
-.cursor {
-  display: inline-block;
-  width: 10px;
-  height: 1em;
-  background-color: #00ff99;
-  margin-left: 5px;
-  animation: blink 0.9s infinite;
-  vertical-align: middle;
-}
-@keyframes blink {
-  50% { opacity: 0; }
-}
-
-/* CRT glow on screen edges */
-body::before {
-  content: "";
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  background: radial-gradient(circle at center, rgba(0,255,153,0.08) 0%, rgba(0,0,0,0.9) 70%);
-  mix-blend-mode: screen;
-  z-index: 1000;
-}
-
-/* Scanline overlay */
+/* CRT subtle scanlines */
 body::after {
   content: "";
   position: fixed;
@@ -55,24 +18,92 @@ body::after {
   height: 100%;
   pointer-events: none;
   background: repeating-linear-gradient(
-    0deg,
-    rgba(0,0,0,0.15),
-    rgba(0,0,0,0.15) 1px,
-    transparent 1px,
-    transparent 2px
+    to bottom,
+    rgba(0, 0, 0, 0) 0px,
+    rgba(0, 0, 0, 0) 1px,
+    rgba(0, 0, 0, 0.08) 2px
   );
-  mix-blend-mode: overlay;
-  opacity: 0.2;
-  z-index: 1001;
+  z-index: 999;
+  mix-blend-mode: multiply;
 }
 
-/* Canvas covers everything for particle effect */
-#cursorCanvas {
+/* subtle glow flicker animation */
+@keyframes flicker {
+  0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% { opacity: 1; }
+  20%, 24%, 55% { opacity: 0.96; }
+}
+
+/* Matrix background */
+#matrix {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: 1002;
+  z-index: 0;
+  opacity: 0.12;
   pointer-events: none;
+}
+
+/* Main content */
+#main-content {
+  position: relative;
+  z-index: 10;
+  padding: 1rem;
+}
+
+.title {
+  text-align: center;
+  font-size: 2rem;
+  text-shadow: 0 0 10px #39ff14, 0 0 25px #39ff14;
+  display: inline-block;
+  position: relative;
+}
+
+/* blinking cursor next to title */
+.title::after {
+  content: "_";
+  display: inline-block;
+  margin-left: 4px;
+  animation: blink-cursor 1s step-end infinite;
+}
+
+@keyframes blink-cursor {
+  50% { opacity: 0; }
+}
+
+/* Boot screen */
+.boot {
+  position: fixed;
+  inset: 0;
+  background: #000;
+  color: #39ff14;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  text-shadow: 0 0 8px #39ff14;
+}
+
+.boot pre {
+  width: 80%;
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+  font-size: 0.9rem;
+  line-height: 1.4;
+  text-shadow: 0 0 10px #39ff14;
+}
+
+/* Cursor glow / flashlight */
+.cursor-light {
+  position: fixed;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  pointer-events: none;
+  background: radial-gradient(circle, rgba(57,255,20,0.4) 0%, transparent 80%);
+  transform: translate(-50%, -50%);
+  transition: 0.04s linear;
+  z-index: 1001;
+  filter: blur(2px);
 }
