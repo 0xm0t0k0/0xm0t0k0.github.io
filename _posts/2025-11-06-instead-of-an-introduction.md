@@ -2,7 +2,12 @@
 layout: post
 title: "Instead of an Introduction"
 date: 2025-11-06
-tags: asm revEng python cryptography xor
+tags: 
+    -asm 
+    -revEng 
+    -python 
+    -cryptography 
+    -xor
 ---
 
 # 0xm0t0k0
