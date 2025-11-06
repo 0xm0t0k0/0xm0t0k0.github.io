@@ -2,6 +2,7 @@
 layout: post
 title: "Welcome to the Lab"
 date: 2025-11-01
+tags: none yet:3
 ---
 
 # 0xm0t0k0
