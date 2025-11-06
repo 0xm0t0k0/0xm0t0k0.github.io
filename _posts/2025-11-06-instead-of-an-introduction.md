@@ -53,7 +53,7 @@ for i in range(256):
 ```
 
 What the output looks like : 
-```
+
 sbi`dk h! O!%O}iOv$f eb!'#Ori'um
 rchae~j!i !N $N|hNw%g!dc &"Nsh&tl
 q`kbf}i"j#"M#'MkMt&d"g`#%!Mpk%wo
@@ -67,7 +67,7 @@ zk`imvb)a()F(,Ft`F-o)lk(.*F{`.|d
 yhcjnua*b+*E+/EwcE|.l*oh+-)Exc-g
 xibkot`+c*+D*.DvbD}/m+ni*,(Dyb,~f
 nelhsg,d-,C-)CqeCz(j,in-+/C~e+ya
-~odmirf-e,-B,(BpdB{)k-ho,*.Bd*x` ```
+~odmirf-e,-B,(BpdB{)k-ho,*.Bd*x` 
 
 Okay we prolly dont want so much gibberish on our screen: Solution 1: save the output to a file then grep the key bc we know it is gonna have the format crypto{}
 
