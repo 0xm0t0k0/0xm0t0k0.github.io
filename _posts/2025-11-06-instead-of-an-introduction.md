@@ -2,12 +2,15 @@
 layout: post
 title: "Instead of an Introduction"
 date: 2025-11-06
+tags: asm, revEng, python, cryptography, xor
 ---
 
 # 0xm0t0k0
 
 Week 1 is all about learning the **basics of cryptography** using cryptohacks.org. You can find the implementation of solutions 
-in my github repo named cryptohack-solutions. I also attended the picogym and did their intro to assembly and some other easy exercises.
+in my github repo named cryptohack-solutions. 
+
+I also attended the PicoGym and did their intro to assembly and some other introductory exercises.
 
 
 ```asm
@@ -74,4 +77,6 @@ Okay we prolly dont want so much gibberish on our screen: Solution 1: save the o
 Or by working even smarter we can already anticipate that in the first byte its ```python key = input_str[0] ^ ord('c')```
 as user bigtuple did and then proceed to xor the rest of the string with the known key. One is brute-forcey, costs more computation, takes longer and one is cleaner and easier. However, in case we don't know the format of the flag, a little bruteforcing can go a long way.
 
-So that's it for
+So that's it for this weeks little brain interesting thingies. 
+Any other interesting stuff you might wanna suggest or just wanna chat about u can find me on discord under 0xm0t0k0 
+Have a great day/night!

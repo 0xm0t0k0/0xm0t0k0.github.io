@@ -4,5 +4,5 @@ Personal blog on cryptography, algorithms, h4xx0r>.< culture and anything else t
 Built with Jekyll + Hacker Theme + custom CSS/JS.
 Hosted on GitHub Pages.
 
-You can find me on discord : 0xth00rf1nn
+You can find me on discord : 0xm0t0k0
 
