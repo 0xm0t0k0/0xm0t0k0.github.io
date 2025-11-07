@@ -39,7 +39,7 @@ title: "Home"
       
       <!-- Stage 1: Binary -->
       <div id="stage1" class="puzzle-stage">
-        <h4 class="stage-title">STAGE 1: BINARY DECRYPTION</h4>
+        <h4 class="stage-title">BINARY DECRYPTION</h4>
         <pre class="encrypted-message">
 00110000 01111000 01101101 00110000 01110100
 00110000 01101011 00110000
@@ -49,7 +49,7 @@ title: "Home"
       
       <!-- Stage 2: Hex (hidden initially) -->
       <div id="stage2" class="puzzle-stage" style="display: none;">
-        <h4 class="stage-title">STAGE 2: HEXADECIMAL DECRYPTION</h4>
+        <h4 class="stage-title">HEXADECIMAL DECRYPTION</h4>
         <pre class="encrypted-message">
 30 78 74 68 30 30 72 66 31 6e 6e
         </pre>
@@ -58,7 +58,7 @@ title: "Home"
       
       <!-- Stage 3: Base64 (hidden initially) -->
       <div id="stage3" class="puzzle-stage" style="display: none;">
-        <h4 class="stage-title">STAGE 3: BASE64 DECRYPTION</h4>
+        <h4 class="stage-title">BASE64 DECRYPTION</h4>
         <pre class="encrypted-message">
 NGNjM3NzX2dyNG50M2RfdzNsYzBtM18h
         </pre>
