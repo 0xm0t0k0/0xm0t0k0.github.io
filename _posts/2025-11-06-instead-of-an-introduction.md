@@ -34,7 +34,7 @@ I also attended the PicoGym and did their intro to assembly and some other intro
 <+44>:    pop    rbp
 <+45>:    ret
 ```
-*Here* is an example of a program i **reverse engineered** and analysed to find the decimal number of the contents of the eax register. It was actually and if/else statement but welp in assembly you kinda have to struggle for it. (I know it's basic stuff but bare with me, future posts will go deeper)
+*Here* is an example of a program i **reverse engineered** and analysed to find the decimal number of the contents of the eax register. It was actually an if/else statement but welp in assembly you kinda have to struggle for it. (I know it's basic stuff but bare with me, future posts will go deeper)
 
 Still for me it was probably the happiest time of my day, everything made sense there.
 
