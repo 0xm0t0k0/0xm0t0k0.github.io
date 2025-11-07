@@ -371,7 +371,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 </script>
-<!-- Interactive Terminal Navigation Script -->
+<!-- Enhanced Interactive Terminal Navigation Script -->
 <script>
 document.addEventListener('DOMContentLoaded', () => {
   const navInput = document.getElementById('navInput');
@@ -379,90 +379,209 @@ document.addEventListener('DOMContentLoaded', () => {
   
   if (!navInput || !navOutput) return;
   
+  let commandHistory = [];
+  let historyIndex = -1;
+  
   const commands = {
-    help: `Available commands:
-├─ ls              - list all pages
-├─ cat about.txt   - view about page
-├─ cd logs/        - scroll to blog posts
-├─ ./portfolio.sh  - go to portfolio
-├─ cat manifesto/* - view texts & papers
-├─ clear           - clear output
-└─ whoami          - identify yourself`,
-    
-    ls: `<a href="{{ '/about' | relative_url }}">about.txt</a>
-logs/
-portfolio.sh
-manifesto/
-README.md`,
-    
-    'cat about.txt': () => {
-      window.location.href = '{{ "/about" | relative_url }}';
-      return 'Loading about.txt...';
+    help: {
+      desc: 'Show available commands',
+      output: `<div class="welcome">╔═══════════════════════════════════════╗
+║         AVAILABLE COMMANDS            ║
+╚═══════════════════════════════════════╝</div>
+<span class="info">Navigation:</span>
+  ls                - list all sections
+  cat about.txt     - view about page
+  cd logs/          - scroll to blog posts
+  ./portfolio.sh    - access portfolio (requires key)
+  cat manifesto/*   - view texts & papers
+
+<span class="info">System:</span>
+  help              - show this message
+  clear             - clear terminal output
+  whoami            - show current user
+  history           - show command history
+  cat README.md     - read documentation
+
+<span class="info">Tip:</span> Use ↑/↓ arrow keys to navigate command history`
     },
     
-    'cd logs/': () => {
-      document.getElementById('logs')?.scrollIntoView({ behavior: 'smooth' });
-      return 'Navigating to logs/';
+    ls: {
+      desc: 'List available pages',
+      output: `drwxr-xr-x  2 visitor visitor 4096 Nov 07 2025 <a href="/about">about.txt</a>
+drwxr-xr-x  3 visitor visitor 4096 Nov 07 2025 logs/
+-rwxr-xr-x  1 visitor visitor 2048 Nov 07 2025 portfolio.sh
+drwxr-xr-x  2 visitor visitor 4096 Nov 07 2025 manifesto/
+-rw-r--r--  1 visitor visitor  512 Nov 07 2025 README.md`
     },
     
-    'cd logs': () => {
-      document.getElementById('logs')?.scrollIntoView({ behavior: 'smooth' });
-      return 'Navigating to logs/';
+    'cat about.txt': {
+      desc: 'Open about page',
+      action: () => {
+        setTimeout(() => window.location.href = '/about', 500);
+        return 'Opening about.txt...\n<span class="typing-indicator">█</span>';
+      }
     },
     
-    './portfolio.sh': () => {
-      document.getElementById('portfolio')?.scrollIntoView({ behavior: 'smooth' });
-      return 'Executing portfolio.sh...';
+    'cd logs/': {
+      desc: 'Navigate to logs',
+      action: () => {
+        document.getElementById('logs')?.scrollIntoView({ behavior: 'smooth' });
+        return '✓ Changed directory to logs/';
+      }
     },
     
-    'cat manifesto/*': () => {
-      document.getElementById('texts')?.scrollIntoView({ behavior: 'smooth' });
-      return 'Reading manifesto files...';
+    'cd logs': {
+      desc: 'Navigate to logs',
+      action: () => {
+        document.getElementById('logs')?.scrollIntoView({ behavior: 'smooth' });
+        return '✓ Changed directory to logs/';
+      }
     },
     
-    clear: () => {
-      navOutput.innerHTML = '';
-      return '';
+    './portfolio.sh': {
+      desc: 'Access portfolio',
+      action: () => {
+        document.getElementById('portfolio')?.scrollIntoView({ behavior: 'smooth' });
+        return `Executing portfolio.sh...
+<span class="info">▶ Initializing decryption module...</span>
+<span class="info">▶ Portfolio access requires authentication</span>`;
+      }
     },
     
-    whoami: '0xm0t0k0 - visitor privileges',
+    'cat manifesto/*': {
+      desc: 'View texts & papers',
+      action: () => {
+        document.getElementById('texts')?.scrollIntoView({ behavior: 'smooth' });
+        return `Reading manifesto files...
+<span class="info">▶ Loading: aesthetics-of-encryption.txt</span>
+<span class="info">▶ Loading: hacking-as-fine-art.txt</span>
+<span class="info">▶ Loading: digital-glitch-theory.txt</span>`;
+      }
+    },
     
-    'cat README.md': `# CryptoLab
-Welcome to my cryptography & security research lab.
-Type 'help' to see available commands.`,
+    clear: {
+      desc: 'Clear terminal',
+      action: () => {
+        navOutput.innerHTML = '';
+        return '';
+      }
+    },
+    
+    whoami: {
+      desc: 'Show current user',
+      output: `visitor@cryptolab
+<span class="info">User ID:</span> ${localStorage.getItem('cryptolab_user_id')?.substr(0, 16) || 'anonymous'}...
+<span class="info">Privileges:</span> guest
+<span class="info">Access Level:</span> public`
+    },
+    
+    history: {
+      desc: 'Show command history',
+      action: () => {
+        if (commandHistory.length === 0) {
+          return '<span class="info">No command history yet</span>';
+        }
+        return commandHistory.map((cmd, i) => `  ${i + 1}  ${cmd}`).join('\n');
+      }
+    },
+    
+    'cat README.md': {
+      desc: 'Read documentation',
+      output: `<div class="welcome">╔═══════════════════════════════════════╗
+║      CRYPTOLAB TERMINAL v1.0          ║
+╚═══════════════════════════════════════╝</div>
+
+<span class="info">Welcome to 0xm0t0k0's Cryptography & CS Lab</span>
+
+This is an interactive terminal interface for navigating
+the site. Type commands to explore different sections.
+
+<span class="info">Getting Started:</span>
+  • Type 'help' to see all available commands
+  • Use 'ls' to list all pages
+  • Navigate using 'cd' or 'cat' commands
+  • Press ↑/↓ to cycle through command history
+
+<span class="info">Pro Tip:</span> Try 'cat about.txt' to learn more about me!`
+    }
   };
   
-  function typeOutput(text, isError = false) {
+  function typeOutput(text, className = 'success') {
     const line = document.createElement('div');
-    line.className = `cmd-line ${isError ? 'error' : 'success'}`;
+    line.className = `cmd-line ${className}`;
     line.innerHTML = text;
     navOutput.appendChild(line);
     navOutput.scrollTop = navOutput.scrollHeight;
   }
   
+  function executeCommand(cmd) {
+    // Add to history
+    if (cmd && cmd !== commandHistory[commandHistory.length - 1]) {
+      commandHistory.push(cmd);
+    }
+    historyIndex = commandHistory.length;
+    
+    // Show command that was typed
+    typeOutput(`visitor@cryptolab:~$ ${cmd}`, 'info');
+    
+    // Execute command
+    const command = commands[cmd];
+    if (command) {
+      const result = command.action 
+        ? command.action() 
+        : command.output;
+      
+      if (result) {
+        setTimeout(() => typeOutput(result), 100);
+      }
+    } else if (cmd.trim()) {
+      setTimeout(() => {
+        typeOutput(`bash: ${cmd}: command not found
+<span class="info">Type 'help' to see available commands</span>`, 'error');
+      }, 100);
+    }
+  }
+  
+  // Handle keyboard input
   navInput.addEventListener('keydown', (e) => {
+    // Enter key - execute command
     if (e.key === 'Enter') {
       const cmd = navInput.value.trim();
-      
-      if (cmd) {
-        // Show command that was typed
-        typeOutput(`visitor@cryptolab:~$ ${cmd}`);
-        
-        // Execute command
-        if (commands[cmd]) {
-          const result = typeof commands[cmd] === 'function' 
-            ? commands[cmd]() 
-            : commands[cmd];
-          
-          if (result) {
-            setTimeout(() => typeOutput(result), 100);
-          }
-        } else {
-          setTimeout(() => typeOutput(`bash: ${cmd}: command not found`, true), 100);
-        }
-      }
-      
+      executeCommand(cmd);
       navInput.value = '';
+    }
+    
+    // Up arrow - previous command
+    else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      if (historyIndex > 0) {
+        historyIndex--;
+        navInput.value = commandHistory[historyIndex];
+      }
+    }
+    
+    // Down arrow - next command
+    else if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      if (historyIndex < commandHistory.length - 1) {
+        historyIndex++;
+        navInput.value = commandHistory[historyIndex];
+      } else {
+        historyIndex = commandHistory.length;
+        navInput.value = '';
+      }
+    }
+    
+    // Tab key - autocomplete (basic)
+    else if (e.key === 'Tab') {
+      e.preventDefault();
+      const input = navInput.value.trim();
+      const matches = Object.keys(commands).filter(cmd => cmd.startsWith(input));
+      if (matches.length === 1) {
+        navInput.value = matches[0];
+      } else if (matches.length > 1) {
+        typeOutput(`Possible commands: ${matches.join(', ')}`, 'info');
+      }
     }
   });
   
@@ -473,8 +592,12 @@ Type 'help' to see available commands.`,
   
   // Show welcome message
   setTimeout(() => {
-    typeOutput("Type 'help' to see available commands");
+    typeOutput(`<div class="welcome">Welcome to CryptoLab Terminal
+Type '<span style="color: #00ffff;">help</span>' to see available commands or '<span style="color: #00ffff;">cat README.md</span>' to get started</div>`);
   }, 500);
+  
+  // Auto-focus input on page load
+  navInput.focus();
 });
 </script>
 
