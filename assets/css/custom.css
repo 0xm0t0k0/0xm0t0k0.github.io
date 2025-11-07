@@ -175,7 +175,7 @@ body:hover .grid-highlight {
   box-shadow: var(--scanline-shadow);
   mix-blend-mode: multiply;      /* blends with bg, reduces glow intensity */
   transition: top var(--scanline-transition), opacity var(--scanline-transition);
-  opacity: 0.65;                 /* overall dimming */
+  opacity: 0.98;                 /* overall dimming */
   filter: grayscale(0.25) blur(0.02px); /* slight desaturate + micro blur */
 }
 
