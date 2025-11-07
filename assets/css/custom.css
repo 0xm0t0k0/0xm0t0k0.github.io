@@ -1534,12 +1534,6 @@ html {
     opacity: 0.8;
   }
   
-  .cursor-light,
-  .grid-highlight,
-  .axis-scanline-x,
-  .axis-scanline-y {
-    display: none;
-  }
 }
 
 /* Small phones */
