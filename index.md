@@ -34,7 +34,7 @@ title: "Home"
   <div id="portfolioPuzzle" class="encryption-puzzle">
     <div class="puzzle-container">
       <h3 class="puzzle-title">// ACCESS RESTRICTED //</h3>
-      <p class="puzzle-hint">Complete all stages to unlock the portfolio</p>
+      <p class="puzzle-hint">Solve the little ciphers to unlock the portfolio. U may want to "hack" the website for an easy answer or use an online decoder 0.< </p>
       <p class="stage-counter">Stage <span id="currentStage">1</span> of 3</p>
       
       <!-- Stage 1: Binary -->
