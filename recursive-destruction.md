@@ -1,5 +1,5 @@
-
 ---
+
 layout: default
 title: "On Recursive Deconstruction of the Digital Banal inside the Network of Art"
 
