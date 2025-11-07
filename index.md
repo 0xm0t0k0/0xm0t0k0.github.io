@@ -60,7 +60,7 @@ title: "Home"
       <div id="stage3" class="puzzle-stage" style="display: none;">
         <h4 class="stage-title">STAGE 3: BASE64 DECRYPTION</h4>
         <pre class="encrypted-message">
-NGMzc3NfZ3I0bnQzZF93M2xjMG0zXyE=
+NGNjM3NzX2dyNG50M2RfdzNsYzBtM18h
         </pre>
         <p class="cipher-hint">Cipher: <span class="cipher-type">Base64 → ASCII</span></p>
         <p class="final-hint">This is the final key - enter it below!</p>

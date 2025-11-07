@@ -138,17 +138,13 @@ document.addEventListener('DOMContentLoaded', () => {
       progress: 66
     },
     3: {
-      answer: '4c3ss_gr4nt3d_w3lc0m3_!',
+      answer: '4cc3ss_gr4nt3d_w3lc0m3_!',
       nextStage: 'unlock',
       progress: 100
     }
   };
   
-  // Check if already unlocked
-  if (sessionStorage.getItem('portfolioUnlocked') === 'true') {
-    unlockPortfolio();
-    return;
-  }
+
   
   // Check saved progress
   const savedStage = sessionStorage.getItem('puzzleStage');
