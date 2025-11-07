@@ -1400,11 +1400,6 @@ html {
     transform: none;
   }
   
-  /* Reduce grid density */
-  .digital-grid {
-    background-size: 20px 20px;
-    opacity: 0.2;
-  }
   
   /* Simplify cursor effects */
   .cursor-light {
