@@ -142,7 +142,7 @@ body::after {
   background: radial-gradient(circle, rgba(57, 255, 20, 0.08) 0%, transparent 70%);
   transform: translate(-50%, -50%);
   opacity: 0;
-  transition: opacity 0.5s ease;
+  transition: opacity 0.8s ease;
   mix-blend-mode: screen;
 }
 
@@ -727,7 +727,7 @@ html {
   box-shadow: 0 0 15px rgba(57, 255, 20, 0.4);
 }
 
-/* ========== PORTFOLIO SECTION (SMALLER) ========== */
+/* ========== PORTFOLIO SECTION ========== */
 #portfolio {
   margin-top: 4rem;
 }
@@ -737,7 +737,7 @@ html {
   margin: 0 auto;
 }
 
-/* ========== ENHANCED HACKER AESTHETICS ========== */
+/* ==========  HACKER AESTHETICS ========== */
 .encryption-puzzle {
   position: relative;
   border-radius: 8px;
