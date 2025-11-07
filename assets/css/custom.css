@@ -65,7 +65,7 @@ body::after {
     rgba(0, 0, 0, 0) 3px
   );
   z-index: 999;
-  opacity: 0.4;
+  opacity: 0.05;
   animation: scanlineMove 8s linear infinite;
 }
 
@@ -135,14 +135,14 @@ body::after {
 /* ========== SUBTLE GRID HIGHLIGHT (ONLY ON HOVER) ========== */
 .grid-highlight {
   position: fixed;
-  width: 250px;
-  height: 250px;
+  width: 300px;
+  height: 300px;
   pointer-events: none;
   z-index: 3;
   background: radial-gradient(circle, rgba(57, 255, 20, 0.08) 0%, transparent 70%);
   transform: translate(-50%, -50%);
   opacity: 0;
-  transition: opacity 0.8s ease;
+  transition: opacity 0.3s ease;
   mix-blend-mode: screen;
 }
 
