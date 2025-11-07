@@ -151,34 +151,51 @@ body:hover .grid-highlight {
 }
 
 /* ========== AXIS SCANLINES (X AND Y) ========== */
+:root{
+  --scanline-color: rgba(57,255,20,0.14); /* lower alpha = less attention */
+  --scanline-thin: 0.4px;                  /* thin but visible */
+  --scanline-length: 8%;                   /* shorter bars */
+  --scanline-shadow: 0 0 4px rgba(57,255,20,0.06); /* tiny soft shadow */
+  --scanline-z: 490;                       /* below most UI elements */
+  --scanline-transition: 150ms ease-out;   /* subtle, not snappy */
+}
+
+/* X axis */
 .axis-scanline-x {
   position: fixed;
   left: 0;
-  width: 10%;
-  height: 0.2px;
-  background: linear-gradient(90deg, 
-    transparent 0%, 
-    rgba(57, 255, 20, 0.3) 50%, 
+  width: var(--scanline-length);
+  height: var(--scanline-thin);
+  background: linear-gradient(90deg,
+    transparent 0%,
+    var(--scanline-color) 50%,
     transparent 100%);
   pointer-events: none;
-  z-index: 997;
-  box-shadow: 0 0 10px rgba(57, 255, 20, 0.3);
-  transition: top 0.05s ease-out;
+  z-index: var(--scanline-z);
+  box-shadow: var(--scanline-shadow);
+  mix-blend-mode: multiply;      /* blends with bg, reduces glow intensity */
+  transition: top var(--scanline-transition), opacity var(--scanline-transition);
+  opacity: 0.65;                 /* overall dimming */
+  filter: grayscale(0.25) blur(0.02px); /* slight desaturate + micro blur */
 }
 
+/* Y axis */
 .axis-scanline-y {
   position: fixed;
   top: 0;
-  width: 0.2px;
-  height: 10%;
-  background: linear-gradient(180deg, 
-    transparent 0%, 
-    rgba(57, 255, 20, 0.3) 50%, 
+  width: var(--scanline-thin);
+  height: var(--scanline-length);
+  background: linear-gradient(180deg,
+    transparent 0%,
+    var(--scanline-color) 50%,
     transparent 100%);
   pointer-events: none;
-  z-index: 997;
-  box-shadow: 0 0 10px rgba(57, 255, 20, 0.3);
-  transition: left 0.05s ease-out;
+  z-index: var(--scanline-z);
+  box-shadow: var(--scanline-shadow);
+  mix-blend-mode: multiply;
+  transition: left var(--scanline-transition), opacity var(--scanline-transition);
+  opacity: 0.65;
+  filter: grayscale(0.25) blur(0.02px);
 }
 
 /* ========== SCREEN FLICKER ========== */
