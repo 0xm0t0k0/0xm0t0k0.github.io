@@ -6,14 +6,15 @@ title: "Home"
 <nav class="terminal-nav">
   <div class="nav-terminal">
     <span class="nav-prompt">visitor@cryptolab:~$</span>
-    <span class="nav-cmd">ls</span>
+    <input 
+      type="text" 
+      id="navInput" 
+      class="nav-input" 
+      placeholder="type 'help' for commands"
+      autocomplete="off"
+      spellcheck="false">
   </div>
-  <ul class="cmd-output">
-    <li><a href="{{ '/about' | relative_url }}" data-cmd="cat about.txt">about.txt</a></li>
-    <li><a href="#logs" data-cmd="cd logs/">logs/</a></li>
-    <li><a href="#portfolio" data-cmd="./portfolio.sh">portfolio.sh</a></li>
-    <li><a href="#texts" data-cmd="cat manifesto/*">manifesto/</a></li>
-  </ul>
+  <div id="navOutput" class="nav-output"></div>
 </nav>
 
 <section id="logs" class="section">

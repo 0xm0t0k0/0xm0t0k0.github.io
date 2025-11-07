@@ -371,6 +371,112 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 </script>
+<!-- Interactive Terminal Navigation Script -->
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const navInput = document.getElementById('navInput');
+  const navOutput = document.getElementById('navOutput');
+  
+  if (!navInput || !navOutput) return;
+  
+  const commands = {
+    help: `Available commands:
+├─ ls              - list all pages
+├─ cat about.txt   - view about page
+├─ cd logs/        - scroll to blog posts
+├─ ./portfolio.sh  - go to portfolio
+├─ cat manifesto/* - view texts & papers
+├─ clear           - clear output
+└─ whoami          - identify yourself`,
+    
+    ls: `<a href="{{ '/about' | relative_url }}">about.txt</a>
+logs/
+portfolio.sh
+manifesto/
+README.md`,
+    
+    'cat about.txt': () => {
+      window.location.href = '{{ "/about" | relative_url }}';
+      return 'Loading about.txt...';
+    },
+    
+    'cd logs/': () => {
+      document.getElementById('logs')?.scrollIntoView({ behavior: 'smooth' });
+      return 'Navigating to logs/';
+    },
+    
+    'cd logs': () => {
+      document.getElementById('logs')?.scrollIntoView({ behavior: 'smooth' });
+      return 'Navigating to logs/';
+    },
+    
+    './portfolio.sh': () => {
+      document.getElementById('portfolio')?.scrollIntoView({ behavior: 'smooth' });
+      return 'Executing portfolio.sh...';
+    },
+    
+    'cat manifesto/*': () => {
+      document.getElementById('texts')?.scrollIntoView({ behavior: 'smooth' });
+      return 'Reading manifesto files...';
+    },
+    
+    clear: () => {
+      navOutput.innerHTML = '';
+      return '';
+    },
+    
+    whoami: '0xm0t0k0 - visitor privileges',
+    
+    'cat README.md': `# CryptoLab
+Welcome to my cryptography & security research lab.
+Type 'help' to see available commands.`,
+  };
+  
+  function typeOutput(text, isError = false) {
+    const line = document.createElement('div');
+    line.className = `cmd-line ${isError ? 'error' : 'success'}`;
+    line.innerHTML = text;
+    navOutput.appendChild(line);
+    navOutput.scrollTop = navOutput.scrollHeight;
+  }
+  
+  navInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+      const cmd = navInput.value.trim();
+      
+      if (cmd) {
+        // Show command that was typed
+        typeOutput(`visitor@cryptolab:~$ ${cmd}`);
+        
+        // Execute command
+        if (commands[cmd]) {
+          const result = typeof commands[cmd] === 'function' 
+            ? commands[cmd]() 
+            : commands[cmd];
+          
+          if (result) {
+            setTimeout(() => typeOutput(result), 100);
+          }
+        } else {
+          setTimeout(() => typeOutput(`bash: ${cmd}: command not found`, true), 100);
+        }
+      }
+      
+      navInput.value = '';
+    }
+  });
+  
+  // Focus on input when clicking anywhere in terminal
+  document.querySelector('.terminal-nav')?.addEventListener('click', () => {
+    navInput.focus();
+  });
+  
+  // Show welcome message
+  setTimeout(() => {
+    typeOutput("Type 'help' to see available commands");
+  }, 500);
+});
+</script>
 
 <!-- User Tracking & Persistence Script -->
 <script>
