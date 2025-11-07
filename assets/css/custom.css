@@ -182,17 +182,7 @@ body:hover .grid-highlight {
   50% { opacity: 0; }
 }
 
-/* Restore bright green text everywhere */
-body {
-  background-color: #000;
-  color: #39ff14;
-  font-family: "JetBrains Mono", monospace;
-  overflow-x: hidden;
-  margin: 0;
-  text-shadow: 0 0 4px #39ff14, 0 0 10px #39ff14;
-  animation: flicker 2.5s infinite;
-  position: relative;
-}
+
 
 .desc {
   text-align: center;
