@@ -1,5 +1,7 @@
 title: "0xm0t0k0's Cryptography & CS lab"
-description: "Notes on cryptography, algorithms, CTF write-ups, data structures and my journey into computer science. Plus some interesting intesection between art & hacking.\nMy real name is '9366b1d5923333c2671f1688f9a9170549061196a0aab291' (Hint: a mix of XOR, ROT13 & RC2) :3"
+description: "I <3 Reverse Engineering, Cryptography & Binary Exploitation. I also like Data Structs & Algorithms sometimes. Created as a means of documenting my passion.
+  Plus some interesting intesection between art & hacking.\n
+  My real name is '9366b1d5923333c2671f1688f9a9170549061196a0aab291' (Hint: a mix of XOR, ROT13 & RC2) :3"
 theme: jekyll-theme-hacker
 markdown: kramdown
 baseurl: ""
