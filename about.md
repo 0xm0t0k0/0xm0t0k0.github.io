@@ -21,12 +21,18 @@ Wasn't it the same case with art and actual visual abstraction in the 20th centu
 
 What we encounter with art is a soft problem, a problem which its' solutions are typically ambiguous and subjective relying mostly on perceptions and interpretations of the participants involved. What's more someone could propose that actually art is not a problem at all. It is not something to be solved, just a means of expression. That too though is a problem because if it's fundamentally just a means of expression, does this assumption, if taken to be true, also imply that there are no rules of expression? Is it only cultural bias when someone likes something? Is it only a matter of sociological factors in the deciding equation of taste or also an innate ability of humans to appreciate things. Why do we appreciate a well-formulated theorem? And why do I feel more of an artist when I'm reading a disassembly than when I'm painting? I dare not answer these questions but I dare say that even asking these questions could pose a challenge in today's decaying view of art and the institutions that house it. There was a distinction between art and decoration, that I find that might be lost today but I'm definitely not a romantic to some lost old golden time. As I said, I feel more of an artist while analysing code TwT
 
-Now for the formal stuff (skip if bored or not potential employer)
+Now for the formal stuff (skip if bored or not potential employer):
+
 -Graduating in June 2026 with a **Diploma (MAi & BFA) in Fine and Applied Arts** from UoWM
+
 -Will attend **BSc on Computer Science** in AuTH
+
 -Couple of **CyberSec certificates** on my LinkedIn
+
 -Mostly interested in **Security Research**
+
 -My interests as of the time being include but not limited to: **Applied Cryptography, Malware Research, Reverse Engineering,** and some good ol' **Binary Exploitation**. TL;DR low-level security stuff that are in my mind like puzzles.
+
 -I do **CTFs** regularly and will be posting about them on this very blog!
 
 Puzzles are so interesting to me and I find that the aforementioned interests are mostly puzzles but in these warm fuzzy *for my brain* machines that everything makes sense.
