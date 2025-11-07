@@ -17,6 +17,8 @@ title: "Home"
   <div id="navOutput" class="nav-output"></div>
 </nav>
 
+ <a href="{{ '/about' | relative_url }}" class="nav-button">About Me</a>
+
 <section id="logs" class="section">
   <h2>Latest Logs</h2>
   <p class="section-subtitle">Hey read these! It would make me happy ₊‧°𐐪♡𐑂°‧₊  </p>
