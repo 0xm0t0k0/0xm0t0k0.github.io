@@ -697,5 +697,139 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 </script>
 
+<!-- Enhanced Interactive Grid Effects -->
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const gridHighlight = document.querySelector('.grid-highlight');
+  const digitalGrid = document.querySelector('.digital-grid');
+  
+  // Mouse position tracking
+  let mouseX = 0, mouseY = 0;
+  let targetX = 0, targetY = 0;
+  
+  // Create ripple effect on click
+  function createRipple(x, y) {
+    const ripple = document.createElement('div');
+    ripple.className = 'grid-ripple';
+    ripple.style.left = x + 'px';
+    ripple.style.top = y + 'px';
+    document.body.appendChild(ripple);
+    
+    setTimeout(() => ripple.remove(), 1000);
+  }
+  
+  // Enhanced grid highlight with parallax
+  document.addEventListener('mousemove', (e) => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+    
+    if (gridHighlight) {
+      // Smooth parallax effect
+      const moveX = (mouseX - window.innerWidth / 2) * 0.02;
+      const moveY = (mouseY - window.innerHeight / 2) * 0.02;
+      
+      gridHighlight.style.left = mouseX + 'px';
+      gridHighlight.style.top = mouseY + 'px';
+      gridHighlight.style.transform = `translate(-50%, -50%) translate(${moveX}px, ${moveY}px)`;
+    }
+    
+    // Create trailing particles occasionally
+    if (Math.random() > 0.95) {
+      createTrailParticle(mouseX, mouseY);
+    }
+  });
+  
+  // Click ripple effect
+  document.addEventListener('click', (e) => {
+    createRipple(e.clientX, e.clientY);
+  });
+  
+  // Create trailing particles
+  function createTrailParticle(x, y) {
+    const particle = document.createElement('div');
+    particle.className = 'trail-particle';
+    particle.style.left = x + 'px';
+    particle.style.top = y + 'px';
+    document.body.appendChild(particle);
+    
+    setTimeout(() => particle.remove(), 800);
+  }
+  
+  // Pulsing grid intensity based on cursor speed
+  let lastX = 0, lastY = 0;
+  let lastTime = Date.now();
+  
+  setInterval(() => {
+    const now = Date.now();
+    const dx = mouseX - lastX;
+    const dy = mouseY - lastY;
+    const dt = now - lastTime;
+    
+    const speed = Math.sqrt(dx * dx + dy * dy) / dt;
+    const intensity = Math.min(speed * 0.5, 0.8);
+    
+    if (digitalGrid) {
+      digitalGrid.style.opacity = 0.4 + intensity;
+    }
+    
+    lastX = mouseX;
+    lastY = mouseY;
+    lastTime = now;
+  }, 100);
+  
+  // Interactive elements that glow on hover
+  const interactiveElements = document.querySelectorAll('a, button, .post, .portfolio-item, .text-item');
+  
+  interactiveElements.forEach(el => {
+    el.addEventListener('mouseenter', function() {
+      // Create glow pulse
+      const rect = this.getBoundingClientRect();
+      const centerX = rect.left + rect.width / 2;
+      const centerY = rect.top + rect.height / 2;
+      
+      createGlowPulse(centerX, centerY);
+    });
+  });
+  
+  function createGlowPulse(x, y) {
+    const pulse = document.createElement('div');
+    pulse.className = 'glow-pulse';
+    pulse.style.left = x + 'px';
+    pulse.style.top = y + 'px';
+    document.body.appendChild(pulse);
+    
+    setTimeout(() => pulse.remove(), 600);
+  }
+  
+  // Scanline that follows mouse vertically
+  const scanline = document.createElement('div');
+  scanline.className = 'interactive-scanline';
+  document.body.appendChild(scanline);
+  
+  document.addEventListener('mousemove', (e) => {
+    scanline.style.top = e.clientY + 'px';
+  });
+  
+  // Parallax effect on terminal windows
+  const terminals = document.querySelectorAll('.terminal-nav, .terminal-container, .encryption-puzzle');
+  
+  document.addEventListener('mousemove', (e) => {
+    const centerX = window.innerWidth / 2;
+    const centerY = window.innerHeight / 2;
+    const percentX = (e.clientX - centerX) / centerX;
+    const percentY = (e.clientY - centerY) / centerY;
+    
+    terminals.forEach((terminal, index) => {
+      const depth = (index + 1) * 2;
+      const moveX = percentX * depth;
+      const moveY = percentY * depth;
+      
+      if (terminal) {
+        terminal.style.transform = `translate(${moveX}px, ${moveY}px)`;
+      }
+    });
+  });
+});
+</script>
 </body>
 </html>

@@ -65,7 +65,6 @@ body::after {
 }
 
 /* ========== DYNAMIC NOISE TEXTURE ========== */
-/* Creates the "alive" CRT feeling */
 .noise-overlay {
   position: fixed;
   top: 0;
@@ -1579,5 +1578,188 @@ html {
     font-size: 0.8rem;
     max-height: 200px;
     overflow-y: auto;
+  }
+}
+
+/* ========== ENHANCED INTERACTIVE EFFECTS ========== */
+
+/* Ripple effect on click */
+.grid-ripple {
+  position: fixed;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(57, 255, 20, 0.4) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 9999;
+  animation: rippleExpand 1s ease-out forwards;
+  transform: translate(-50%, -50%);
+  border: 2px solid rgba(57, 255, 20, 0.6);
+}
+
+@keyframes rippleExpand {
+  0% {
+    width: 0;
+    height: 0;
+    opacity: 1;
+  }
+  100% {
+    width: 300px;
+    height: 300px;
+    opacity: 0;
+  }
+}
+
+/* Trail particles */
+.trail-particle {
+  position: fixed;
+  width: 4px;
+  height: 4px;
+  background: #39ff14;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  box-shadow: 0 0 10px #39ff14, 0 0 20px #39ff14;
+  animation: particleFade 0.8s ease-out forwards;
+  transform: translate(-50%, -50%);
+}
+
+@keyframes particleFade {
+  0% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0);
+  }
+}
+
+/* Glow pulse on hover */
+.glow-pulse {
+  position: fixed;
+  width: 100px;
+  height: 100px;
+  background: radial-gradient(circle, rgba(57, 255, 20, 0.3) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  animation: pulseExpand 0.6s ease-out forwards;
+  transform: translate(-50%, -50%);
+}
+
+@keyframes pulseExpand {
+  0% {
+    width: 50px;
+    height: 50px;
+    opacity: 1;
+  }
+  100% {
+    width: 200px;
+    height: 200px;
+    opacity: 0;
+  }
+}
+
+/* Interactive scanline that follows mouse */
+.interactive-scanline {
+  position: fixed;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, 
+    transparent 0%, 
+    rgba(57, 255, 20, 0.5) 50%, 
+    transparent 100%);
+  pointer-events: none;
+  z-index: 9997;
+  box-shadow: 0 0 20px rgba(57, 255, 20, 0.5);
+  transition: top 0.1s ease-out;
+}
+
+/* Enhanced grid highlight with pulsing effect */
+.grid-highlight {
+  position: fixed;
+  width: 300px;
+  height: 300px;
+  pointer-events: none;
+  z-index: 3;
+  background: radial-gradient(circle, rgba(57, 255, 20, 0.2) 0%, transparent 70%);
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  mix-blend-mode: screen;
+  animation: gridPulse 2s ease-in-out infinite;
+}
+
+@keyframes gridPulse {
+  0%, 100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.7;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.1);
+    opacity: 1;
+  }
+}
+
+body:hover .grid-highlight {
+  opacity: 1;
+}
+
+/* Parallax transitions on terminals */
+.terminal-nav,
+.terminal-container,
+.encryption-puzzle {
+  transition: transform 0.3s ease-out;
+  will-change: transform;
+}
+
+/* Glow effect on interactive elements */
+a, button, .post, .portfolio-item, .text-item {
+  transition: all 0.3s ease;
+}
+
+a:hover, button:hover {
+  filter: drop-shadow(0 0 8px rgba(57, 255, 20, 0.6));
+}
+
+/* Cursor trail effect enhancement */
+.cursor-light {
+  position: fixed;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  pointer-events: none;
+  background: radial-gradient(circle, rgba(57, 255, 20, 0.4) 0%, transparent 80%);
+  transform: translate(-50%, -50%);
+  transition: 0.04s linear;
+  z-index: 1001;
+  filter: blur(2px);
+  animation: cursorPulse 3s ease-in-out infinite;
+}
+
+@keyframes cursorPulse {
+  0%, 100% {
+    filter: blur(2px);
+  }
+  50% {
+    filter: blur(4px);
+  }
+}
+
+/* Disable on mobile for performance */
+@media (max-width: 768px) {
+  .grid-ripple,
+  .trail-particle,
+  .glow-pulse,
+  .interactive-scanline {
+    display: none;
+  }
+  
+  .terminal-nav,
+  .terminal-container,
+  .encryption-puzzle {
+    transform: none !important;
   }
 }
