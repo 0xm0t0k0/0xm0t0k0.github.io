@@ -883,3 +883,230 @@ html {
   40% { content: '..'; }
   60%, 100% { content: '...'; }
 }
+
+/* ========== TERMINAL STYLING ========== */
+.terminal-container {
+  max-width: 700px;
+  margin: 2rem auto;
+  background: #0a0a0a;
+  border: 2px solid #39ff14;
+  border-radius: 8px;
+  box-shadow: 
+    0 0 30px rgba(57, 255, 20, 0.3),
+    inset 0 0 100px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+  font-family: "JetBrains Mono", "Courier New", monospace;
+  position: relative;
+}
+
+.terminal-header {
+  background: linear-gradient(180deg, #1a1a1a 0%, #0f0f0f 100%);
+  padding: 0.75rem 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-bottom: 1px solid #39ff14;
+}
+
+.terminal-button {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.terminal-button.red {
+  background: #ff5f56;
+  box-shadow: 0 0 5px #ff5f56;
+}
+
+.terminal-button.yellow {
+  background: #ffbd2e;
+  box-shadow: 0 0 5px #ffbd2e;
+}
+
+.terminal-button.green {
+  background: #27c93f;
+  box-shadow: 0 0 5px #27c93f;
+}
+
+.terminal-title {
+  color: #39ff14;
+  font-size: 0.85rem;
+  margin-left: 1rem;
+  opacity: 0.8;
+  text-shadow: 0 0 5px #39ff14;
+}
+
+.terminal-body {
+  padding: 1.5rem;
+  background: #000;
+  min-height: 80px;
+}
+
+.terminal-prompt {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.prompt-symbol {
+  color: #39ff14;
+  font-size: 1.2rem;
+  font-weight: bold;
+  text-shadow: 0 0 8px #39ff14;
+  animation: promptBlink 1.5s ease-in-out infinite;
+}
+
+@keyframes promptBlink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+.terminal-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: #39ff14;
+  font-family: "JetBrains Mono", "Courier New", monospace;
+  font-size: 1rem;
+  outline: none;
+  padding: 0.5rem 0;
+  text-shadow: 0 0 5px #39ff14;
+  caret-color: #39ff14;
+}
+
+.terminal-input::placeholder {
+  color: rgba(57, 255, 20, 0.3);
+  font-style: italic;
+}
+
+.terminal-input:focus {
+  animation: terminalFocus 0.3s ease;
+}
+
+@keyframes terminalFocus {
+  0% { text-shadow: 0 0 5px #39ff14; }
+  50% { text-shadow: 0 0 15px #39ff14, 0 0 25px #39ff14; }
+  100% { text-shadow: 0 0 5px #39ff14; }
+}
+
+/* Typing effect on input */
+.terminal-input:not(:placeholder-shown) {
+  animation: typing 0.1s steps(1);
+}
+
+@keyframes typing {
+  from { opacity: 0.8; }
+  to { opacity: 1; }
+}
+
+/* Terminal output for errors/success */
+.terminal-output {
+  max-width: 700px;
+  margin: 1rem auto;
+  padding: 1rem 1.5rem 1rem 2.5rem;
+  background: #000;
+  border: 1px solid #39ff14;
+  border-radius: 4px;
+  font-family: "JetBrains Mono", "Courier New", monospace;
+  min-height: 24px;
+  text-shadow: 0 0 8px currentColor;
+  position: relative;
+}
+
+.terminal-output::before {
+  content: '>';
+  position: absolute;
+  left: 1rem;
+  color: inherit;
+  font-weight: bold;
+}
+
+.terminal-output:empty {
+  display: none;
+}
+
+/* Update button to match terminal theme */
+.unlock-btn {
+  background: #000;
+  border: 2px solid #39ff14;
+  color: #39ff14;
+  padding: 0.75rem 2rem;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 1rem;
+  cursor: pointer;
+  text-shadow: 0 0 5px #39ff14;
+  transition: all 0.3s ease;
+  font-weight: bold;
+  letter-spacing: 2px;
+  margin: 1rem auto;
+  display: block;
+  position: relative;
+  overflow: hidden;
+}
+
+.unlock-btn::before {
+  content: '▶';
+  margin-right: 0.5rem;
+  animation: buttonArrow 1s ease-in-out infinite;
+}
+
+@keyframes buttonArrow {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(3px); }
+}
+
+.unlock-btn:hover {
+  background: rgba(57, 255, 20, 0.1);
+  box-shadow: 0 0 25px rgba(57, 255, 20, 0.6);
+  transform: scale(1.02);
+}
+
+.unlock-btn:active {
+  transform: scale(0.98);
+  box-shadow: 0 0 15px rgba(57, 255, 20, 0.8);
+}
+
+/* Hacker-style ASCII art */
+.ascii-decoration {
+  margin-top: 3rem;
+  opacity: 0.4;
+  font-size: 0.7rem;
+  transition: opacity 0.3s ease;
+}
+
+.ascii-decoration:hover {
+  opacity: 0.7;
+}
+
+.ascii-decoration pre {
+  color: #39ff14;
+  text-shadow: 0 0 5px #39ff14;
+  line-height: 1.2;
+}
+
+/* Scanline effect on terminal */
+.terminal-container::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.15),
+    rgba(0, 0, 0, 0.15) 1px,
+    transparent 1px,
+    transparent 2px
+  );
+  pointer-events: none;
+  animation: scanlineTerminal 8s linear infinite;
+  z-index: 10;
+}
+
+@keyframes scanlineTerminal {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(4px); }
+}

@@ -12,7 +12,7 @@ title: "Home"
 
 <section id="logs" class="section">
   <h2>Latest Logs</h2>
-  <p class="section-subtitle">Cryptography challenges, algorithms, CTF write-ups, and computer science explorations</p>
+  <p class="section-subtitle">Hey read these! It would make me happy ₊‧°𐐪♡𐑂°‧₊  </p>
   <div class="posts">
     {% for post in site.posts %}
     <article class="post">
@@ -28,7 +28,7 @@ title: "Home"
 
 <section id="portfolio" class="section portfolio-locked">
   <h2>Digi-Expressionism Portfolio</h2>
-  <p class="section-subtitle">Visual explorations at the intersection of art and hacking</p>
+  <p class="section-subtitle">Visual explorations :3 </p>
   
   <!-- Multi-Stage Encryption Puzzle -->
   <div id="portfolioPuzzle" class="encryption-puzzle">
@@ -66,32 +66,58 @@ NGMzc3NfZ3I0bnQzZF93M2xjMG0zXyE=
         <p class="final-hint">This is the final key - enter it below!</p>
       </div>
       
-      <div class="input-container">
-        <input 
-          type="text" 
-          id="decryptInput" 
-          placeholder="Enter decoded message..."
-          class="decrypt-input"
-          autocomplete="off">
-        <button id="unlockBtn" class="unlock-btn">DECRYPT</button>
+      <div class="terminal-container">
+        <div class="terminal-header">
+          <span class="terminal-button red"></span>
+          <span class="terminal-button yellow"></span>
+          <span class="terminal-button green"></span>
+          <span class="terminal-title">root@cryptolab:~#</span>
+        </div>
+        <div class="terminal-body">
+          <div class="terminal-prompt">
+            <span class="prompt-symbol">$</span>
+            <input 
+              type="text" 
+              id="decryptInput" 
+              placeholder="decrypt --key"
+              class="terminal-input"
+              autocomplete="off"
+              spellcheck="false">
+          </div>
+        </div>
       </div>
       
-      <div id="errorMessage" class="error-message"></div>
+      <button id="unlockBtn" class="unlock-btn">EXECUTE</button>
+      
+      <div id="errorMessage" class="terminal-output"></div>
+      
       <div id="progressBar" class="progress-bar">
         <div id="progressFill" class="progress-fill"></div>
       </div>
       
       <div class="ascii-decoration">
         <pre>
-    ╔═══════════════════════════════════╗
-    ║                                   ║
-    ║   ▄▀▀ █▀▀▄ ▀▄▀ █▀▀▄ ▀█▀ ▄▀▀▄     ║
-    ║   ▀▄▄ █▐█▀  █  █▐█▀  █  █  █     ║
-    ║                                   ║
-    ║   █▀▀▄ █  █ ▀▀█ ▀▀█ █   ██▀      ║
-    ║   █▐█  █▄▄█ ▄▄█ ▄▄█ █▄▄ █▄▄      ║
-    ║                                   ║
-    ╚═══════════════════════════════════╝
+    ╔═══════════════════════════════════════════╗
+    ║░░░░░░░                                    ║
+    ║    ╔═══════════════════════════════╗░░░░░░░ 
+    ║   CRYPTO-PUZZLE CHALLENGE                 ║
+    ║   ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+    ║   ░░░░░░░ LOCKED TwT ░░░░░░░              ║
+    ╚═══════════════════════════════╝ ░░░░░░░░░░░          
+    ║                                           ║
+    ║                                           ║
+    ║                                           ║ 
+    ║                                           ║
+    ║    ███████╗███╗   ██╗ ██████╗██████╗      ║
+    ║    ██╔════╝████╗  ██║██╔════╝██╔══██╗     ║
+    ║    █████╗  ██╔██╗ ██║██║     ██████╔╝     ║
+    ║    ██╔══╝  ██║╚██╗██║██║     ██╔══██╗     ║
+    ║    ███████╗██║ ╚████║╚██████╗██║  ██║     ║
+    ║    ╚══════╝╚═╝  ╚═══╝ ╚═════╝╚═╝  ╚═╝     ║
+    ║                                           ║
+    ║         [DECRYPTION REQUIRED]             ║
+    ║                                           ║
+    ╚═══════════════════════════════════════════╝
         </pre>
       </div>
     </div>
@@ -100,14 +126,11 @@ NGMzc3NfZ3I0bnQzZF93M2xjMG0zXyE=
   <!-- Unlocked Portfolio (hidden initially) -->
   <div id="portfolioContent" class="portfolio-content" style="display: none;">
     <div class="unlock-success">
-      <p>✓ ACCESS GRANTED - 4C3SS_GR4NT3D_W3LC0M3_!</p>
+      <p>✓ ACCESS GRANTED - 4CC3SS_GR4NT3D_W3LC0M3_!</p>
     </div>
     
     <div class="portfolio-filters">
       <button class="filter-btn active" data-filter="all">All (47)</button>
-      <button class="filter-btn" data-filter="digital">Digital</button>
-      <button class="filter-btn" data-filter="crypto">Cryptography</button>
-      <button class="filter-btn" data-filter="experimental">Experimental</button>
     </div>
 
     <div class="portfolio-masonry" id="portfolioGrid">
@@ -146,7 +169,7 @@ NGMzc3NfZ3I0bnQzZF93M2xjMG0zXyE=
   <div class="texts-grid">
     <article class="text-item">
       <h3>On Recursive Deconstruction of the Digital Banal inside the Network of Art</h3>
-      <p class="date">2024</p>
+      <p class="date">2025</p>
       <p>On hacking the network of art</p>
       <a href="{{ '/recursive-destruction' | relative_url }}" class="text-link">Read More →</a>
     </article>
