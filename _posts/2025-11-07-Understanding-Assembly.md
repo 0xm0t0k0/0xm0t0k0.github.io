@@ -90,10 +90,28 @@ condition:
   cmp -0xc(%rbp), %eax     ; i < limit?
   jl loop_body
 ``` 
+
+Okay but say we want to see what the value is on the **eax** register in the end of the loop, do we manyally trace it?
+Well here is where gdb comes in handy as we can just put a breakpoint in the end of the loop and check the registers witha neat little command.
+```bash
+chmod +x debugger0_b 
+gdb debugger0_b
+
+(gdb) disassemble main # We first need to understand that it's a loop
+(gdb) break *main+59 # When we do we put a breakpoint to the end of the function (when loop finishes)
+(gdb) run
+(gdb) info registers eax
+eax            0x4af4b             307019
+
+# We now can quit the gdb
+# Run this command and find out the decimal value of eax
+python3 -c "print(0x4af4b)"
+307019
+```
 Again, by continuously feeding your brain a language it will naturally get more fluid in it. The key to understanding assembly is repetition. Practice with small functions, trace them manually and gradually you will get to more complex code. 
 Also you can use C to assembly translators if you are familiar with C (and if you are not familiar with C please get familiar with it). I like to write programs in C and then trace them through with gdb and understand what I wrote in assembly. 
 Most days I get a headache but in the end it's actually kinda cute being able to speak as close to as a human can get to computerish.
 
-0xm0t0k0 signing out 0.<
+**0xm0t0k0 signing out 0.<**
 
 
