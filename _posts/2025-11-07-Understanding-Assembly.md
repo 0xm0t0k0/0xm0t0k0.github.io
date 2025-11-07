@@ -8,7 +8,7 @@ tags:
     - Stack
 ---
 
-# m0t0k0
+# 0xm0t0k0
 
 In the words of the great R. Feynman, to understand something, you need to teach it.
 That's what I'm gonna be doing in order to solidify and broaden my own knowledge in assembly.
