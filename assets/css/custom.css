@@ -162,12 +162,11 @@ body:hover .grid-highlight {
 .title {
   text-align: center;
   font-size: 2rem;
-  text-shadow: 0 0 10px #39ff14, 0 0 25px #39ff14, 0 0 40px #39ff14;
-  display: inline-block;
+  text-shadow: 0 0 10px #39ff14, 0 0 25px #39ff14, 0 0 40px #39ff14 !important;
   position: relative;
   margin: 0 auto;
   display: block;
-  color: #39ff14;
+  color: #39ff14 !important;
   font-weight: bold;
 }
 
@@ -176,6 +175,7 @@ body:hover .grid-highlight {
   display: inline-block;
   margin-left: 4px;
   animation: blink-cursor 1s step-end infinite;
+  color: #39ff14;
 }
 
 @keyframes blink-cursor {
@@ -278,11 +278,11 @@ body:hover .grid-highlight {
   height: 150px;
   border-radius: 50%;
   pointer-events: none;
-  background: radial-gradient(circle, rgba(57, 255, 20, 0.4) 0%, transparent 80%);
+  background: radial-gradient(circle, rgba(57, 255, 20, 0.4) 0%, transparent 85%);
   transform: translate(-50%, -50%);
-  transition: 0.04s linear;
+  transition: 0.03s linear;
   z-index: 1001;
-  filter: blur(2px);
+  filter: blur(1px);
 }
 
 /* ========== NAVIGATION ========== */
@@ -969,24 +969,36 @@ html {
 
 .terminal-input {
   flex: 1;
-  background: transparent;
+  background: transparent !important;
   border: none;
-  color: #39ff14;
+  color: #39ff14 !important;
   font-family: "JetBrains Mono", "Courier New", monospace;
   font-size: 1rem;
   outline: none;
   padding: 0.5rem 0;
   text-shadow: 0 0 5px #39ff14;
   caret-color: #39ff14;
+  -webkit-text-fill-color: #39ff14;
 }
 
 .terminal-input::placeholder {
-  color: rgba(57, 255, 20, 0.3);
+  color: rgba(57, 255, 20, 0.3) !important;
   font-style: italic;
+  opacity: 1;
 }
 
 .terminal-input:focus {
   animation: terminalFocus 0.3s ease;
+  color: #39ff14 !important;
+}
+
+/* Fix for Safari/Chrome autocomplete */
+.terminal-input:-webkit-autofill,
+.terminal-input:-webkit-autofill:hover,
+.terminal-input:-webkit-autofill:focus {
+  -webkit-text-fill-color: #39ff14 !important;
+  -webkit-box-shadow: 0 0 0px 1000px #000 inset;
+  transition: background-color 5000s ease-in-out 0s;
 }
 
 @keyframes terminalFocus {
@@ -1179,9 +1191,9 @@ html {
 
 .nav-input {
   flex: 1;
-  background: transparent;
+  background: transparent !important;
   border: none;
-  color: #39ff14;
+  color: #39ff14 !important;
   font-family: "JetBrains Mono", monospace;
   font-size: 1rem;
   outline: none;
@@ -1190,16 +1202,29 @@ html {
   padding: 0.5rem;
   border-radius: 4px;
   transition: all 0.3s ease;
+  -webkit-text-fill-color: #39ff14; /* Force color on WebKit browsers */
 }
 
 .nav-input:focus {
-  background: rgba(57, 255, 20, 0.05);
+  background: rgba(57, 255, 20, 0.05) !important;
   box-shadow: 0 0 15px rgba(57, 255, 20, 0.2);
+  color: #39ff14 !important;
 }
 
 .nav-input::placeholder {
-  color: rgba(57, 255, 20, 0.4);
+  color: rgba(57, 255, 20, 0.4) !important;
   font-style: italic;
+  opacity: 1;
+}
+
+/* Fix for Safari/Chrome autocomplete */
+.nav-input:-webkit-autofill,
+.nav-input:-webkit-autofill:hover,
+.nav-input:-webkit-autofill:focus {
+  -webkit-text-fill-color: #39ff14 !important;
+  -webkit-box-shadow: 0 0 0px 1000px #000 inset;
+  transition: background-color 5000s ease-in-out 0s;
+  caret-color: #39ff14;
 }
 
 /* Autocomplete suggestions */
