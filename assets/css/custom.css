@@ -1110,3 +1110,297 @@ html {
   0% { transform: translateY(0); }
   100% { transform: translateY(4px); }
 }
+
+/* ========== CRT SCREEN CURVATURE & GLOW ========== */
+body::before {
+  content: '';
+  position: fixed;
+  top: -5%;
+  left: -5%;
+  width: 110%;
+  height: 110%;
+  border-radius: 2%;
+  box-shadow: inset 0 0 200px rgba(0, 0, 0, 0.9);
+  pointer-events: none;
+  z-index: 9998;
+}
+
+/* Subtle screen edge glow */
+#main-content::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(
+    ellipse at center,
+    transparent 0%,
+    transparent 60%,
+    rgba(57, 255, 20, 0.03) 80%,
+    rgba(57, 255, 20, 0.08) 100%
+  );
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* Screen curvature simulation */
+#main-content {
+  transform: perspective(1000px) rotateX(0.5deg);
+  transform-style: preserve-3d;
+}
+
+/* ========== TERMINAL-STYLE NAVIGATION ========== */
+.terminal-nav {
+  max-width: 900px;
+  margin: 2rem auto;
+  padding: 1.5rem;
+  background: rgba(0, 0, 0, 0.8);
+  border: 1px solid #39ff14;
+  border-radius: 4px;
+  font-family: "JetBrains Mono", monospace;
+  box-shadow: 0 0 20px rgba(57, 255, 20, 0.2);
+  position: relative;
+  z-index: 100;
+}
+
+.nav-terminal {
+  margin-bottom: 0.5rem;
+}
+
+.nav-prompt {
+  color: #39ff14;
+  text-shadow: 0 0 5px #39ff14;
+  font-weight: bold;
+}
+
+.nav-cmd {
+  color: #39ff14;
+  margin-left: 0.5rem;
+  animation: cmdBlink 0.8s ease-in-out;
+}
+
+@keyframes cmdBlink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+.cmd-output {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  padding-left: 2ch;
+}
+
+.cmd-output li {
+  margin: 0.3rem 0;
+  position: relative;
+}
+
+.cmd-output li::before {
+  content: '├─ ';
+  color: rgba(57, 255, 20, 0.5);
+  position: absolute;
+  left: -2ch;
+}
+
+.cmd-output li:last-child::before {
+  content: '└─ ';
+}
+
+.cmd-output a {
+  color: #00ff88;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  position: relative;
+  padding: 0.2rem 0.5rem;
+  display: inline-block;
+}
+
+.cmd-output a:hover {
+  color: #39ff14;
+  text-shadow: 0 0 8px #39ff14;
+  background: rgba(57, 255, 20, 0.1);
+}
+
+.cmd-output a::after {
+  content: attr(data-cmd);
+  position: absolute;
+  bottom: -1.5rem;
+  left: 0;
+  font-size: 0.75rem;
+  color: rgba(57, 255, 20, 0.5);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  white-space: nowrap;
+}
+
+.cmd-output a:hover::after {
+  opacity: 1;
+}
+
+/* ========== MOBILE OPTIMIZATIONS ========== */
+@media (max-width: 768px) {
+  /* Remove heavy effects on mobile */
+  body::before {
+    box-shadow: inset 0 0 100px rgba(0, 0, 0, 0.8);
+  }
+  
+  #main-content {
+    transform: none;
+  }
+  
+  #main-content::before {
+    display: none;
+  }
+  
+  /* Reduce grid density */
+  .digital-grid {
+    background-size: 20px 20px;
+    opacity: 0.2;
+  }
+  
+  /* Simplify cursor effects */
+  .cursor-light {
+    width: 100px;
+    height: 100px;
+    filter: blur(30px);
+  }
+  
+  .grid-highlight {
+    width: 200px;
+    height: 200px;
+  }
+  
+  /* Terminal nav mobile-friendly */
+  .terminal-nav {
+    margin: 1rem;
+    padding: 1rem;
+    font-size: 0.9rem;
+  }
+  
+  .cmd-output a::after {
+    display: none; /* Hide command hints on mobile */
+  }
+  
+  /* Portfolio grid mobile */
+  .portfolio-masonry {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .portfolio-item:nth-child(3n+1) .portfolio-img-wrapper,
+  .portfolio-item:nth-child(3n+2) .portfolio-img-wrapper,
+  .portfolio-item:nth-child(3n) .portfolio-img-wrapper {
+    height: 200px;
+  }
+  
+  /* Terminal input mobile */
+  .terminal-container {
+    margin: 1rem;
+  }
+  
+  .terminal-input {
+    font-size: 0.9rem;
+  }
+  
+  .unlock-btn {
+    padding: 0.6rem 1.5rem;
+    font-size: 0.9rem;
+  }
+  
+  /* Text sections */
+  .texts-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .section {
+    padding: 1rem;
+  }
+  
+  .section h2 {
+    font-size: 1.5rem;
+  }
+  
+  /* Reduce animations on mobile for performance */
+  .noise-overlay {
+    animation: none;
+    opacity: 0.02;
+  }
+  
+}
+
+/* Tablet adjustments */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .portfolio-masonry {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  }
+  
+  .terminal-nav {
+    max-width: 700px;
+  }
+}
+
+/* Touch device optimizations */
+@media (hover: none) and (pointer: coarse) {
+  /* Larger touch targets */
+  .cmd-output a {
+    padding: 0.5rem 1rem;
+    margin: 0.3rem 0;
+  }
+  
+  .filter-btn {
+    padding: 0.6rem 1.2rem;
+    margin: 0.3rem;
+  }
+  
+  .unlock-btn {
+    padding: 1rem 2rem;
+  }
+  
+  /* Remove hover-only effects */
+  .portfolio-overlay {
+    opacity: 0.8;
+  }
+  
+  .cursor-light,
+  .grid-highlight {
+    display: none;
+  }
+}
+
+/* Small phones */
+@media (max-width: 480px) {
+  .title {
+    font-size: 1.5rem;
+  }
+  
+  .desc {
+    font-size: 0.8rem;
+  }
+  
+  .ascii-decoration pre {
+    font-size: 0.5rem;
+  }
+  
+  .puzzle-title {
+    font-size: 1.2rem;
+  }
+}
+
+/* ========== USER STATS ========== */
+.user-stats {
+  background: rgba(57, 255, 20, 0.05);
+  border: 1px solid #39ff14;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+.user-stats p {
+  margin: 0.3rem 0;
+  color: #39ff14;
+  opacity: 0.8;
+}

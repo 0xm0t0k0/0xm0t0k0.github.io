@@ -371,5 +371,101 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 </script>
+
+<!-- User Tracking & Persistence Script -->
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  // Generate or retrieve user ID
+  function getUserId() {
+    let userId = localStorage.getItem('cryptolab_user_id');
+    if (!userId) {
+      userId = 'user_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+      localStorage.setItem('cryptolab_user_id', userId);
+    }
+    return userId;
+  }
+  
+  // Track puzzle completion with timestamp
+  function trackPuzzleCompletion(userId) {
+    const completions = JSON.parse(localStorage.getItem('puzzle_completions') || '[]');
+    completions.push({
+      userId: userId,
+      timestamp: new Date().toISOString(),
+      stages: [1, 2, 3]
+    });
+    localStorage.setItem('puzzle_completions', JSON.stringify(completions));
+  }
+  
+  // Check if user completed puzzle recently (within 24 hours)
+  function recentlyCompleted(userId) {
+    const completions = JSON.parse(localStorage.getItem('puzzle_completions') || '[]');
+    const userCompletions = completions.filter(c => c.userId === userId);
+    
+    if (userCompletions.length === 0) return false;
+    
+    const lastCompletion = new Date(userCompletions[userCompletions.length - 1].timestamp);
+    const now = new Date();
+    const hoursSince = (now - lastCompletion) / (1000 * 60 * 60);
+    
+    return hoursSince < 24;
+  }
+  
+  // Show stats to returning users
+  function showUserStats(userId) {
+    const completions = JSON.parse(localStorage.getItem('puzzle_completions') || '[]');
+    const userCompletions = completions.filter(c => c.userId === userId);
+    
+    if (userCompletions.length > 1) {
+      const statsDiv = document.createElement('div');
+      statsDiv.className = 'user-stats';
+      statsDiv.innerHTML = `
+        <p>Welcome back, ${userId.substr(0, 12)}...</p>
+        <p>Puzzle completions: ${userCompletions.length}</p>
+      `;
+      document.querySelector('.encryption-puzzle')?.prepend(statsDiv);
+    }
+  }
+  
+  const userId = getUserId();
+  
+  // Modify unlock function to track completion
+  const originalUnlockPortfolio = window.unlockPortfolio;
+  if (typeof unlockPortfolio !== 'undefined') {
+    window.unlockPortfolio = function() {
+      trackPuzzleCompletion(userId);
+      originalUnlockPortfolio();
+    };
+  }
+  
+  // Show stats on puzzle page
+  if (document.getElementById('portfolioPuzzle')) {
+    showUserStats(userId);
+  }
+  
+  console.log(`[CryptoLab] User ID: ${userId}`);
+  console.log(`[CryptoLab] Recent completion: ${recentlyCompleted(userId)}`);
+});
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const navCmd = document.querySelector('.nav-cmd');
+  if (navCmd) {
+    const text = navCmd.textContent;
+    navCmd.textContent = '';
+    let i = 0;
+    const typing = setInterval(() => {
+      navCmd.textContent += text[i];
+      i++;
+      if (i === text.length) {
+        clearInterval(typing);
+        // Fade in output after typing
+        document.querySelector('.cmd-output').style.animation = 'fadeIn 0.5s ease';
+      }
+    }, 120);
+  }
+});
+</script>
+
 </body>
 </html>
