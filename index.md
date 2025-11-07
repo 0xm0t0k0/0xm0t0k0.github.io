@@ -18,7 +18,7 @@ title: "Home"
 </nav>
 
 <section id="about" class="section">
- <h2><a href="{{ '/about' | relative_url }}" class="nav-button">About Me</a></h2>
+ <<a href="{{ '/about' | relative_url }}" class="nav-button">About Me</a>
  </section>
 
 <section id="logs" class="section">
