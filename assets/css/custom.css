@@ -45,7 +45,7 @@ body::before {
 @keyframes crtFlicker {
   0% { opacity: 0.97; }
   50% { opacity: 1; }
-  100% { opacity: 0.94; }
+  100% { opacity: 0.98; }
 }
 
 /* ========== CRT SCANLINES ========== */
