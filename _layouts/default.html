@@ -110,90 +110,270 @@ animateCursor();
 })();
 {% endif %}
 </script>
-<!-- Portfolio Script -->
-  <script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const portfolioItems = document.querySelectorAll('.portfolio-item');
-    const loadMoreBtn = document.getElementById('loadMore');
-    const shownCountEl = document.getElementById('shownCount');
-    const totalCountEl = document.getElementById('totalCount');
-    const filterBtns = document.querySelectorAll('.filter-btn');
-    
-    if (!loadMoreBtn || !portfolioItems.length) return;
-    
-    let itemsPerLoad = 12;
-    let currentItems = itemsPerLoad;
-    
-    totalCountEl.textContent = portfolioItems.length;
-    
-    function updateVisibility() {
-      let visibleCount = 0;
-      portfolioItems.forEach((item, index) => {
-        if (!item.classList.contains('hidden-filter')) {
-          if (visibleCount < currentItems) {
-            item.classList.remove('hidden-load');
-            item.style.animationDelay = `${(visibleCount % itemsPerLoad) * 0.05}s`;
-            visibleCount++;
-          } else {
-            item.classList.add('hidden-load');
-          }
-        }
-      });
-      
-      shownCountEl.textContent = visibleCount;
-      
-      const hiddenFilterCount = document.querySelectorAll('.hidden-filter').length;
-      if (visibleCount >= portfolioItems.length - hiddenFilterCount) {
-        loadMoreBtn.classList.add('hidden');
-      } else {
-        loadMoreBtn.classList.remove('hidden');
-      }
+
+<!-- Multi-Stage Encryption Puzzle Script -->
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const unlockBtn = document.getElementById('unlockBtn');
+  const decryptInput = document.getElementById('decryptInput');
+  const errorMessage = document.getElementById('errorMessage');
+  const puzzle = document.getElementById('portfolioPuzzle');
+  const content = document.getElementById('portfolioContent');
+  const currentStageEl = document.getElementById('currentStage');
+  const progressFill = document.getElementById('progressFill');
+  
+  if (!unlockBtn) return;
+  
+  // Stage configuration
+  let currentStage = 1;
+  const stages = {
+    1: {
+      answer: '0xm0t0k0',
+      nextStage: 2,
+      progress: 33
+    },
+    2: {
+      answer: '0xth00rf1nn',
+      nextStage: 3,
+      progress: 66
+    },
+    3: {
+      answer: '4c3ss_gr4nt3d_w3lc0m3_!',
+      nextStage: 'unlock',
+      progress: 100
+    }
+  };
+  
+  // Check if already unlocked
+  if (sessionStorage.getItem('portfolioUnlocked') === 'true') {
+    unlockPortfolio();
+    return;
+  }
+  
+  // Check saved progress
+  const savedStage = sessionStorage.getItem('puzzleStage');
+  if (savedStage) {
+    currentStage = parseInt(savedStage);
+    loadStage(currentStage);
+  }
+  
+  function loadStage(stageNum) {
+    // Hide all stages
+    for (let i = 1; i <= 3; i++) {
+      const stage = document.getElementById(`stage${i}`);
+      if (stage) stage.style.display = 'none';
     }
     
-    updateVisibility();
+    // Show current stage
+    const currentStageDiv = document.getElementById(`stage${stageNum}`);
+    if (currentStageDiv) {
+      currentStageDiv.style.display = 'block';
+    }
     
-    loadMoreBtn.addEventListener('click', () => {
-      currentItems += itemsPerLoad;
-      updateVisibility();
-    });
+    // Update UI
+    currentStageEl.textContent = stageNum;
+    decryptInput.value = '';
+    decryptInput.focus();
     
-    const imageObserver = new IntersectionObserver((entries, observer) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          const img = entry.target;
-          img.src = img.dataset.src;
-          img.classList.remove('lazy');
-          observer.unobserve(img);
+    // Update progress bar
+    const previousProgress = stageNum === 1 ? 0 : stages[stageNum - 1].progress;
+    progressFill.style.width = previousProgress + '%';
+  }
+  
+  function unlockPortfolio() {
+    puzzle.style.display = 'none';
+    content.style.display = 'block';
+    sessionStorage.setItem('portfolioUnlocked', 'true');
+    sessionStorage.removeItem('puzzleStage');
+  }
+  
+  // Terminal typing effect for errors/success
+  function typeMessage(element, message, color, callback) {
+    element.style.color = color;
+    element.textContent = '';
+    let i = 0;
+    const interval = setInterval(() => {
+      if (i < message.length) {
+        element.textContent += message.charAt(i);
+        i++;
+      } else {
+        clearInterval(interval);
+        if (callback) callback();
+      }
+    }, 30);
+  }
+  
+  function checkAnswer() {
+    const userAnswer = decryptInput.value.trim().toLowerCase();
+    const correctAnswer = stages[currentStage].answer.toLowerCase();
+    
+    if (userAnswer === correctAnswer) {
+      // Correct answer
+      typeMessage(errorMessage, `✓ STAGE ${currentStage} COMPLETE - AUTHORIZATION GRANTED`, '#39ff14', () => {
+        // Animate stage completion
+        const stageDiv = document.getElementById(`stage${currentStage}`);
+        if (stageDiv) {
+          stageDiv.classList.add('stage-complete');
         }
-      });
-    });
-    
-    document.querySelectorAll('.portfolio-img.lazy').forEach(img => {
-      imageObserver.observe(img);
-    });
-    
-    filterBtns.forEach(btn => {
-      btn.addEventListener('click', () => {
-        filterBtns.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
         
-        const filter = btn.getAttribute('data-filter');
-        currentItems = itemsPerLoad;
+        // Update progress
+        progressFill.style.width = stages[currentStage].progress + '%';
         
-        portfolioItems.forEach(item => {
-          if (filter === 'all' || item.getAttribute('data-category') === filter) {
-            item.classList.remove('hidden-filter');
+        // Move to next stage or unlock
+        setTimeout(() => {
+          if (stages[currentStage].nextStage === 'unlock') {
+            typeMessage(errorMessage, '✓ ALL STAGES COMPLETE - INITIATING ACCESS...', '#39ff14', () => {
+              setTimeout(unlockPortfolio, 1000);
+            });
           } else {
-            item.classList.add('hidden-filter');
+            currentStage = stages[currentStage].nextStage;
+            sessionStorage.setItem('puzzleStage', currentStage);
+            loadStage(currentStage);
+            errorMessage.textContent = '';
           }
-        });
-        
-        updateVisibility();
+        }, 1500);
       });
+      
+    } else {
+      // Wrong answer with terminal effect
+      typeMessage(errorMessage, '✗ ACCESS DENIED - INVALID CREDENTIALS', '#ff3333');
+      decryptInput.value = '';
+      decryptInput.classList.add('error');
+      
+      // Glitch effect
+      puzzle.style.animation = 'glitchShake 0.3s ease';
+      setTimeout(() => {
+        decryptInput.classList.remove('error');
+        puzzle.style.animation = '';
+        setTimeout(() => errorMessage.textContent = '', 2000);
+      }, 500);
+    }
+  }
+  
+  unlockBtn.addEventListener('click', checkAnswer);
+  
+  decryptInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') {
+      checkAnswer();
+    }
+  });
+  
+  // Typing sound effect simulation (visual)
+  decryptInput.addEventListener('input', () => {
+    decryptInput.style.textShadow = '0 0 10px #39ff14';
+    setTimeout(() => {
+      decryptInput.style.textShadow = '0 0 5px #39ff14';
+    }, 50);
+  });
+  
+  // Optional hint system (click title 5 times)
+  let hintClicks = 0;
+  const puzzleTitle = document.querySelector('.puzzle-title');
+  
+  if (puzzleTitle) {
+    puzzleTitle.addEventListener('click', () => {
+      hintClicks++;
+      if (hintClicks === 5) {
+        const hints = {
+          1: 'HINT: Binary to text converter required',
+          2: 'HINT: Hexadecimal to ASCII decoder needed',
+          3: 'HINT: Base64 decoder - final authentication key'
+        };
+        typeMessage(errorMessage, hints[currentStage], '#39ff14');
+        setTimeout(() => {
+          if (errorMessage.textContent.includes('HINT:')) {
+            errorMessage.textContent = '';
+          }
+        }, 5000);
+        hintClicks = 0;
+      }
+    });
+  }
+});
+</script>
+
+<!-- Portfolio Script -->
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const portfolioItems = document.querySelectorAll('.portfolio-item');
+  const loadMoreBtn = document.getElementById('loadMore');
+  const shownCountEl = document.getElementById('shownCount');
+  const totalCountEl = document.getElementById('totalCount');
+  const filterBtns = document.querySelectorAll('.filter-btn');
+  
+  if (!loadMoreBtn || !portfolioItems.length) return;
+  
+  let itemsPerLoad = 12;
+  let currentItems = itemsPerLoad;
+  
+  totalCountEl.textContent = portfolioItems.length;
+  
+  function updateVisibility() {
+    let visibleCount = 0;
+    portfolioItems.forEach((item, index) => {
+      if (!item.classList.contains('hidden-filter')) {
+        if (visibleCount < currentItems) {
+          item.classList.remove('hidden-load');
+          item.style.animationDelay = `${(visibleCount % itemsPerLoad) * 0.05}s`;
+          visibleCount++;
+        } else {
+          item.classList.add('hidden-load');
+        }
+      }
+    });
+    
+    shownCountEl.textContent = visibleCount;
+    
+    const hiddenFilterCount = document.querySelectorAll('.hidden-filter').length;
+    if (visibleCount >= portfolioItems.length - hiddenFilterCount) {
+      loadMoreBtn.classList.add('hidden');
+    } else {
+      loadMoreBtn.classList.remove('hidden');
+    }
+  }
+  
+  updateVisibility();
+  
+  loadMoreBtn.addEventListener('click', () => {
+    currentItems += itemsPerLoad;
+    updateVisibility();
+  });
+  
+  const imageObserver = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const img = entry.target;
+        img.src = img.dataset.src;
+        img.classList.remove('lazy');
+        observer.unobserve(img);
+      }
     });
   });
-  </script>
-</body>
-</html>
+  
+  document.querySelectorAll('.portfolio-img.lazy').forEach(img => {
+    imageObserver.observe(img);
+  });
+  
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filterBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      
+      const filter = btn.getAttribute('data-filter');
+      currentItems = itemsPerLoad;
+      
+      portfolioItems.forEach(item => {
+        if (filter === 'all' || item.getAttribute('data-category') === filter) {
+          item.classList.remove('hidden-filter');
+        } else {
+          item.classList.add('hidden-filter');
+        }
+      });
+      
+      updateVisibility();
+    });
+  });
+});
+</script>
 </body>
 </html>

@@ -580,3 +580,306 @@ html {
     height: 180px;
   }
 }
+
+/* ========== SECTION SUBTITLES ========== */
+.section-subtitle {
+  text-align: center;
+  opacity: 0.7;
+  font-size: 1rem;
+  margin: -1rem auto 2rem;
+  max-width: 700px;
+}
+
+/* ========== POSTS SECTION EMPHASIS ========== */
+#logs {
+  margin-top: 1rem;
+}
+
+#logs .posts {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+#logs .post {
+  margin: 2rem 0;
+  padding: 2rem;
+  border-left: 3px solid #39ff14;
+  background: rgba(57, 255, 20, 0.03);
+  transition: all 0.3s ease;
+}
+
+#logs .post:hover {
+  background: rgba(57, 255, 20, 0.06);
+  border-left-width: 5px;
+  transform: translateX(5px);
+  box-shadow: 0 0 20px rgba(57, 255, 20, 0.2);
+}
+
+#logs .post h3 {
+  margin-top: 0;
+  font-size: 1.5rem;
+}
+
+#logs .post h3 a {
+  color: #39ff14;
+  text-decoration: none;
+  text-shadow: 0 0 8px #39ff14;
+  transition: all 0.3s ease;
+}
+
+#logs .post h3 a:hover {
+  text-shadow: 0 0 15px #39ff14, 0 0 25px #39ff14;
+}
+
+#logs .post .date {
+  color: #39ff14;
+  opacity: 0.6;
+  font-size: 0.9rem;
+  margin: 0.5rem 0 1rem 0;
+}
+
+#logs .post p {
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* ========== TEXTS & PAPERS SECTION ========== */
+.texts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.text-item {
+  background: rgba(57, 255, 20, 0.02);
+  border: 1px solid rgba(57, 255, 20, 0.3);
+  padding: 2rem;
+  transition: all 0.3s ease;
+}
+
+.text-item:hover {
+  border-color: #39ff14;
+  background: rgba(57, 255, 20, 0.05);
+  box-shadow: 0 0 25px rgba(57, 255, 20, 0.3);
+  transform: translateY(-5px);
+}
+
+.text-item h3 {
+  color: #39ff14;
+  text-shadow: 0 0 8px #39ff14;
+  margin-top: 0;
+}
+
+.text-item .date {
+  color: #39ff14;
+  opacity: 0.6;
+  font-size: 0.85rem;
+  margin: 0.5rem 0 1rem 0;
+}
+
+.text-item p {
+  line-height: 1.6;
+  margin: 1rem 0;
+}
+
+.text-link {
+  color: #39ff14;
+  text-decoration: none;
+  display: inline-block;
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  border: 1px solid #39ff14;
+  transition: all 0.3s ease;
+}
+
+.text-link:hover {
+  background: rgba(57, 255, 20, 0.1);
+  text-shadow: 0 0 10px #39ff14;
+  box-shadow: 0 0 15px rgba(57, 255, 20, 0.4);
+}
+
+/* ========== PORTFOLIO SECTION (SMALLER) ========== */
+#portfolio {
+  margin-top: 4rem;
+}
+
+#portfolio .portfolio-masonry {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+/* ========== ENHANCED HACKER AESTHETICS ========== */
+
+/* CRT screen curvature effect on puzzle */
+.encryption-puzzle {
+  position: relative;
+  border-radius: 8px;
+  box-shadow: 
+    0 0 30px rgba(57, 255, 20, 0.3),
+    inset 0 0 100px rgba(57, 255, 20, 0.05);
+}
+
+/* Scanline effect on puzzle */
+.encryption-puzzle::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.15),
+    rgba(0, 0, 0, 0.15) 1px,
+    transparent 1px,
+    transparent 2px
+  );
+  pointer-events: none;
+  animation: scanlines 8s linear infinite;
+  z-index: 10;
+}
+
+@keyframes scanlines {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(4px); }
+}
+
+/* Glitch shake animation */
+@keyframes glitchShake {
+  0%, 100% { transform: translate(0, 0); }
+  10% { transform: translate(-5px, -2px); }
+  20% { transform: translate(5px, 2px); }
+  30% { transform: translate(-3px, 3px); }
+  40% { transform: translate(3px, -3px); }
+  50% { transform: translate(-2px, 2px); }
+  60% { transform: translate(2px, -2px); }
+  70% { transform: translate(-5px, 1px); }
+  80% { transform: translate(5px, -1px); }
+  90% { transform: translate(-3px, -3px); }
+}
+
+/* Terminal cursor blink in input */
+.decrypt-input {
+  position: relative;
+  caret-color: #39ff14;
+}
+
+.decrypt-input:focus {
+  animation: inputGlow 1.5s ease-in-out infinite;
+}
+
+@keyframes inputGlow {
+  0%, 100% { box-shadow: 0 0 20px rgba(57, 255, 20, 0.5); }
+  50% { box-shadow: 0 0 30px rgba(57, 255, 20, 0.8); }
+}
+
+/* Enhanced encrypted message with matrix feel */
+.encrypted-message {
+  animation: matrixFlicker 0.1s infinite;
+  position: relative;
+}
+
+@keyframes matrixFlicker {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.98; }
+}
+
+/* Add random character glitch effect */
+.encrypted-message::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent 0%, rgba(57, 255, 20, 0.1) 50%, transparent 100%);
+  animation: dataStream 3s linear infinite;
+}
+
+@keyframes dataStream {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+/* Progress bar with data loading effect */
+.progress-fill {
+  position: relative;
+  overflow: visible;
+  animation: progressPulse 1.5s ease-in-out infinite;
+}
+
+.progress-fill::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 20px;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5));
+  animation: progressSweep 1s ease-in-out infinite;
+}
+
+@keyframes progressPulse {
+  0%, 100% { box-shadow: 0 0 10px #39ff14; }
+  50% { box-shadow: 0 0 20px #39ff14, 0 0 30px #39ff14; }
+}
+
+@keyframes progressSweep {
+  0% { opacity: 0; }
+  50% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+/* Button press effect */
+.unlock-btn:active {
+  animation: buttonPress 0.1s ease;
+}
+
+@keyframes buttonPress {
+  0% { transform: scale(1); }
+  50% { transform: scale(0.95); box-shadow: 0 0 15px rgba(57, 255, 20, 0.8); }
+  100% { transform: scale(1); }
+}
+
+/* Error input shake */
+.decrypt-input.error {
+  animation: inputError 0.3s ease;
+  border-color: #ff3333;
+  box-shadow: 0 0 20px rgba(255, 51, 51, 0.5);
+}
+
+@keyframes inputError {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-10px); }
+  75% { transform: translateX(10px); }
+}
+
+/* Stage title glitch effect on hover */
+.stage-title:hover {
+  animation: titleGlitch 0.3s ease;
+}
+
+@keyframes titleGlitch {
+  0%, 100% { transform: translate(0, 0); text-shadow: 0 0 10px #39ff14; }
+  25% { transform: translate(-2px, 2px); text-shadow: -2px 0 #39ff14, 2px 0 #ff3333; }
+  50% { transform: translate(2px, -2px); text-shadow: 2px 0 #39ff14, -2px 0 #00ffff; }
+  75% { transform: translate(-2px, -2px); text-shadow: -2px 0 #ff3333, 2px 0 #39ff14; }
+}
+
+/* ASCII art subtle animation */
+.ascii-decoration pre {
+  animation: asciiPulse 4s ease-in-out infinite;
+}
+
+@keyframes asciiPulse {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 0.5; }
+}
+
+/* Loading dots animation for success messages */
+@keyframes loadingDots {
+  0%, 20% { content: '.'; }
+  40% { content: '..'; }
+  60%, 100% { content: '...'; }
+}
