@@ -17,7 +17,7 @@ body {
   overflow-x: hidden;
   margin: 0;
   text-shadow: 0 0 4px #39ff14, 0 0 10px #39ff14;
-  animation: flicker 15s infinite;
+  animation: flicker 10s infinite;
   position: relative;
 }
 
@@ -39,7 +39,7 @@ body::before {
   );
   pointer-events: none;
   z-index: 1000;
-  animation: crtFlicker 0.15s infinite;
+  animation: crtFlicker 0.10s infinite;
 }
 
 @keyframes crtFlicker {
