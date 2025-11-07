@@ -34,7 +34,7 @@ title: "Home"
   <div id="portfolioPuzzle" class="encryption-puzzle">
     <div class="puzzle-container">
       <h3 class="puzzle-title">// ACCESS RESTRICTED //</h3>
-      <p class="puzzle-hint">Solve the little ciphers to unlock the portfolio. U may want to "hack" the website for an easy answer or use an online decoder 0.< </p>
+      <p class="puzzle-hint">Solve the little ciphers to unlock the portfolio. U may want to code your own decoding or just use an online decoder 0.< </p>
       <p class="stage-counter">Stage <span id="currentStage">1</span> of 3</p>
       
       <!-- Stage 1: Binary -->
@@ -47,7 +47,7 @@ title: "Home"
         <p class="cipher-hint">Cipher: <span class="cipher-type">Binary → ASCII</span></p>
       </div>
       
-      <!-- Stage 2: Hex (hidden initially) -->
+      <!-- Stage 2: Hex -->
       <div id="stage2" class="puzzle-stage" style="display: none;">
         <h4 class="stage-title">HEXADECIMAL DECRYPTION</h4>
         <pre class="encrypted-message">
@@ -56,7 +56,7 @@ title: "Home"
         <p class="cipher-hint">Cipher: <span class="cipher-type">Hexadecimal → ASCII</span></p>
       </div>
       
-      <!-- Stage 3: Base64 (hidden initially) -->
+      <!-- Stage 3: Base64 -->
       <div id="stage3" class="puzzle-stage" style="display: none;">
         <h4 class="stage-title">BASE64 DECRYPTION</h4>
         <pre class="encrypted-message">
