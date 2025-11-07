@@ -39,13 +39,13 @@ body::before {
   );
   pointer-events: none;
   z-index: 1000;
-  animation: crtFlicker 0.10s infinite;
+  animation: crtFlicker 0.15s infinite;
 }
 
 @keyframes crtFlicker {
   0% { opacity: 0.97; }
   50% { opacity: 1; }
-  100% { opacity: 0.92; }
+  100% { opacity: 0.94; }
 }
 
 /* ========== CRT SCANLINES ========== */
@@ -176,7 +176,7 @@ body:hover .grid-highlight {
   mix-blend-mode: multiply;      /* blends with bg, reduces glow intensity */
   transition: top var(--scanline-transition), opacity var(--scanline-transition);
   opacity: 0.98;                 /* overall dimming */
-  filter: grayscale(0.25) blur(0.02px); /* slight desaturate + micro blur */
+  filter: grayscale(0.75) blur(0.02px); /* slight desaturate + micro blur */
 }
 
 /* Y axis */
