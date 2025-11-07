@@ -17,7 +17,7 @@ body {
   overflow-x: hidden;
   margin: 0;
   text-shadow: 0 0 4px #39ff14, 0 0 10px #39ff14;
-  animation: flicker 2.5s infinite;
+  animation: flicker 15s infinite;
   position: relative;
 }
 
