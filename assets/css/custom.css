@@ -532,7 +532,7 @@ li a:hover {
 
 
 .portfolio-img {
-  object-fit: cover;
+  object-fit: scale-down;
   object-position: 100% 100%;
   transition: transform 0.5s ease, filter 0.3s ease;
   filter: grayscale(30%) brightness(0.85);
