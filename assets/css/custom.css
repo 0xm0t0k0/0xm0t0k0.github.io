@@ -576,7 +576,7 @@ li a:hover {
   max-height: none !important;
   min-width: 100% !important;
   min-height: 100% !important;
-  object-fit: cover !important;
+  object-fit: fill !important;
   object-position: center !important;
   display: block !important;
   margin: 0 !important;
