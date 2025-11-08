@@ -678,5 +678,180 @@ Type '<span style="color: #00ffff;">help</span>' to see available commands or '<
   });
 })();
 </script>
+
+<!-- Image Lightbox Modal -->
+<div id="imageLightbox" class="lightbox">
+  <div class="lightbox-backdrop"></div>
+  <div class="lightbox-content">
+    <button class="lightbox-close" aria-label="Close">&times;</button>
+    <button class="lightbox-prev" aria-label="Previous">‹</button>
+    <button class="lightbox-next" aria-label="Next">›</button>
+    <div class="lightbox-image-container">
+      <img id="lightboxImage" src="" alt="" class="lightbox-image">
+      <div class="lightbox-info">
+        <h3 id="lightboxTitle"></h3>
+        <p id="lightboxYear"></p>
+      </div>
+    </div>
+    <div class="lightbox-counter">
+      <span id="lightboxCounter"></span>
+    </div>
+  </div>
+</div>
+
+<!-- Image Lightbox Script -->
+<script>
+(function() {
+  'use strict';
+  
+  document.addEventListener('DOMContentLoaded', () => {
+    const lightbox = document.getElementById('imageLightbox');
+    const lightboxImage = document.getElementById('lightboxImage');
+    const lightboxTitle = document.getElementById('lightboxTitle');
+    const lightboxYear = document.getElementById('lightboxYear');
+    const lightboxCounter = document.getElementById('lightboxCounter');
+    const closeBtn = document.querySelector('.lightbox-close');
+    const prevBtn = document.querySelector('.lightbox-prev');
+    const nextBtn = document.querySelector('.lightbox-next');
+    
+    if (!lightbox) return;
+    
+    let currentIndex = 0;
+    let images = [];
+    
+    // Initialize portfolio images
+    function initializeLightbox() {
+      const portfolioItems = document.querySelectorAll('.portfolio-item:not(.hidden-filter):not(.hidden-load)');
+      
+      images = Array.from(portfolioItems).map(item => {
+        const img = item.querySelector('.portfolio-img');
+        const title = item.querySelector('.overlay-content h4')?.textContent || 'Untitled';
+        const year = item.querySelector('.overlay-content .year')?.textContent || '';
+        
+        return {
+          src: img.dataset.src || img.src,
+          title: title,
+          year: year,
+          element: item
+        };
+      });
+      
+      // Add click handlers to portfolio images
+      portfolioItems.forEach((item, index) => {
+        const imgWrapper = item.querySelector('.portfolio-img-wrapper');
+        if (imgWrapper) {
+          imgWrapper.style.cursor = 'pointer';
+          imgWrapper.addEventListener('click', (e) => {
+            e.preventDefault();
+            openLightbox(index);
+          });
+        }
+      });
+    }
+    
+    // Open lightbox
+    function openLightbox(index) {
+      if (images.length === 0) return;
+      
+      currentIndex = index;
+      updateLightbox();
+      lightbox.classList.add('active');
+      document.body.style.overflow = 'hidden';
+      
+      // Update navigation button visibility
+      if (images.length <= 1) {
+        prevBtn.classList.add('hidden');
+        nextBtn.classList.add('hidden');
+      } else {
+        prevBtn.classList.remove('hidden');
+        nextBtn.classList.remove('hidden');
+      }
+    }
+    
+    // Close lightbox
+    function closeLightbox() {
+      lightbox.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+    
+    // Update lightbox content
+    function updateLightbox() {
+      const currentImage = images[currentIndex];
+      
+      lightboxImage.classList.add('loading');
+      lightboxImage.src = currentImage.src;
+      lightboxImage.alt = currentImage.title;
+      
+      lightboxImage.onload = () => {
+        lightboxImage.classList.remove('loading');
+      };
+      
+      
+    }
+    
+    // Navigate to previous image
+    function showPrevious() {
+      currentIndex = (currentIndex - 1 + images.length) % images.length;
+      updateLightbox();
+    }
+    
+    // Navigate to next image
+    function showNext() {
+      currentIndex = (currentIndex + 1) % images.length;
+      updateLightbox();
+    }
+    
+    // Event listeners
+    closeBtn.addEventListener('click', closeLightbox);
+    prevBtn.addEventListener('click', showPrevious);
+    nextBtn.addEventListener('click', showNext);
+    
+    // Close on backdrop click
+    lightbox.querySelector('.lightbox-backdrop').addEventListener('click', closeLightbox);
+    
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+      if (!lightbox.classList.contains('active')) return;
+      
+      switch(e.key) {
+        case 'Escape':
+          closeLightbox();
+          break;
+        case 'ArrowLeft':
+          showPrevious();
+          break;
+        case 'ArrowRight':
+          showNext();
+          break;
+      }
+    });
+    
+    // Prevent closing when clicking on image
+    lightboxImage.addEventListener('click', (e) => {
+      e.stopPropagation();
+    });
+    
+    // Re-initialize when filters change
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        setTimeout(initializeLightbox, 100);
+      });
+    });
+    
+    // Re-initialize when load more is clicked
+    const loadMoreBtn = document.getElementById('loadMore');
+    if (loadMoreBtn) {
+      loadMoreBtn.addEventListener('click', () => {
+        setTimeout(initializeLightbox, 100);
+      });
+    }
+    
+    // Initialize on page load
+    initializeLightbox();
+  });
+})();
+</script>
+
 </body>
 </html>
