@@ -503,7 +503,7 @@ li a:hover {
   box-shadow: 0 0 15px rgba(57, 255, 20, 0.4);
 }
 
-/* ========== COMPLETE PORTFOLIO RESET ========== */
+/* ========== COMPLETE PORTFOLIO ========== */
 .portfolio-masonry {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
@@ -521,7 +521,6 @@ li a:hover {
   transform: translateY(20px);
   animation: fadeInUp 0.5s ease forwards;
   position: relative;
-  /* CRITICAL - REMOVE ALL PADDING */
   padding: 0 !important;
   margin: 0 !important;
 }
@@ -577,7 +576,7 @@ li a:hover {
   min-width: 100% !important;
   min-height: 100% !important;
   object-fit: fill !important;
-  object-position: center !important;
+  object-position: cover !important;
   display: block !important;
   margin: 0 !important;
   padding: 0 !important;
