@@ -563,25 +563,10 @@ li a:hover {
   box-sizing: border-box !important;
 }
 
+
 .portfolio-img {
-  position: absolute !important;
-  top: 0 !important;
-  left: 0 !important;
-  right: 0 !important;
-  bottom: 0 !important;
-  width: 100% !important;
-  height: 100% !important;
-  max-width: none !important;
-  max-height: none !important;
-  min-width: 100% !important;
-  min-height: 100% !important;
-  object-fit: fill !important;
-  object-position: cover !important;
-  display: block !important;
-  margin: 0 !important;
-  padding: 0 !important;
-  border: none !important;
-  outline: none !important;
+  object-fit: fill;
+  object-position: center;
   transition: transform 0.5s ease, filter 0.3s ease;
   filter: grayscale(30%) brightness(0.85);
 }
