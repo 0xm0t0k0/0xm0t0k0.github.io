@@ -519,36 +519,29 @@ li a:hover {
   height: 240px;
 }
 
-/* ========== IMAGE WRAPPER ========== */
+/* ========== IMAGE WRAPPER - GUARANTEED FILL ========== */
 .portfolio-img-wrapper {
   position: relative;
   width: 100%;
+  height: 250px;
   overflow: hidden;
   background: #000;
-  display: block;
-}
-
-/* Set explicit heights */
-.portfolio-item:nth-child(3n+1) .portfolio-img-wrapper {
-  height: 200px;
-}
-
-.portfolio-item:nth-child(3n+2) .portfolio-img-wrapper {
-  height: 280px;
-}
-
-.portfolio-item:nth-child(3n) .portfolio-img-wrapper {
-  height: 240px;
 }
 
 .portfolio-img {
-  width: 100%;
-  height: 100%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  max-width: none;
+  transform: translate(-50%, -50%);
   object-fit: cover;
   object-position: center;
   transition: transform 0.5s ease, filter 0.3s ease;
   filter: grayscale(30%) brightness(0.85);
-  display: block;
 }
 
 .portfolio-img.lazy {
@@ -566,16 +559,20 @@ li a:hover {
 }
 
 .portfolio-item:hover .portfolio-img {
-  transform: scale(1.1);
+  transform: translate(-50%, -50%) scale(1.1);
   filter: grayscale(0%) brightness(1.1);
 }
 
-/* Mobile adjustments */
+/* Varied heights for visual interest */
+.portfolio-item:nth-child(5n+1) .portfolio-img-wrapper { height: 220px; }
+.portfolio-item:nth-child(5n+2) .portfolio-img-wrapper { height: 280px; }
+.portfolio-item:nth-child(5n+3) .portfolio-img-wrapper { height: 240px; }
+.portfolio-item:nth-child(5n+4) .portfolio-img-wrapper { height: 300px; }
+.portfolio-item:nth-child(5n) .portfolio-img-wrapper { height: 260px; }
+
 @media (max-width: 768px) {
-  .portfolio-item:nth-child(3n+1) .portfolio-img-wrapper,
-  .portfolio-item:nth-child(3n+2) .portfolio-img-wrapper,
-  .portfolio-item:nth-child(3n) .portfolio-img-wrapper {
-    height: 200px;
+  .portfolio-img-wrapper {
+    height: 200px !important;
   }
 }
 
