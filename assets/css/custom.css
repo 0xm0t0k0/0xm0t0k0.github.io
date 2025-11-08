@@ -548,7 +548,7 @@ li a:hover {
 .portfolio-img-wrapper {
   position: relative;
   width: 100% !important;
-  height: 250px !important;
+  height: auto !important;
   overflow: hidden ;
   background: #000 t;
   display: block ;
