@@ -2456,3 +2456,13 @@ main.full-article-content th {
   color: #39ff14 !important;
   text-shadow: 0 0 5px #39ff14 !important;
 }
+
+.encrypted-message {
+  overflow-x: auto;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE/Edge */
+}
+
+.encrypted-message::-webkit-scrollbar {
+  display: none; /* Chrome/Safari */
+}
