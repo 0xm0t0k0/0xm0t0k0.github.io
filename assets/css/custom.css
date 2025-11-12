@@ -2180,3 +2180,23 @@ html {
     font-size: 0.8rem;
   }
 }
+
+/* ========== FIX POST LIST PREVIEWS ========== */
+/* Keep previews in green (they're short snippets) */
+#logs .post p,
+.posts .post p {
+  color: #39ff14;
+  text-shadow: 0 0 5px #39ff14;
+  line-height: 1.6;
+}
+
+/* But full post content should be gray for readability */
+/* This targets the actual post content page */
+article.post p,
+.post-content p,
+.post-full p,
+main .post p {
+  color: #e8e8e8;
+  text-shadow: none;
+  line-height: 1.8;
+}
