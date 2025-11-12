@@ -925,5 +925,31 @@ Type '<span style="color: #00ffff;">help</span>' to see available commands or '<
   }, 1000);
 })();
 </script>
+
+<!-- Readability for Full Posts -->
+<script>
+(function() {
+  'use strict';
+  
+  document.addEventListener('DOMContentLoaded', () => {
+    // Check if we're on a full post/article page (NOT the index/list page)
+    const isListPage = document.querySelector('.posts') || 
+                       document.querySelector('#logs') || 
+                       document.querySelector('.section');
+    
+    const mainElement = document.querySelector('main');
+    
+    if (mainElement && !isListPage) {
+      // We're on a full post page - apply gray text
+      mainElement.classList.add('full-article-content');
+      console.log('[Readability] Full article mode enabled');
+    } else {
+      console.log('[Readability] List/preview mode - keeping green');
+    }
+  });
+})();
+</script>
+
+
 </body>
 </html>

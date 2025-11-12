@@ -402,7 +402,7 @@ li a:hover {
 
 .content-box p,
 .content-box li {
-  color: #e8e8e8;
+  color: #39ff14;
   line-height: 1.8;
   text-shadow: none;
   font-size: 1.05rem;
@@ -1027,7 +1027,7 @@ li a:hover {
 }
 
 .text-item p {
-  color: #e8e8e8;
+  color: #39ff14;
   line-height: 1.7;
   text-shadow: none;
   margin: 1rem 0;
@@ -2365,4 +2365,94 @@ main img {
 
 main img:hover {
   box-shadow: 0 0 30px rgba(57, 255, 20, 0.5);
+}
+
+/* ========== PROFESSIONAL READABILITY FOR FULL ARTICLES ========== */
+
+/* Target ONLY pages with the full-article-content class */
+main.full-article-content p,
+main.full-article-content li,
+main.full-article-content td {
+  color: #e8e8e8 !important;
+  text-shadow: none !important;
+  line-height: 1.8 !important;
+  font-size: 1.05rem !important;
+}
+
+/* Keep headers green */
+main.full-article-content h1,
+main.full-article-content h2,
+main.full-article-content h3,
+main.full-article-content h4 {
+  color: #39ff14 !important;
+  text-shadow: 0 0 8px #39ff14 !important;
+}
+
+/* Keep links green */
+main.full-article-content a {
+  color: #39ff14 !important;
+  text-shadow: 0 0 5px #39ff14 !important;
+  text-decoration: underline;
+  text-decoration-color: rgba(57, 255, 20, 0.3);
+}
+
+main.full-article-content a:hover {
+  text-decoration-color: #39ff14;
+  text-shadow: 0 0 10px #39ff14, 0 0 20px #39ff14 !important;
+}
+
+/* Keep strong green */
+main.full-article-content strong,
+main.full-article-content b {
+  color: #39ff14 !important;
+  text-shadow: 0 0 3px #39ff14 !important;
+}
+
+/* Keep emphasis cyan */
+main.full-article-content em,
+main.full-article-content i {
+  color: #00ff88 !important;
+}
+
+/* Code blocks */
+main.full-article-content code {
+  background: rgba(0, 0, 0, 0.6);
+  color: #00ff88;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  border: 1px solid rgba(57, 255, 20, 0.2);
+}
+
+main.full-article-content pre {
+  background: rgba(0, 0, 0, 0.8);
+  color: #39ff14;
+  padding: 1.5rem;
+  border-left: 3px solid #39ff14;
+  overflow-x: auto;
+}
+
+main.full-article-content pre code {
+  background: none;
+  padding: 0;
+  border: none;
+}
+
+/* Blockquotes */
+main.full-article-content blockquote {
+  border-left: 4px solid #39ff14;
+  padding: 1rem 1.5rem;
+  background: rgba(57, 255, 20, 0.05);
+  color: #b8b8b8 !important;
+  font-style: italic;
+}
+
+/* Tables */
+main.full-article-content table {
+  border: 1px solid rgba(57, 255, 20, 0.3);
+}
+
+main.full-article-content th {
+  background: rgba(57, 255, 20, 0.1);
+  color: #39ff14 !important;
+  text-shadow: 0 0 5px #39ff14 !important;
 }
