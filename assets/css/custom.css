@@ -1240,6 +1240,29 @@ li a:hover {
   transform: scale(0.98);
   box-shadow: 0 0 15px rgba(57, 255, 20, 0.8);
 }
+/* ========== ASCII DECORATION - OVERRIDE MAIN PRE STYLES ========== */
+.ascii-decoration pre {
+  background: none !important;
+  color: #39ff14 !important;
+  padding: 0 !important;
+  border: none !important;
+  border-left: none !important;
+  border-radius: 0 !important;
+  overflow-x: visible !important;
+  margin: 3rem 0 !important;
+  line-height: 1.2 !important;
+  box-shadow: none !important;
+  opacity: 0.4;
+  font-size: 0.7rem;
+  text-shadow: 0 0 5px #39ff14;
+  animation: asciiPulse 4s ease-in-out infinite;
+  transition: opacity 0.3s ease;
+}
+
+.ascii-decoration pre:hover {
+  opacity: 0.7;
+  
+}
 
 .ascii-decoration {
   margin-top: 3rem;
@@ -1248,21 +1271,18 @@ li a:hover {
   transition: opacity 0.3s ease;
 }
 
-.ascii-decoration:hover {
-  opacity: 0.7;
-}
-
-.ascii-decoration pre {
-  color: #39ff14;
-  text-shadow: 0 0 5px #39ff14;
-  line-height: 1.2;
-  animation: asciiPulse 4s ease-in-out infinite;
-}
-
 @keyframes asciiPulse {
   0%, 100% { opacity: 0.3; }
   50% { opacity: 0.5; }
 }
+
+
+
+
+
+
+
+
 
 .terminal-container::after {
   content: '';
