@@ -2181,22 +2181,188 @@ html {
   }
 }
 
-/* ========== FIX POST LIST PREVIEWS ========== */
-/* Keep previews in green (they're short snippets) */
+/* ========== FINAL FIX: GRAY TEXT ONLY ON FULL POST PAGES ========== */
+
+/* Remove the old conflicting rules from the rewritten CSS */
+/* Add this at the BOTTOM of your CSS file to override everything */
+
+/* Keep ALL text green by default (for previews, lists, etc.) */
+main p,
+main li,
+main td,
+.post p,
+.posts .post p,
 #logs .post p,
-.posts .post p {
-  color: #39ff14;
-  text-shadow: 0 0 5px #39ff14;
+.text-item p {
+  color: #39ff14 !important;
+  text-shadow: 0 0 5px #39ff14 !important;
+  line-height: 1.6;
+  font-size: 1rem;
+}
+
+/* BUT! When main ONLY contains the post content (no .posts or #logs wrapper) */
+/* This targets individual post pages */
+main > p,
+main > ul > li,
+main > ol > li,
+main > table td {
+  color: #e8e8e8 !important;
+  text-shadow: none !important;
+  line-height: 1.8;
+  font-size: 1.05rem;
+}
+
+/* Target paragraphs that are direct children or inside divs (but not .posts) */
+main > div:not(.posts):not(#logs) p,
+main > div:not(.posts):not(#logs) li,
+main > div:not(.posts):not(#logs) td {
+  color: #e8e8e8 !important;
+  text-shadow: none !important;
+  line-height: 1.8;
+  font-size: 1.05rem;
+}
+
+/* Ensure preview sections stay green */
+main .posts p,
+main .posts li,
+main #logs p,
+main #logs li,
+main .text-item p,
+main .section p {
+  color: #39ff14 !important;
+  text-shadow: 0 0 5px #39ff14 !important;
   line-height: 1.6;
 }
 
-/* But full post content should be gray for readability */
-/* This targets the actual post content page */
-article.post p,
-.post-content p,
-.post-full p,
-main .post p {
-  color: #e8e8e8;
-  text-shadow: none;
-  line-height: 1.8;
+/* Keep headers green everywhere */
+main h1,
+main h2,
+main h3,
+main h4,
+main h5,
+main h6 {
+  color: #39ff14 !important;
+  text-shadow: 0 0 8px #39ff14 !important;
+}
+
+/* Keep links green */
+main a {
+  color: #39ff14 !important;
+  text-shadow: 0 0 5px #39ff14 !important;
+}
+
+/* Keep strong/emphasis styled */
+main strong,
+main b {
+  color: #39ff14 !important;
+  text-shadow: 0 0 3px #39ff14 !important;
+  font-weight: bold;
+}
+
+main em,
+main i {
+  color: #00ff88 !important;
+  font-style: italic;
+}
+
+/* Code blocks - readable in full posts */
+main code {
+  background: rgba(0, 0, 0, 0.6);
+  color: #00ff88;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  border: 1px solid rgba(57, 255, 20, 0.2);
+  font-family: "JetBrains Mono", "Courier New", monospace;
+  font-size: 0.95em;
+}
+
+main pre {
+  background: rgba(0, 0, 0, 0.8);
+  color: #39ff14;
+  padding: 1.5rem;
+  border-left: 3px solid #39ff14;
+  border-radius: 4px;
+  overflow-x: auto;
+  margin: 1.5rem 0;
+  line-height: 1.6;
+  box-shadow: 0 0 20px rgba(57, 255, 20, 0.1);
+}
+
+main pre code {
+  background: none;
+  padding: 0;
+  border: none;
+  color: inherit;
+  font-size: 0.9rem;
+}
+
+/* Blockquotes in full posts */
+main blockquote {
+  border-left: 4px solid #39ff14;
+  padding: 1rem 1.5rem;
+  margin: 1.5rem 0;
+  background: rgba(57, 255, 20, 0.05);
+  color: #b8b8b8 !important;
+  font-style: italic;
+}
+
+/* Lists in full posts */
+main > ul,
+main > ol,
+main > div:not(.posts):not(#logs) ul,
+main > div:not(.posts):not(#logs) ol {
+  padding-left: 2rem;
+  margin: 1rem 0;
+}
+
+main > ul li::before,
+main > div:not(.posts):not(#logs) ul li::before {
+  content: '▶';
+  position: absolute;
+  left: 0;
+  color: #39ff14;
+  font-size: 0.8em;
+}
+
+/* Tables in full posts */
+main table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(57, 255, 20, 0.3);
+}
+
+main th {
+  background: rgba(57, 255, 20, 0.1);
+  color: #39ff14;
+  text-shadow: 0 0 5px #39ff14;
+  padding: 0.75rem;
+  text-align: left;
+  border-bottom: 2px solid #39ff14;
+  font-weight: bold;
+}
+
+main td {
+  padding: 0.75rem;
+  border-bottom: 1px solid rgba(57, 255, 20, 0.2);
+}
+
+main tr:hover {
+  background: rgba(57, 255, 20, 0.05);
+}
+
+/* Images in full posts */
+main img {
+  max-width: 100%;
+  height: auto;
+  border: 2px solid #39ff14;
+  border-radius: 4px;
+  margin: 1.5rem 0;
+  box-shadow: 0 0 20px rgba(57, 255, 20, 0.3);
+  display: block;
+}
+
+main img:hover {
+  box-shadow: 0 0 30px rgba(57, 255, 20, 0.5);
 }
