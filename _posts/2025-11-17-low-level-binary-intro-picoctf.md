@@ -405,7 +405,7 @@ So use ```info registers eip + cyclic -l``` -> to get the padding
 Then we have to find a way to input the address without the terminal interpreting our input as characters.
 If we try to just input our address after 44 bytes of padding into the challs interactive terminal, we won't find any luck. So we need to make a command that sends raw bytes:
 ```python
-python3 -c "import sys; sys.stdout.buffer.write(b"PADDING\xf6\x91\x04\x08\x0a") | nc saturn.picoctf.net port
+python3 -c "import sys; sys.stdout.buffer.write(b'PADDING\xf6\x91\x04\x08\x0a')" | nc saturn.picoctf.net port
 ```
 
 when you hit enter and get the flag, remember that feeling **for me it's the best thing**
@@ -413,5 +413,4 @@ when you hit enter and get the flag, remember that feeling **for me it's the bes
 understanding buffer overflows deeply and intuitively will help you graduate into even more interesting and difficult techniques, something i am also trying to self-learn, and it is so worth it when you finally get it and understand what's going on.
 
 as always, 0xm0t0k0 signing out 0.<
-
 
