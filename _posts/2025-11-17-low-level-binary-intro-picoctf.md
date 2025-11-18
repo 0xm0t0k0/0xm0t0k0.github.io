@@ -67,6 +67,8 @@ int main() {
   void (*foo)(void) = (void (*)())val;
   foo();
 }
+```
+
 ```assembly
 So we understand that in order to get the flag we need to trigger the win() function.
 All we need to do is input the functions address and the programm will jump right to it.
