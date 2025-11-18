@@ -2650,3 +2650,45 @@ pre[class*="language-"] {
 .nav-output a:hover {
   text-shadow: 0 0 5px #39ff14; /* Reduced from 10px */
 }
+
+/* ========== ASSEMBLY SYNTAX HIGHLIGHTING ========== */
+
+/* Assembly-specific tokens */
+.language-nasm .token.register,
+.language-asm .token.register,
+.language-x86asm .token.register {
+  color: #ff6b9d !important; /* Pink for registers (rax, rbx, etc.) */
+  font-weight: bold;
+}
+
+.language-nasm .token.instruction,
+.language-asm .token.instruction,
+.language-x86asm .token.instruction {
+  color: #00ddff !important; /* Light blue for instructions (mov, add, etc.) */
+}
+
+.language-nasm .token.directive,
+.language-asm .token.directive,
+.language-x86asm .token.directive {
+  color: #ffd700 !important; /* Gold for directives (.section, .globl) */
+}
+
+.language-nasm .token.number,
+.language-asm .token.number,
+.language-x86asm .token.number {
+  color: #39ff14 !important; /* Bright green for numbers/addresses */
+}
+
+.language-nasm .token.label,
+.language-asm .token.label,
+.language-x86asm .token.label {
+  color: #00ff88 !important; /* Cyan for labels */
+  font-weight: bold;
+}
+
+.language-nasm .token.comment,
+.language-asm .token.comment,
+.language-x86asm .token.comment {
+  color: #6a9955 !important; /* Green for comments */
+  font-style: italic;
+}
