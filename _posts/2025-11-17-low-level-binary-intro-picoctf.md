@@ -69,7 +69,7 @@ int main() {
 }
 ```
 
-```assembly
+```asm
 So we understand that in order to get the flag we need to trigger the win() function.
 All we need to do is input the functions address and the programm will jump right to it.
 All we need to do is load the binary into pwndbg, disassemble win function, and :
@@ -87,7 +87,7 @@ Dump of assembler code for function win:
    0x00000000004012c9 <+43>:	mov    QWORD PTR [rbp-0x10],rax
    0x00000000004012cd <+47>:	cmp    QWORD PTR [rbp-0x10],0x0
    ...
-   ... #here is the rest of the assembly that we do not care abt
+   ... #here is the rest of the asm that we do not care abt
 ```
 Okay, we have the address of the func its the very first ```asm 0x000000000040129e ``` 
 We input the address into the program and voilà : 
@@ -229,9 +229,9 @@ int main(){
 Here I discovered two approaches: one (more nerdy and prone to error) and one that uses something called DeBruijn sequence.
 
 What we need to do is find out exactly how many "padding" we need to insert into our vulnerable input[] array. First though would be 17, and that does corrupt the buffer but it does not alter the value stored in the num variable's memory location, it's like breaking a glass into a house but only checking the entry hall.My initial approach was to see exactly where in memory resided input and num and then calculate how many *steps* in our case **bytes** i would need to access num's memory location. 
-Here is the disassembly:
+Here is the disasm:
 
-```assembly
+```asm
 Dump of assembler code for function main:
    0x0000000000401236 <+0>:    endbr64
    0x000000000040123a <+4>:    push   rbp
@@ -315,7 +315,7 @@ as you can see win() is never called and is not after a vulnerable function, mea
 pwndbg> disass win
 ```
 
-```assembly
+```asm
 Dump of assembler code for function win:
    0x080491f6 <+0>:	endbr32                #This is what interests us
    0x080491fa <+4>:	push   ebp
@@ -342,7 +342,7 @@ Please enter your string:
 aaaabaaacaaadaaaeaaafaaagaaahaaaiaaajaaakaaalaaamaaanaaaoaaapaaaqaaaraaasaaataaauaaavaaawaaaxaaayaaazaabbaabcaabdaabeaabfaabgaabhaabiaabjaabkaablaabmaabnaaboaabpaabqaabraabsaabtaabuaabvaabwaabxaabyaab
 Okay, time to return... Fingers Crossed... Jumping to 0x6161616c
 ```
-```assembly
+```asm
 Program received signal SIGSEGV, Segmentation fault.
 0x6161616c in ?? ()
 LEGEND: STACK | HEAP | CODE | DATA | WX | RODATA
