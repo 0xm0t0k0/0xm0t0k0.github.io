@@ -241,10 +241,10 @@ Dump of assembler code for function main:
    0x0000000000401249 <+19>:    lea    rdi,[rip+0xdb4]        # 0x402004
    0x0000000000401250 <+26>:    mov    eax,0x0
    0x0000000000401255 <+31>:    call   0x4010f0 <printf@plt>
-   0x000000000040125a <+36>:    mov    rax,QWORD PTR [rip+0x2e0f]        # 0x404070 <stdout@@GLIBC_2.2.5>
+   0x000000000040125a <+36>:    mov    rax,QWORD PTR [rip+0x2e0f]        # 0x404070 
    0x0000000000401261 <+43>:    mov    rdi,rax
    0x0000000000401264 <+46>:    call   0x401120 <fflush@plt>
-   0x0000000000401269 <+51>:    lea    rax,[rbp-0x20] #here wesee that input[] buffer is at 0x20
+   0x0000000000401269 <+51>:    lea    rax,[rbp-0x20] ;here we see that input[] buffer is at 0x20
    0x000000000040126d <+55>:    mov    rdi,rax
    0x0000000000401270 <+58>:    mov    eax,0x0
    0x0000000000401275 <+63>:    call   0x401110 <gets@plt>
@@ -255,7 +255,7 @@ Dump of assembler code for function main:
    0x0000000000401289 <+83>:    lea    rdi,[rip+0xd85]        # 0x402015
    0x0000000000401290 <+90>:    mov    eax,0x0
    0x0000000000401295 <+95>:    call   0x4010f0 <printf@plt>
-   0x000000000040129a <+100>:    mov    rax,QWORD PTR [rip+0x2dcf]        # 0x404070 <stdout@@GLIBC_2.2.5>
+   0x000000000040129a <+100>:    mov    rax,QWORD PTR [rip+0x2dcf]        # 0x404070
 ```
 so 0x20 - 0x8 = 0x18 = 24 bytes of padding then all we need is to write value of 65 in hex and once again 
 we have a flag.
@@ -317,7 +317,7 @@ pwndbg> disass win
 
 ```asm
 Dump of assembler code for function win:
-   0x080491f6 <+0>:	endbr32                #This is what interests us
+   0x080491f6 <+0>:	endbr32                ;This is what interests us
    0x080491fa <+4>:	push   ebp
    0x080491fb <+5>:	mov    ebp,esp
    0x080491fd <+7>:	push   ebx
@@ -387,7 +387,7 @@ Invalid address 0x6161616c
    6 0x61616172 None
    7 0x61616173 None
 ─────────────────────────────────────────────────────────────────────────────────────────────────────────
-#we see that it crashed which is what we wanted₍^ >⩊< ^₎Ⳋ now we just have to look at the instruction pointer register
+;we see that it crashed which is what we wanted₍^ >⩊< ^₎Ⳋ now we just have to look at the instruction pointer register
 ```
 ```bash
 pwndbg> info registers eip
