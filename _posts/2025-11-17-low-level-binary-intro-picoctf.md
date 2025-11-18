@@ -13,8 +13,8 @@ tags:
 # 0xm0t0k0
 
 WELCOME :D
-I've been busy! Busy solving buffer overflows in picoCTF's Low Level Binary Intro playlist and reading thelegendary paper **Smashing The Stack For Fun And Profit**. 
-Buffer overflows are a foundational topic that once you understand are like the scales on the violin, painful to play at first and mostly bad executed at first, but then you can advance into real art or in our case **more advanced memory exploitation topics** :3 Soo, without further ado, let's go to the first challenge in the **Binary Exploitation** list, called **Picker IV**.
+I've been busy! Busy solving buffer overflows in picoCTF's Low Level Binary Intro playlist and reading the legendary paper **Smashing The Stack For Fun And Profit**. 
+Buffer overflows are a foundational topic that once you understand are like the scales on the violin, painful to play at first and mostly bad executed as well, but then as you get better you can advance into real art or in our case **more advanced memory exploitation topics** :3 Soo, without further ado, let's go to the first challenge in the **Binary Exploitation** list, called **Picker IV**.
 
 We have source and it looks like this:
 ```c
