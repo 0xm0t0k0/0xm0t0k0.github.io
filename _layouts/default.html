@@ -962,5 +962,48 @@ Type '<span style="color: #00ffff;">help</span>' to see available commands or '<
 <!-- Add Assembly support -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-nasm.min.js"></script>
 
+<!-- Custom Assembly Highlighter (fallback) -->
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('pre code.language-asm, pre code.language-nasm, pre code.language-x86asm').forEach(block => {
+    let html = block.textContent;
+    
+    // Registers (rax, rbx, eax, r8, etc.)
+    html = html.replace(/\b([re]?[abcd]x|[re]?[sb]p|[re]?[sd]i|r[89]|r1[0-5]|[abcd][hl])\b/gi, 
+      '<span style="color: #ff6b9d; font-weight: bold;">$1</span>');
+    
+    // Instructions (mov, add, sub, push, pop, etc.)
+    html = html.replace(/\b(mov|add|sub|push|pop|call|ret|jmp|je|jne|jg|jl|cmp|test|lea|xor|and|or|shl|shr|syscall|int)\b/gi, 
+      '<span style="color: #00ddff;">$1</span>');
+    
+    // Directives (.section, .global, etc.)
+    html = html.replace(/(\.[a-z]+)/gi, 
+      '<span style="color: #ffd700;">$1</span>');
+    
+    // Hex numbers (0x...)
+    html = html.replace(/\b(0x[0-9a-f]+)\b/gi, 
+      '<span style="color: #39ff14;">$1</span>');
+    
+    // Decimal numbers
+    html = html.replace(/\b(\d+)\b/g, 
+      '<span style="color: #39ff14;">$1</span>');
+    
+    // Labels (word followed by :)
+    html = html.replace(/^(\w+):/gm, 
+      '<span style="color: #00ff88; font-weight: bold;">$1</span>:');
+    
+    // Comments (; ...)
+    html = html.replace(/(;.*$)/gm, 
+      '<span style="color: #6a9955; font-style: italic;">$1</span>');
+    
+    // Memory operands [...]
+    html = html.replace(/(\[[^\]]+\])/g, 
+      '<span style="color: #ff9900;">$1</span>');
+    
+    block.innerHTML = html;
+  });
+});
+</script>
+
 </body>
 </html>
