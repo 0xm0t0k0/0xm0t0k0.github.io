@@ -2692,3 +2692,37 @@ pre[class*="language-"] {
   color: #6a9955 !important; /* Green for comments */
   font-style: italic;
 }
+
+/* ========== REMOVE DISTRACTING EFFECTS FROM POSTS SECTION ========== */
+
+/* Hide cursor glow when hovering over post content */
+main.full-article-content ~ .cursor-light,
+body:has(main.full-article-content) .cursor-light {
+  display: none !important;
+}
+
+/* Remove CRT vignette/roundness effect on post pages */
+body:has(main.full-article-content)::before {
+  display: none !important;
+}
+
+/* Optional: Also reduce scanlines on post pages */
+body:has(main.full-article-content)::after {
+  opacity: 0.1 !important; /* Very subtle, or use display: none to remove completely */
+}
+
+/* Optional: Reduce grid opacity on post pages */
+body:has(main.full-article-content) .digital-grid {
+  opacity: 0.1 !important;
+}
+
+/* Optional: Hide axis scanlines on post pages */
+body:has(main.full-article-content) .axis-scanline-x,
+body:has(main.full-article-content) .axis-scanline-y {
+  display: none !important;
+}
+
+/* Optional: Reduce noise on post pages */
+body:has(main.full-article-content) .noise-overlay {
+  opacity: 0.01 !important;
+}
