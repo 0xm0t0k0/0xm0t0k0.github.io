@@ -9,8 +9,7 @@ tags:
     - algorithms 
     - computer science philosophy
     - strange loop
-    - polymorphism
-    - "Gödel, Escher, Bach: An Eternal Golden Braid" by Douglas Hofstadter 
+    - polymorphism 
     - cryptography
 ---
 
