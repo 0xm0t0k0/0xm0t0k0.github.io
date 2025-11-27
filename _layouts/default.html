@@ -929,7 +929,7 @@ Type '<span style="color: #00ffff;">help</span>' to see available commands or '<
 })();
 </script>
 
-<!-- Readability for Full Posts -->
+<!-- Professional Readability for Full Posts -->
 <script>
 (function() {
   'use strict';
@@ -943,8 +943,9 @@ Type '<span style="color: #00ffff;">help</span>' to see available commands or '<
     const mainElement = document.querySelector('main');
     
     if (mainElement && !isListPage) {
-      // We're on a full post page - apply gray text
+      // We're on a full post page
       mainElement.classList.add('full-article-content');
+      document.body.classList.add('reading-mode'); // Add to body too
       console.log('[Readability] Full article mode enabled');
     } else {
       console.log('[Readability] List/preview mode - keeping green');
@@ -952,6 +953,7 @@ Type '<span style="color: #00ffff;">help</span>' to see available commands or '<
   });
 })();
 </script>
+
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>

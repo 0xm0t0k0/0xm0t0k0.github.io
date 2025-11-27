@@ -2693,34 +2693,32 @@ pre[class*="language-"] {
   font-style: italic;
 }
 
-/* ========== CLEAN POST READING EXPERIENCE ========== */
-
-/* Target body when full article is present */
-body:has(.full-article-content) .cursor-light {
+/* ========== CLEAN READING MODE FOR POSTS ========== */
+body.reading-mode .cursor-light {
   display: none !important;
 }
 
-body:has(.full-article-content)::before {
-  display: none !important; /* Remove CRT vignette */
-}
-
-body:has(.full-article-content)::after {
-  opacity: 0.1 !important; /* Subtle scanlines */
-}
-
-body:has(.full-article-content) .digital-grid {
-  opacity: 0.1 !important;
-}
-
-body:has(.full-article-content) .axis-scanline-x,
-body:has(.full-article-content) .axis-scanline-y {
+body.reading-mode::before {
   display: none !important;
 }
 
-body:has(.full-article-content) .noise-overlay {
+body.reading-mode::after {
+  opacity: 0.05 !important;
+}
+
+body.reading-mode .digital-grid {
+  opacity: 0.05 !important;
+}
+
+body.reading-mode .axis-scanline-x,
+body.reading-mode .axis-scanline-y {
+  display: none !important;
+}
+
+body.reading-mode .noise-overlay {
   opacity: 0.01 !important;
 }
 
-body:has(.full-article-content) .grid-highlight {
+body.reading-mode .grid-highlight {
   display: none !important;
 }
