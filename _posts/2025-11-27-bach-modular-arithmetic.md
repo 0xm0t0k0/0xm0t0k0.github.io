@@ -70,7 +70,9 @@ We now circle back on Bach and shift our attention to his famous "Crab Canon", w
 *"The canon per tonos (endlessly rising canon) pits a variant of the king's theme against a two-voice canon at the fifth. However, it modulates and finishes one whole tone higher than it started out at. It thus has no final cadence"*
 
 What that means? 
-At the end of the melody, it modulates up a step and repeats. It will forever spiral upwards. It is a loop that contains the instructions for its own repetition. Can you think of something else that does that?hints: **polymorphism** 
+At the end of the melody, it modulates up a step and repeats. It will forever spiral upwards. It is a loop that contains the instructions for its own repetition. Can you think of something else that does that?
+
+**Hint: polymorphism** 
 
 Well what about a **Worm** or **Recursion** in general?
 A worm is basically recursion on a network graph.
@@ -85,15 +87,15 @@ Another example for understanding a theme:
 Lockbit (uses AES encryption) and WannaCry (uses ChaCha20)
 
 Their "theme" though is the same:
->Open a file.
+* Open a file.
 
->Read the content.
+* Read the content.
 
->Do math on the content.
+* Do math on the content.
 
->Write the content back.
+* Write the content back.
 
-Rename the file.
+* Rename the file.
 
 We understand the underlying theme is Ransomware.
 
