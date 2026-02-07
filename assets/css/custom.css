@@ -22,14 +22,13 @@ body {
   font-family: "JetBrains Mono", "Courier New", monospace;
   overflow-x: hidden;
   margin: 0;
-  /* TIGHTER SHADOW for crisp blue text */
+  /* Sharp, tight shadow for crisp text */
   text-shadow: 0 0 2px rgba(0, 229, 255, 0.8), 0 0 5px rgba(0, 229, 255, 0.3);
-  /* SUBTLE FLICKER to avoid eye strain */
   animation: flicker 10s infinite;
   position: relative;
 }
 
-/* CRT screen vignette effect - REDUCED OPACITY for better visibility */
+/* CRT screen vignette effect */
 body::before {
   content: "";
   position: fixed;
@@ -56,7 +55,7 @@ body::before {
   100% { opacity: 0.99; }
 }
 
-/* CRT scanlines - LIGHTER touch */
+/* CRT scanlines */
 body::after {
   content: "";
   position: fixed;
@@ -73,7 +72,7 @@ body::after {
     rgba(0, 0, 0, 0) 3px
   );
   z-index: 999;
-  opacity: 0.2; /* Reduced from 0.3 */
+  opacity: 0.15;
   animation: scanlineMove 8s linear infinite;
 }
 
@@ -84,12 +83,12 @@ body::after {
 
 @keyframes flicker {
   0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% { opacity: 1; }
-  20%, 24%, 55% { opacity: 0.97; } /* Less drastic dip */
+  20%, 24%, 55% { opacity: 0.97; }
 }
 
 /* ========== VISUAL EFFECTS OVERLAYS ========== */
 
-/* Noise texture - Very subtle */
+/* Noise texture */
 .noise-overlay {
   position: fixed;
   top: 0;
@@ -106,12 +105,11 @@ body::after {
 @keyframes noiseAnim {
   0% { transform: translate(0, 0); }
   10% { transform: translate(-5%, -5%); }
-  /* Simplified for performance */
   50% { transform: translate(-10%, 5%); }
   100% { transform: translate(5%, 0); }
 }
 
-/* Digital grid background - MORE VISIBLE */
+/* Digital grid background */
 .digital-grid {
   position: fixed;
   top: 0;
@@ -123,7 +121,7 @@ body::after {
   background-image:
     linear-gradient(rgba(0, 229, 255, 0.1) 1px, transparent 1px),
     linear-gradient(90deg, rgba(0, 229, 255, 0.1) 1px, transparent 1px);
-  background-size: 20px 20px; /* Larger grid for better look */
+  background-size: 20px 20px;
   opacity: 0.2;
 }
 
@@ -137,10 +135,10 @@ body::after {
   background-image:
     linear-gradient(rgba(0, 229, 255, 0.15) 2px, transparent 2px),
     linear-gradient(90deg, rgba(0, 229, 255, 0.15) 2px, transparent 2px);
-  background-size: 100px 100px; /* Major grid lines */
+  background-size: 100px 100px;
 }
 
-/* Subtle grid highlight on hover */
+/* Grid highlight on hover */
 .grid-highlight {
   position: fixed;
   width: 300px;
@@ -158,7 +156,7 @@ body:hover .grid-highlight {
   opacity: 1;
 }
 
-/* Axis scanlines (X and Y) */
+/* Axis scanlines */
 :root {
   --scanline-color: rgba(0, 229, 255, 0.2);
   --scanline-thin: 1px;
@@ -202,7 +200,7 @@ body:hover .grid-highlight {
   opacity: 0.8;
 }
 
-/* Cursor glow effect */
+/* Cursor glow */
 .cursor-light {
   position: fixed;
   width: 150px;
@@ -216,7 +214,7 @@ body:hover .grid-highlight {
   filter: blur(5px);
 }
 
-/* ========== MAIN CONTENT AREA ========== */
+/* ========== MAIN CONTENT ========== */
 #main-content {
   position: relative;
   z-index: 100;
@@ -255,7 +253,7 @@ body:hover .grid-highlight {
   opacity: 0.8;
   font-size: 1rem;
   margin-top: 0.5rem;
-  color: #e0faff; /* Slightly lighter for readability */
+  color: #e0faff;
 }
 
 /* ========== BOOT SEQUENCE ========== */
@@ -351,32 +349,7 @@ nav {
   color: #b0f0ff;
 }
 
-/* ========== ABOUT / CONTENT BOXES ========== */
-.content-box {
-  background: rgba(0, 229, 255, 0.02);
-  border: 1px solid rgba(0, 229, 255, 0.2);
-  padding: 2rem;
-  line-height: 1.8;
-}
-
-.content-box p,
-.content-box li {
-  color: #d0f5ff; /* White-ish blue for readability */
-  font-size: 1.05rem;
-}
-
-.content-box a {
-  color: #00e5ff;
-  text-decoration: underline;
-  text-decoration-color: rgba(0, 229, 255, 0.3);
-}
-
-.content-box a:hover {
-  text-decoration-color: #00e5ff;
-  text-shadow: 0 0 5px rgba(0, 229, 255, 0.5);
-}
-
-/* ========== BLOG POSTS ========== */
+/* ========== BLOG POSTS LIST (PREVIEW) ========== */
 .posts {
   position: relative;
   z-index: 101;
@@ -425,7 +398,7 @@ nav {
   line-height: 1.6;
 }
 
-/* ========== PORTFOLIO SECTION - UNLOCKED & VIBRANT ========== */
+/* ========== PORTFOLIO SECTION ========== */
 #portfolio {
   margin-top: 4rem;
   width: 100%;
@@ -456,12 +429,11 @@ nav {
 .filter-btn:hover,
 .filter-btn.active {
   background: #00e5ff;
-  color: #000; /* Contrast flip on active */
+  color: #000;
   box-shadow: 0 0 15px rgba(0, 229, 255, 0.5);
   text-shadow: none;
 }
 
-/* Portfolio grid */
 .portfolio-masonry {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -474,7 +446,6 @@ nav {
 @media (min-width: 900px) and (max-width: 1199px) { .portfolio-masonry { grid-template-columns: repeat(3, 1fr); } }
 @media (min-width: 600px) and (max-width: 899px) { .portfolio-masonry { grid-template-columns: repeat(2, 1fr); } }
 
-/* Portfolio items */
 .portfolio-item {
   background: #000;
   border: 1px solid rgba(0, 229, 255, 0.3);
@@ -502,13 +473,12 @@ nav {
   background: #050505;
 }
 
-/* IMAGE FIX - NO GRAYSCALE, FULL COLOR */
+/* Full color images */
 .portfolio-img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   transition: transform 0.5s ease;
-  /* Removed grayscale filter */
   filter: brightness(0.9); 
 }
 
@@ -517,7 +487,6 @@ nav {
   filter: brightness(1.1);
 }
 
-/* Varied heights */
 .portfolio-item:nth-child(5n+1) .portfolio-img-wrapper { height: 220px; }
 .portfolio-item:nth-child(5n+2) .portfolio-img-wrapper { height: 280px; }
 .portfolio-item:nth-child(5n+3) .portfolio-img-wrapper { height: 240px; }
@@ -638,7 +607,7 @@ nav {
   flex: 1;
   background: transparent;
   border: none;
-  color: #fff; /* White input for better contrast */
+  color: #fff;
   font-family: inherit;
   font-size: 1rem;
   outline: none;
@@ -651,39 +620,186 @@ nav {
   font-size: 0.9rem;
 }
 
-/* ========== FULL PAGE READABILITY ========== */
-/* Clean styling for full articles */
+/* ========== FULL PAGE READABILITY & CODE BOXES ========== */
+
 main.full-article-content {
   max-width: 800px;
   margin: 0 auto;
 }
 
+/* Readable Paragraphs */
 main.full-article-content p, 
-main.full-article-content li {
+main.full-article-content li,
+main.full-article-content td {
   color: #e0e0e0;
   text-shadow: none;
   font-size: 1.1rem;
   line-height: 1.8;
 }
 
+/* Headers keep the neon */
 main.full-article-content h1,
 main.full-article-content h2,
-main.full-article-content h3 {
+main.full-article-content h3,
+main.full-article-content h4 {
   color: #00e5ff;
   text-shadow: 0 0 5px rgba(0, 229, 255, 0.4);
+  margin-top: 2.5rem;
 }
 
-main.full-article-content code {
-  background: #1a1a1a;
+main.full-article-content a {
   color: #00e5ff;
-  padding: 0.2rem 0.4rem;
-  border-radius: 3px;
+  text-decoration: underline;
+  text-decoration-color: rgba(0, 229, 255, 0.3);
+  text-shadow: none;
 }
+
+main.full-article-content a:hover {
+  text-decoration-color: #00e5ff;
+  text-shadow: 0 0 8px rgba(0, 229, 255, 0.6);
+}
+
+/* --- THE CODE BOXES --- */
+/* Restoring the "terminal" look for code blocks */
 
 main.full-article-content pre {
-  background: #111;
-  border: 1px solid rgba(0, 229, 255, 0.2);
+  background: #0a0a0a;
+  color: #00e5ff;
   padding: 1.5rem;
-  border-radius: 5px;
+  border: 1px solid rgba(0, 229, 255, 0.3);
+  border-left: 4px solid #00e5ff; /* The neon strip */
+  border-radius: 4px;
+  box-shadow: 0 0 20px rgba(0, 229, 255, 0.05); /* Subtle glow */
   overflow-x: auto;
+  margin: 2rem 0;
+  font-family: "JetBrains Mono", "Courier New", monospace;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+/* Inline code */
+main.full-article-content code {
+  background: rgba(0, 229, 255, 0.1);
+  color: #00e5ff;
+  padding: 0.2rem 0.4rem;
+  border-radius: 4px;
+  font-family: "JetBrains Mono", "Courier New", monospace;
+  font-size: 0.9em;
+  border: 1px solid rgba(0, 229, 255, 0.2);
+}
+
+/* Fix for code inside pre (don't double style) */
+main.full-article-content pre code {
+  background: none;
+  padding: 0;
+  border: none;
+  color: inherit;
+  font-size: 100%;
+}
+
+/* Blockquotes - Neon Style */
+main.full-article-content blockquote {
+  background: linear-gradient(90deg, rgba(0, 229, 255, 0.05) 0%, transparent 100%);
+  border-left: 4px solid #00e5ff;
+  margin: 2rem 0;
+  padding: 1rem 1.5rem;
+  color: #b0f0ff;
+  font-style: italic;
+  position: relative;
+}
+
+/* Tables - Terminal Grid */
+main.full-article-content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 2rem 0;
+  border: 1px solid rgba(0, 229, 255, 0.3);
+  background: rgba(0, 0, 0, 0.3);
+}
+
+main.full-article-content th {
+  background: rgba(0, 229, 255, 0.1);
+  color: #00e5ff;
+  padding: 1rem;
+  text-align: left;
+  border-bottom: 2px solid #00e5ff;
+}
+
+main.full-article-content td {
+  padding: 1rem;
+  border-bottom: 1px solid rgba(0, 229, 255, 0.15);
+}
+
+main.full-article-content tr:hover {
+  background: rgba(0, 229, 255, 0.05);
+}
+
+/* ========== SYNTAX HIGHLIGHTING (PRISMJS OVERRIDES) ========== */
+/* Ensure code inside the boxes has colors! */
+
+/* Base Text */
+code[class*="language-"],
+pre[class*="language-"] {
+  color: #e0e0e0 !important; /* Default code color */
+  text-shadow: none !important;
+}
+
+/* Comments - Green */
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+  color: #6a9955 !important;
+  font-style: italic;
+}
+
+/* Punctuation - Gray */
+.token.punctuation {
+  color: #888 !important;
+}
+
+/* Constants/Numbers - Cyan */
+.token.boolean,
+.token.number,
+.token.constant,
+.token.symbol {
+  color: #00e5ff !important;
+}
+
+/* Strings - Green/Cyan Mix */
+.token.string,
+.token.char,
+.token.attr-value {
+  color: #00ffaa !important;
+}
+
+/* Keywords - Pink */
+.token.keyword,
+.token.atrule {
+  color: #ff6b9d !important;
+}
+
+/* Functions - Blue */
+.token.function,
+.token.class-name {
+  color: #00ddff !important;
+}
+
+/* Operators/Variables - Gold */
+.token.operator,
+.token.entity,
+.token.url,
+.token.variable {
+  color: #ffd700 !important;
+}
+
+/* Assembly Specifics (restored) */
+.language-nasm .token.register,
+.language-asm .token.register {
+  color: #ff6b9d !important; /* Registers Pink */
+}
+
+.language-nasm .token.instruction,
+.language-asm .token.instruction {
+  color: #00ddff !important; /* Instructions Blue */
 }
