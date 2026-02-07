@@ -5,10 +5,10 @@ title: "About Me"
 
 ## About Me
 
-I'm **0xm0t0k0, real name: 9366b1d5923333c2671f1688f9a9170549061196a0aab291** (go solve this if you haven't already owo).
+I'm **0xm0t0k0, real name: 9366b1d5923333c2671f1688f9a9170549061196a0aab291**.
 Ever since I was young my main interest was being interested, aka being curious. I love learning about new things,
 connecting dots and finding out stuff. Naturally I gravitated towards 3 things: Computers, Theory & Art. What may come out of 
-this synthesis? Who cares, right? 
+this synthesis? 
 
 But- Here's the thing; I can't choose what I like most, so I try to use all of these things together and create new stuff.
 Also, I have found that having a nice theoretical foundation informs your analytical problem-solving skills as well. So i guess yay :3 
@@ -29,13 +29,9 @@ What we encounter with art is a soft problem, a problem which its solutions are 
 
 -Couple of **CyberSec certificates** on my LinkedIn
 
--Mostly interested in **Security Research**
+-My interests as of the time being include but not limited to: **Applied Cryptography, AI and Robotics Integration, BCI, HCI and Applied Mathematics** and some good ol' **Binary Exploitation**. TL;DR too many stuff
 
--My interests as of the time being include but not limited to: **Applied Cryptography, Malware Research, Reverse Engineering,** and some good ol' **Binary Exploitation**. TL;DR low-level security stuff that are in my mind like puzzles.
-
--I do **CTFs** regularly and will be posting about them on this very blog!
-
-Puzzles are so interesting to me and I find that the aforementioned interests are mostly puzzles but in these warm fuzzy *for my brain* machines that everything makes sense.
+-I do **CTFs** and will be posting about them on this very blog!
 
 If you are interested in my theoretical and artistic stuff I have a separate page *again* in this very same blog where you dear reader could find my "artworks" as well as my theoretical works. Some are in Greek though (thank god for LLMs you now can translate them with expert level accuracy with the right prompts).
 
