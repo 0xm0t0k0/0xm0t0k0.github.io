@@ -1,3 +1,7 @@
+{
+type: file
+fileName: 0xm0t0k0/0xm0t0k0.github.io/0xm0t0k0.github.io-0336ee96070193efbcfffefc1d22bfa84751e0f4/_layouts/default.html
+fullContent:
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,32 +10,25 @@
 <link rel="stylesheet" href="{{ '/assets/css/custom.css' | relative_url }}">
 <link rel="icon" href="{{ '/assets/images/favicon.png' | relative_url }}">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<!-- Prism.js for Syntax Highlighting -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.css">
 </head>
 <body>
-<!-- Noise overlay -->
 <div class="noise-overlay"></div>
 
-<!-- Digital grid (static, subtle) -->
 <div class="digital-grid"></div>
 
-<!-- Grid highlight that only shows on hover -->
 <div class="grid-highlight"></div>
 
-<!-- Subtle X and Y axis scanlines -->
 <div class="axis-scanline-x"></div>
 <div class="axis-scanline-y"></div>
 
-<!-- Boot Sequence - ONLY ON HOMEPAGE -->
 {% if page.url == "/" %}
 <div id="boot-sequence" class="boot">
 <pre id="boot-text"></pre>
 </div>
 {% endif %}
 
-<!-- Main Content -->
 <div id="main-content" {% unless page.url == "/" %}style="display:block;"{% else %}style="display:none;"{% endunless %}>
 <header>
 <h1 class="title">{{ site.title }}</h1>
@@ -47,10 +44,8 @@
 </main>
 </div>
 
-<!-- Glowing Cursor -->
 <div class="cursor-light"></div>
 
-<!-- Consolidated Scripts -->
 <script>
 (function() {
   'use strict';
@@ -137,165 +132,6 @@
 })();
 </script>
 
-<!-- Multi-Stage Encryption Puzzle Script -->
-<script>
-(function() {
-  'use strict';
-  
-  document.addEventListener('DOMContentLoaded', () => {
-    const unlockBtn = document.getElementById('unlockBtn');
-    const decryptInput = document.getElementById('decryptInput');
-    const errorMessage = document.getElementById('errorMessage');
-    const puzzle = document.getElementById('portfolioPuzzle');
-    const content = document.getElementById('portfolioContent');
-    const currentStageEl = document.getElementById('currentStage');
-    const progressFill = document.getElementById('progressFill');
-    
-    if (!unlockBtn) return;
-    
-    // Stage configuration
-    let currentStage = 1;
-    const stages = {
-      1: { answer: '0xm0t0k0', nextStage: 2, progress: 33 },
-      2: { answer: '0xth00rf1nn', nextStage: 3, progress: 66 },
-      3: { answer: '4cc3ss_gr4nt3d_w3lc0m3_!', nextStage: 'unlock', progress: 100 }
-    };
-    
-    // Check saved progress
-    const savedStage = sessionStorage.getItem('puzzleStage');
-    if (savedStage) {
-      currentStage = parseInt(savedStage);
-      loadStage(currentStage);
-    }
-    
-    function loadStage(stageNum) {
-      // Hide all stages
-      for (let i = 1; i <= 3; i++) {
-        const stage = document.getElementById(`stage${i}`);
-        if (stage) stage.style.display = 'none';
-      }
-      
-      // Show current stage
-      const currentStageDiv = document.getElementById(`stage${stageNum}`);
-      if (currentStageDiv) currentStageDiv.style.display = 'block';
-      
-      // Update UI
-      if (currentStageEl) currentStageEl.textContent = stageNum;
-      decryptInput.value = '';
-      decryptInput.focus();
-      
-      // Update progress bar
-      const previousProgress = stageNum === 1 ? 0 : stages[stageNum - 1].progress;
-      if (progressFill) progressFill.style.width = previousProgress + '%';
-    }
-    
-    function unlockPortfolio() {
-      puzzle.style.display = 'none';
-      content.style.display = 'block';
-      sessionStorage.setItem('portfolioUnlocked', 'true');
-      sessionStorage.removeItem('puzzleStage');
-      
-      // Track completion
-      if (window.trackPuzzleCompletion) {
-        window.trackPuzzleCompletion();
-      }
-    }
-    
-    // Terminal typing effect
-    function typeMessage(element, message, color, callback) {
-      element.style.color = color;
-      element.textContent = '';
-      let i = 0;
-      const interval = setInterval(() => {
-        if (i < message.length) {
-          element.textContent += message.charAt(i);
-          i++;
-        } else {
-          clearInterval(interval);
-          if (callback) callback();
-        }
-      }, 30);
-    }
-    
-    function checkAnswer() {
-      const userAnswer = decryptInput.value.trim().toLowerCase();
-      const correctAnswer = stages[currentStage].answer.toLowerCase();
-      
-      if (userAnswer === correctAnswer) {
-        typeMessage(errorMessage, `✓ STAGE ${currentStage} COMPLETE - AUTHORIZATION GRANTED`, '#39ff14', () => {
-          const stageDiv = document.getElementById(`stage${currentStage}`);
-          if (stageDiv) stageDiv.classList.add('stage-complete');
-          
-          if (progressFill) progressFill.style.width = stages[currentStage].progress + '%';
-          
-          setTimeout(() => {
-            if (stages[currentStage].nextStage === 'unlock') {
-              typeMessage(errorMessage, '✓ ALL STAGES COMPLETE - INITIATING ACCESS...', '#39ff14', () => {
-                setTimeout(unlockPortfolio, 1000);
-              });
-            } else {
-              currentStage = stages[currentStage].nextStage;
-              sessionStorage.setItem('puzzleStage', currentStage);
-              loadStage(currentStage);
-              errorMessage.textContent = '';
-            }
-          }, 1500);
-        });
-      } else {
-        typeMessage(errorMessage, '✗ ACCESS DENIED - INVALID CREDENTIALS', '#ff3333');
-        decryptInput.value = '';
-        decryptInput.classList.add('error');
-        
-        puzzle.style.animation = 'glitchShake 0.3s ease';
-        setTimeout(() => {
-          decryptInput.classList.remove('error');
-          puzzle.style.animation = '';
-          setTimeout(() => errorMessage.textContent = '', 2000);
-        }, 500);
-      }
-    }
-    
-    unlockBtn.addEventListener('click', checkAnswer);
-    decryptInput.addEventListener('keypress', (e) => {
-      if (e.key === 'Enter') checkAnswer();
-    });
-    
-    // Typing visual effect
-    decryptInput.addEventListener('input', () => {
-      decryptInput.style.textShadow = '0 0 10px #39ff14';
-      setTimeout(() => {
-        decryptInput.style.textShadow = '0 0 5px #39ff14';
-      }, 50);
-    });
-    
-    // Hint system (click title 5 times)
-    let hintClicks = 0;
-    const puzzleTitle = document.querySelector('.puzzle-title');
-    
-    if (puzzleTitle) {
-      puzzleTitle.addEventListener('click', () => {
-        hintClicks++;
-        if (hintClicks === 5) {
-          const hints = {
-            1: 'HINT: Binary to text converter required',
-            2: 'HINT: Hexadecimal to ASCII decoder needed',
-            3: 'HINT: Base64 decoder - final authentication key'
-          };
-          typeMessage(errorMessage, hints[currentStage], '#39ff14');
-          setTimeout(() => {
-            if (errorMessage.textContent.includes('HINT:')) {
-              errorMessage.textContent = '';
-            }
-          }, 5000);
-          hintClicks = 0;
-        }
-      });
-    }
-  });
-})();
-</script>
-
-<!-- Portfolio Script -->
 <script>
 (function() {
   'use strict';
@@ -387,7 +223,6 @@
 })();
 </script>
 
-<!-- Enhanced Interactive Terminal Navigation Script -->
 <script>
 (function() {
   'use strict';
@@ -412,7 +247,7 @@
   cat about.txt     - view about page
   cd logs/          - scroll to blog posts
   ./portfolio.sh    - access portfolio (requires key)
-  cat manifesto/*   - view texts & papers
+  cat manifesto/* - view texts & papers
 
 <span class="info">System:</span>
   help              - show this message
@@ -611,7 +446,6 @@ Type '<span style="color: #00ffff;">help</span>' to see available commands or '<
 })();
 </script>
 
-<!-- User Tracking & Persistence Script -->
 <script>
 (function() {
   'use strict';
@@ -682,7 +516,6 @@ Type '<span style="color: #00ffff;">help</span>' to see available commands or '<
 })();
 </script>
 
-<!-- Image Lightbox Modal -->
 <div id="imageLightbox" class="lightbox">
   <div class="lightbox-backdrop"></div>
   <div class="lightbox-content">
@@ -702,7 +535,6 @@ Type '<span style="color: #00ffff;">help</span>' to see available commands or '<
   </div>
 </div>
 
-<!-- Image Lightbox Script -->
 <script>
 (function() {
   'use strict';
@@ -855,7 +687,6 @@ Type '<span style="color: #00ffff;">help</span>' to see available commands or '<
   });
 })();
 </script>
-<!-- FORCE PORTFOLIO IMAGES TO FILL - JAVASCRIPT FIX -->
 <script>
 (function() {
   'use strict';
@@ -929,7 +760,6 @@ Type '<span style="color: #00ffff;">help</span>' to see available commands or '<
 })();
 </script>
 
-<!-- Professional Readability for Full Posts -->
 <script>
 (function() {
   'use strict';
@@ -961,10 +791,8 @@ Type '<span style="color: #00ffff;">help</span>' to see available commands or '<
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-c.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.js"></script>
-<!-- Add Assembly support -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-nasm.min.js"></script>
 
-<!-- Custom Assembly Highlighter (fallback) -->
 <script>
 document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('pre code.language-asm, pre code.language-nasm, pre code.language-x86asm').forEach(block => {
@@ -984,11 +812,11 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Hex numbers (0x...)
     html = html.replace(/\b(0x[0-9a-f]+)\b/gi, 
-      '<span style="color: #39ff14;">$1</span>');
+      '<span style="color: #00e5ff;">$1</span>');
     
     // Decimal numbers
     html = html.replace(/\b(\d+)\b/g, 
-      '<span style="color: #39ff14;">$1</span>');
+      '<span style="color: #00e5ff;">$1</span>');
     
     // Labels (word followed by :)
     html = html.replace(/^(\w+):/gm, 
