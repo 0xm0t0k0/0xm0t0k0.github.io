@@ -1,7 +1,4 @@
-{
-type: file
-fileName: 0xm0t0k0/0xm0t0k0.github.io/0xm0t0k0.github.io-0336ee96070193efbcfffefc1d22bfa84751e0f4/index.md
-fullContent:
+
 ---
 layout: default
 title: "Home"
@@ -24,6 +21,7 @@ title: "Home"
 <section id="about" class="section">
  <p class="section-subtitle"><a href="{{ '/about' | relative_url }}" class="nav-button">About Me</a></p>
  </section>
+
 <section id="logs" class="section">
   <h2>Latest Logs</h2>
   <p class="section-subtitle">Hey read these! It would make me happy ₊‧°𐐪♡𐑂°‧₊  </p>
@@ -40,13 +38,11 @@ title: "Home"
   </div>
 </section>
 
-
 <section id="portfolio" class="section">
   <h2>Digi-Expressionism Portfolio</h2>
   <p class="section-subtitle">Visual explorations :3 </p>
   
   <div id="portfolioContent" class="portfolio-content">
-    
     <div class="portfolio-filters">
       <button class="filter-btn active" data-filter="all">All (47)</button>
     </div>
@@ -81,7 +77,6 @@ title: "Home"
 </section>
 
 <section id="texts" class="section">
-  <section id="texts" class="section">
   <h2>Texts & Papers</h2>
   <p class="section-subtitle">Theoretical explorations on algorithmic beauty(?) and the art of hacking anything that interests you :3</p>
   <div class="texts-grid">
@@ -91,6 +86,5 @@ title: "Home"
       <p>On hacking the network of art</p>
       <a href="{{ '/recursive-destruction' | relative_url }}" class="text-link">Read More →</a>
     </article>
-    
   </div>
 </section>
