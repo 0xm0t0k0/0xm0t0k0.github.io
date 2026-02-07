@@ -1,7 +1,6 @@
-
 ---
 layout: default
-title: "Home"
+title: Home
 ---
 
 <nav class="terminal-nav">
