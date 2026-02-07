@@ -21,7 +21,6 @@ body {
   font-family: "JetBrains Mono", "Courier New", monospace;
   overflow-x: hidden;
   margin: 0;
-  /* Sharp, tight shadow for crisp text */
   text-shadow: 0 0 2px rgba(0, 229, 255, 0.8), 0 0 5px rgba(0, 229, 255, 0.3);
   animation: flicker 10s infinite;
   position: relative;
@@ -658,42 +657,42 @@ main.full-article-content a:hover {
   text-shadow: 0 0 8px rgba(0, 229, 255, 0.6);
 }
 
-/* --- THE CODE BOXES --- */
-/* Restoring the "terminal" look for code blocks */
+/* --- THE CODE BOXES (FORCED TERMINAL STYLE) --- */
 
-main.full-article-content pre {
-  background: #0a0a0a;
-  color: #00e5ff;
-  padding: 1.5rem;
-  border: 1px solid rgba(0, 229, 255, 0.3);
-  border-left: 4px solid #00e5ff; /* The neon strip */
-  border-radius: 4px;
-  box-shadow: 0 0 20px rgba(0, 229, 255, 0.05); /* Subtle glow */
+/* Override any gray text from parent */
+main.full-article-content pre,
+pre[class*="language-"] {
+  background: #0a0a0a !important;
+  color: #00e5ff !important;
+  padding: 1.5rem !important;
+  border: 1px solid rgba(0, 229, 255, 0.3) !important;
+  border-left: 4px solid #00e5ff !important; /* The neon strip */
+  border-radius: 4px !important;
+  box-shadow: 0 0 20px rgba(0, 229, 255, 0.05) !important;
   overflow-x: auto;
   margin: 2rem 0;
-  font-family: "JetBrains Mono", "Courier New", monospace;
+  font-family: "JetBrains Mono", "Courier New", monospace !important;
   font-size: 0.95rem;
   line-height: 1.5;
+  text-shadow: none !important;
 }
 
-/* Inline code */
-main.full-article-content code {
-  background: rgba(0, 229, 255, 0.1);
-  color: #00e5ff;
-  padding: 0.2rem 0.4rem;
-  border-radius: 4px;
-  font-family: "JetBrains Mono", "Courier New", monospace;
-  font-size: 0.9em;
-  border: 1px solid rgba(0, 229, 255, 0.2);
+/* Inline code (small boxes) */
+main.full-article-content code,
+code[class*="language-"] {
+  font-family: "JetBrains Mono", "Courier New", monospace !important;
+  background: rgba(0, 229, 255, 0.1) !important;
+  color: #00e5ff !important;
+  text-shadow: none !important;
 }
 
-/* Fix for code inside pre (don't double style) */
-main.full-article-content pre code {
-  background: none;
-  padding: 0;
-  border: none;
-  color: inherit;
-  font-size: 100%;
+/* Code INSIDE pre blocks (remove double background) */
+main.full-article-content pre code,
+pre[class*="language-"] code {
+  background: transparent !important;
+  padding: 0 !important;
+  border: none !important;
+  color: inherit !important;
 }
 
 /* Blockquotes - Neon Style */
@@ -702,7 +701,7 @@ main.full-article-content blockquote {
   border-left: 4px solid #00e5ff;
   margin: 2rem 0;
   padding: 1rem 1.5rem;
-  color: #b0f0ff;
+  color: #b0f0ff !important; /* Override gray */
   font-style: italic;
   position: relative;
 }
@@ -718,7 +717,7 @@ main.full-article-content table {
 
 main.full-article-content th {
   background: rgba(0, 229, 255, 0.1);
-  color: #00e5ff;
+  color: #00e5ff !important;
   padding: 1rem;
   text-align: left;
   border-bottom: 2px solid #00e5ff;
@@ -727,6 +726,7 @@ main.full-article-content th {
 main.full-article-content td {
   padding: 1rem;
   border-bottom: 1px solid rgba(0, 229, 255, 0.15);
+  color: #e0e0e0 !important;
 }
 
 main.full-article-content tr:hover {
@@ -734,16 +734,8 @@ main.full-article-content tr:hover {
 }
 
 /* ========== SYNTAX HIGHLIGHTING (PRISMJS OVERRIDES) ========== */
-/* Ensure code inside the boxes has colors! */
+/* Forced colors for code readability */
 
-/* Base Text */
-code[class*="language-"],
-pre[class*="language-"] {
-  color: #e0e0e0 !important; /* Default code color */
-  text-shadow: none !important;
-}
-
-/* Comments - Green */
 .token.comment,
 .token.prolog,
 .token.doctype,
@@ -752,12 +744,10 @@ pre[class*="language-"] {
   font-style: italic;
 }
 
-/* Punctuation - Gray */
 .token.punctuation {
   color: #888 !important;
 }
 
-/* Constants/Numbers - Cyan */
 .token.boolean,
 .token.number,
 .token.constant,
@@ -765,26 +755,22 @@ pre[class*="language-"] {
   color: #00e5ff !important;
 }
 
-/* Strings - Green/Cyan Mix */
 .token.string,
 .token.char,
 .token.attr-value {
   color: #00ffaa !important;
 }
 
-/* Keywords - Pink */
 .token.keyword,
 .token.atrule {
   color: #ff6b9d !important;
 }
 
-/* Functions - Blue */
 .token.function,
 .token.class-name {
   color: #00ddff !important;
 }
 
-/* Operators/Variables - Gold */
 .token.operator,
 .token.entity,
 .token.url,
@@ -792,13 +778,13 @@ pre[class*="language-"] {
   color: #ffd700 !important;
 }
 
-/* Assembly Specifics (restored) */
+/* Assembly Specifics */
 .language-nasm .token.register,
 .language-asm .token.register {
-  color: #ff6b9d !important; /* Registers Pink */
+  color: #ff6b9d !important;
 }
 
 .language-nasm .token.instruction,
 .language-asm .token.instruction {
-  color: #00ddff !important; /* Instructions Blue */
+  color: #00ddff !important;
 }
