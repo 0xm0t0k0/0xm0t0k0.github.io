@@ -10,12 +10,12 @@
 <link rel="stylesheet" href="{{ '/assets/css/custom.css' | relative_url }}">
 </head>
 <body>
+
+<div class="crt-bezel"></div>
+<div class="crt-scanline-roll"></div>
 <div class="noise-overlay"></div>
-
 <div class="digital-grid"></div>
-
 <div class="grid-highlight"></div>
-
 <div class="axis-scanline-x"></div>
 <div class="axis-scanline-y"></div>
 
@@ -53,13 +53,12 @@
   const axisY = document.querySelector(".axis-scanline-y");
   
   let x = 0, y = 0, targetX = 0, targetY = 0;
-  let moveTimeout;
-
+  
   document.addEventListener("mousemove", e => {
     targetX = e.clientX;
     targetY = e.clientY;
     
-    // Update axis scanlines immediately
+    // Update axis scanlines immediately (8-bit style: distinct movements)
     if (axisX) axisX.style.top = `${e.clientY}px`;
     if (axisY) axisY.style.left = `${e.clientX}px`;
     
@@ -71,8 +70,10 @@
   });
 
   function animateCursor() {
-    x += (targetX - x) * 0.15;
-    y += (targetY - y) * 0.15;
+    // 8-bit style: Less smoothing, more direct movement
+    x += (targetX - x) * 0.3;
+    y += (targetY - y) * 0.3;
+    
     if (cursor) {
       cursor.style.left = `${x}px`;
       cursor.style.top = `${y}px`;
@@ -96,7 +97,8 @@
         if (char < bootLines[line].length) {
           bootText.textContent += bootLines[line].charAt(char);
           char++;
-          setTimeout(typeBootLine, 30);
+          // Faster, jittery typing for retro feel
+          setTimeout(typeBootLine, Math.random() * 30 + 10);
         } else {
           bootText.textContent += "\n";
           line++;
@@ -109,7 +111,7 @@
           setTimeout(() => {
             bootScreen.style.display = "none";
             mainContent.style.display = "block";
-          }, 1000);
+          }, 500);
         }, 600);
       }
     }
@@ -144,7 +146,8 @@
         if (!item.classList.contains('hidden-filter')) {
           if (visibleCount < currentItems) {
             item.classList.remove('hidden-load');
-            item.style.animationDelay = `${(visibleCount % itemsPerLoad) * 0.05}s`;
+            // Stepped animation delay for robotic feel
+            item.style.animationDelay = `${(visibleCount % itemsPerLoad) * 0.1}s`;
             visibleCount++;
           } else {
             item.classList.add('hidden-load');
@@ -337,7 +340,7 @@ drwxr-xr-x  2 visitor visitor 4096 manifesto/`
     const lightbox = document.getElementById('imageLightbox');
     if (!lightbox) return;
     
-    // ... Lightbox logic preserved but truncated for brevity since CSS handles the style ...
+    // ... Lightbox logic preserved ...
   });
 })();
 </script>
