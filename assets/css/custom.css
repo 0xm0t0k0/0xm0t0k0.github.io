@@ -116,7 +116,7 @@ body {
   opacity: 0.15;
 }
 
-/* ========== GRID HIGHLIGHT & AXIS SCANLINES ========== */
+/* ========== GRID HIGHLIGHT ========== */
 .grid-highlight {
   position: fixed;
   width: 300px;
@@ -132,26 +132,65 @@ body {
 
 body:hover .grid-highlight { opacity: 1; }
 
-.axis-scanline-x {
+/* ========== TARGETING RETICLE ========== */
+.reticle {
   position: fixed;
-  left: 0;
-  width: 15%;
-  height: 1px;
-  background: linear-gradient(90deg, transparent 0%, var(--scanline-color) 50%, transparent 100%);
+  width: 40px;
+  height: 40px;
+  transform: translate(-50%, -50%);
   pointer-events: none;
-  z-index: 490;
-  mix-blend-mode: screen;
+  z-index: 1002;
+  animation: reticle-pulse 2s steps(4) infinite;
 }
 
-.axis-scanline-y {
-  position: fixed;
-  top: 0;
-  width: 1px;
-  height: 15%;
-  background: linear-gradient(180deg, transparent 0%, var(--scanline-color) 50%, transparent 100%);
-  pointer-events: none;
-  z-index: 490;
-  mix-blend-mode: screen;
+/* All 4 corner brackets share this base */
+.reticle-corner {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-color: var(--cyan);
+  border-style: solid;
+  box-shadow: 0 0 4px rgba(0, 229, 255, 0.8);
+}
+
+.reticle-corner.tl { top: 0;    left: 0;   border-width: 2px 0 0 2px; }
+.reticle-corner.tr { top: 0;    right: 0;  border-width: 2px 2px 0 0; }
+.reticle-corner.bl { bottom: 0; left: 0;   border-width: 0 0 2px 2px; }
+.reticle-corner.br { bottom: 0; right: 0;  border-width: 0 2px 2px 0; }
+
+/* Crosshair lines */
+.reticle-cross-h,
+.reticle-cross-v {
+  position: absolute;
+  background: rgba(0, 229, 255, 0.5);
+  box-shadow: 0 0 3px rgba(0, 229, 255, 0.6);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.reticle-cross-h { width: 16px; height: 1px; }
+.reticle-cross-v { width: 1px;  height: 16px; }
+
+/* Center dot */
+.reticle-dot {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  background: var(--cyan);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 4px var(--cyan);
+}
+
+/* steps(4) keeps it quantized — flickers like a real CRT readout */
+@keyframes reticle-pulse {
+  0%   { opacity: 1;   }
+  25%  { opacity: 0.6; }
+  50%  { opacity: 1;   }
+  75%  { opacity: 0.8; }
+  100% { opacity: 1;   }
 }
 
 /* ========== CURSOR GLOW ========== */
