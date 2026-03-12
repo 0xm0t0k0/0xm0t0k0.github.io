@@ -5,6 +5,12 @@
 <title>{{ page.title }} | {{ site.title }}</title>
 <link rel="icon" href="{{ '/assets/images/favicon.png' | relative_url }}">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- JetBrains Mono — actually loaded now -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.css">
 <link rel="stylesheet" href="{{ '/assets/css/custom.css' | relative_url }}">
@@ -21,392 +27,324 @@
 
 {% if page.url == "/" %}
 <div id="boot-sequence" class="boot">
-<pre id="boot-text"></pre>
+  <pre id="boot-text"></pre>
 </div>
 {% endif %}
 
 <div id="main-content" {% unless page.url == "/" %}style="display:block;"{% else %}style="display:none;"{% endunless %}>
-<header>
-<h1 class="title">{{ site.title }}</h1>
-<p class="desc">{{ site.description }}</p>
-{% unless page.url == "/" %}
-<nav>
-<a href="{{ '/' | relative_url }}" class="home-link">← Back to Lab</a>
-</nav>
-{% endunless %}
-</header>
-<main>
-{{ content }}
-</main>
+  <header>
+    <h1 class="title">{{ site.title }}</h1>
+    <p class="desc">{{ site.description }}</p>
+    {% unless page.url == "/" %}
+    <nav>
+      <a href="{{ '/' | relative_url }}" class="home-link">← Back to Lab</a>
+    </nav>
+    {% endunless %}
+  </header>
+  <main>
+    {{ content }}
+  </main>
 </div>
 
 <div class="cursor-light"></div>
 
+<!-- ============================================================
+     ALL JS IN ONE DOMContentLoaded — one parse pass, no redundancy
+     ============================================================ -->
 <script>
-(function() {
+(function () {
   'use strict';
-  
-  // ========== CURSOR & GRID ANIMATION ==========
-  const cursor = document.querySelector(".cursor-light");
-  const gridHighlight = document.querySelector(".grid-highlight");
-  const axisX = document.querySelector(".axis-scanline-x");
-  const axisY = document.querySelector(".axis-scanline-y");
-  
+
+  // ── CURSOR & GRID ──────────────────────────────────────────────────────────
+  const cursor       = document.querySelector('.cursor-light');
+  const gridHighlight = document.querySelector('.grid-highlight');
+  const axisX        = document.querySelector('.axis-scanline-x');
+  const axisY        = document.querySelector('.axis-scanline-y');
+
   let x = 0, y = 0, targetX = 0, targetY = 0;
-  
-  document.addEventListener("mousemove", e => {
+
+  document.addEventListener('mousemove', e => {
     targetX = e.clientX;
     targetY = e.clientY;
-    
-    // Update axis scanlines immediately (8-bit style: distinct movements)
-    if (axisX) axisX.style.top = `${e.clientY}px`;
+    if (axisX) axisX.style.top  = `${e.clientY}px`;
     if (axisY) axisY.style.left = `${e.clientX}px`;
-    
-    // Update grid highlight
     if (gridHighlight) {
       gridHighlight.style.left = `${e.clientX}px`;
-      gridHighlight.style.top = `${e.clientY}px`;
+      gridHighlight.style.top  = `${e.clientY}px`;
     }
   });
 
-  function animateCursor() {
-    // 8-bit style: Less smoothing, more direct movement
+  (function animateCursor() {
     x += (targetX - x) * 0.3;
     y += (targetY - y) * 0.3;
-    
     if (cursor) {
       cursor.style.left = `${x}px`;
-      cursor.style.top = `${y}px`;
+      cursor.style.top  = `${y}px`;
     }
     requestAnimationFrame(animateCursor);
-  }
-  animateCursor();
+  })();
 
-  // ========== BOOT SEQUENCE ==========
-  {% if page.layout == "default" and page.url == "/" %}
-  const bootLines = [">Great to see you. I'm 0xm0t0k0 aka 0xth00rf1nn aka c1nn4m0nr0ls"];
-  const bootText = document.getElementById("boot-text");
-  const bootScreen = document.getElementById("boot-sequence");
-  const mainContent = document.getElementById("main-content");
-  
+  // ── BOOT SEQUENCE (index only) ────────────────────────────────────────────
+  {% if page.url == "/" %}
+  const bootLines   = [">Great to see you. I'm 0xm0t0k0 aka 0xth00rf1nn aka c1nn4m0nr0ls"];
+  const bootText    = document.getElementById('boot-text');
+  const bootScreen  = document.getElementById('boot-sequence');
+  const mainContent = document.getElementById('main-content');
+
   if (bootText && bootScreen && mainContent) {
     let line = 0, char = 0;
-    
+
     function typeBootLine() {
       if (line < bootLines.length) {
         if (char < bootLines[line].length) {
-          bootText.textContent += bootLines[line].charAt(char);
-          char++;
-          // Faster, jittery typing for retro feel
+          bootText.textContent += bootLines[line].charAt(char++);
           setTimeout(typeBootLine, Math.random() * 30 + 10);
         } else {
-          bootText.textContent += "\n";
+          bootText.textContent += '\n';
           line++;
           char = 0;
           setTimeout(typeBootLine, 400);
         }
       } else {
         setTimeout(() => {
-          bootScreen.style.opacity = "0";
+          bootScreen.style.opacity = '0';
           setTimeout(() => {
-            bootScreen.style.display = "none";
-            mainContent.style.display = "block";
+            bootScreen.style.display  = 'none';
+            mainContent.style.display = 'block';
           }, 500);
         }, 600);
       }
     }
-    
     typeBootLine();
   }
   {% endif %}
-})();
-</script>
 
-<script>
-(function() {
-  'use strict';
-  
+  // ── EVERYTHING BELOW RUNS AFTER DOM IS READY ──────────────────────────────
   document.addEventListener('DOMContentLoaded', () => {
+
+    // ── PORTFOLIO: LOAD MORE + FILTERS + LAZY LOAD ──────────────────────────
     const portfolioItems = document.querySelectorAll('.portfolio-item');
-    const loadMoreBtn = document.getElementById('loadMore');
-    const shownCountEl = document.getElementById('shownCount');
-    const totalCountEl = document.getElementById('totalCount');
-    const filterBtns = document.querySelectorAll('.filter-btn');
-    
-    if (!loadMoreBtn || !portfolioItems.length) return;
-    
-    let itemsPerLoad = 12;
-    let currentItems = itemsPerLoad;
-    
-    if (totalCountEl) totalCountEl.textContent = portfolioItems.length;
-    
-    function updateVisibility() {
-      let visibleCount = 0;
-      portfolioItems.forEach((item, index) => {
-        if (!item.classList.contains('hidden-filter')) {
-          if (visibleCount < currentItems) {
-            item.classList.remove('hidden-load');
-            // Stepped animation delay for robotic feel
-            item.style.animationDelay = `${(visibleCount % itemsPerLoad) * 0.1}s`;
-            visibleCount++;
-          } else {
-            item.classList.add('hidden-load');
-          }
-        }
-      });
-      
-      if (shownCountEl) shownCountEl.textContent = visibleCount;
-      
-      const hiddenFilterCount = document.querySelectorAll('.hidden-filter').length;
-      if (visibleCount >= portfolioItems.length - hiddenFilterCount) {
-        loadMoreBtn.classList.add('hidden');
-      } else {
-        loadMoreBtn.classList.remove('hidden');
-      }
-    }
-    
-    updateVisibility();
-    
-    loadMoreBtn.addEventListener('click', () => {
-      currentItems += itemsPerLoad;
-      updateVisibility();
-    });
-    
-    // Lazy loading
-    const imageObserver = new IntersectionObserver((entries, observer) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          const img = entry.target;
-          if (img.dataset.src) {
-            img.src = img.dataset.src;
-            img.classList.remove('lazy');
-            observer.unobserve(img);
-          }
-        }
-      });
-    });
-    
-    document.querySelectorAll('.portfolio-img.lazy').forEach(img => {
-      imageObserver.observe(img);
-    });
-    
-    // Filters
-    filterBtns.forEach(btn => {
-      btn.addEventListener('click', () => {
-        filterBtns.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        
-        const filter = btn.getAttribute('data-filter');
-        currentItems = itemsPerLoad;
-        
+    const loadMoreBtn    = document.getElementById('loadMore');
+    const shownCountEl   = document.getElementById('shownCount');
+    const totalCountEl   = document.getElementById('totalCount');
+    const filterBtns     = document.querySelectorAll('.filter-btn');
+
+    if (loadMoreBtn && portfolioItems.length) {
+      const itemsPerLoad = 12;
+      let currentItems   = itemsPerLoad;
+
+      if (totalCountEl) totalCountEl.textContent = portfolioItems.length;
+
+      function updateVisibility() {
+        let visibleCount = 0;
         portfolioItems.forEach(item => {
-          if (filter === 'all' || item.getAttribute('data-category') === filter) {
-            item.classList.remove('hidden-filter');
-          } else {
-            item.classList.add('hidden-filter');
+          if (!item.classList.contains('hidden-filter')) {
+            if (visibleCount < currentItems) {
+              item.classList.remove('hidden-load');
+              item.style.animationDelay = `${(visibleCount % itemsPerLoad) * 0.1}s`;
+              visibleCount++;
+            } else {
+              item.classList.add('hidden-load');
+            }
           }
         });
-        
+
+        if (shownCountEl) shownCountEl.textContent = visibleCount;
+
+        const hiddenFilterCount = document.querySelectorAll('.hidden-filter').length;
+        loadMoreBtn.classList.toggle(
+          'hidden',
+          visibleCount >= portfolioItems.length - hiddenFilterCount
+        );
+      }
+
+      updateVisibility();
+
+      loadMoreBtn.addEventListener('click', () => {
+        currentItems += itemsPerLoad;
         updateVisibility();
       });
-    });
-  });
-})();
-</script>
 
-<script>
-(function() {
-  'use strict';
-  
-  document.addEventListener('DOMContentLoaded', () => {
-    const navInput = document.getElementById('navInput');
+      // Lazy load images
+      const imageObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const img = entry.target;
+            if (img.dataset.src) {
+              img.src = img.dataset.src;
+              img.classList.remove('lazy');
+              observer.unobserve(img);
+            }
+          }
+        });
+      });
+      document.querySelectorAll('.portfolio-img.lazy').forEach(img => imageObserver.observe(img));
+
+      // Filters
+      filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          filterBtns.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+
+          const filter = btn.getAttribute('data-filter');
+          currentItems = itemsPerLoad;
+
+          portfolioItems.forEach(item => {
+            item.classList.toggle(
+              'hidden-filter',
+              filter !== 'all' && item.getAttribute('data-category') !== filter
+            );
+          });
+
+          updateVisibility();
+        });
+      });
+    }
+
+    // ── LIGHTBOX ──────────────────────────────────────────────────────────────
+    const lightbox     = document.getElementById('imageLightbox');
+    const lightboxImg  = document.getElementById('lightboxImg');
+    const lightboxClose = document.getElementById('lightboxClose');
+
+    if (lightbox && lightboxImg) {
+      document.querySelectorAll('.portfolio-item').forEach(item => {
+        item.addEventListener('click', () => {
+          const img = item.querySelector('.portfolio-img');
+          const src = img?.dataset.src || img?.src;
+          if (src) {
+            lightboxImg.src       = src;
+            lightbox.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+          }
+        });
+      });
+
+      function closeLightbox() {
+        lightbox.style.display = 'none';
+        document.body.style.overflow = '';
+      }
+
+      if (lightboxClose) lightboxClose.addEventListener('click', closeLightbox);
+      lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
+      document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+    }
+
+    // ── TERMINAL NAV ──────────────────────────────────────────────────────────
+    const navInput  = document.getElementById('navInput');
     const navOutput = document.getElementById('navOutput');
-    
-    if (!navInput || !navOutput) return;
-    
-    let commandHistory = [];
-    let historyIndex = -1;
-    
-    const commands = {
-      help: {
-        desc: 'Show available commands',
-        output: `<span class="info">Available Commands:</span>
+
+    if (navInput && navOutput) {
+      let commandHistory = [];
+      let historyIndex   = -1;
+
+      const commands = {
+        help: {
+          output: `<span class="info">Available Commands:</span>
   ls                - list sections
   cat about.txt     - view about page
   cd logs/          - go to blog
-  cat manifesto/* - view texts
+  cat manifesto/*   - view texts
   clear             - clear screen`
-      },
-      
-      ls: {
-        output: `drwxr-xr-x  2 visitor visitor 4096 <a href="/about">about.txt</a>
-drwxr-xr-x  3 visitor visitor 4096 logs/
-drwxr-xr-x  2 visitor visitor 4096 manifesto/`
-      },
-      
-      'cat about.txt': {
-        action: () => {
-          setTimeout(() => window.location.href = '/about', 500);
-          return 'Opening about.txt...';
+        },
+        ls: {
+          output: `drwxr-xr-x  visitor  <a href="/about">about.txt</a>
+drwxr-xr-x  visitor  logs/
+drwxr-xr-x  visitor  manifesto/`
+        },
+        'cat about.txt': {
+          action: () => { setTimeout(() => window.location.href = '/about', 500); return 'Opening about.txt...'; }
+        },
+        'cd logs/': {
+          action: () => {
+            document.getElementById('logs')?.scrollIntoView({ behavior: 'smooth' });
+            return '✓ Changed directory to logs/';
+          }
+        },
+        'cat manifesto/*': {
+          action: () => {
+            document.getElementById('texts')?.scrollIntoView({ behavior: 'smooth' });
+            return 'Reading manifesto files...';
+          }
+        },
+        clear: {
+          action: () => { navOutput.innerHTML = ''; return ''; }
         }
-      },
-      
-      'cd logs/': {
-        action: () => {
-          const logsEl = document.getElementById('logs');
-          if (logsEl) logsEl.scrollIntoView({ behavior: 'smooth' });
-          return '✓ Changed directory to logs/';
-        }
-      },
-      
-      'cat manifesto/*': {
-        action: () => {
-          const textsEl = document.getElementById('texts');
-          if (textsEl) textsEl.scrollIntoView({ behavior: 'smooth' });
-          return 'Reading manifesto files...';
-        }
-      },
-      
-      clear: {
-        action: () => {
-          navOutput.innerHTML = '';
-          return '';
+      };
+
+      function typeOutput(text) {
+        const line = document.createElement('div');
+        line.className = 'cmd-line';
+        line.innerHTML  = text;
+        navOutput.appendChild(line);
+        navOutput.scrollTop = navOutput.scrollHeight;
+      }
+
+      function executeCommand(cmd) {
+        if (cmd && cmd !== commandHistory[commandHistory.length - 1]) commandHistory.push(cmd);
+        historyIndex = commandHistory.length;
+
+        typeOutput(`<span style="color:#fff">$ ${cmd}</span>`);
+
+        const command = commands[cmd] || commands[cmd.replace(/\/$/, '')];
+        if (command) {
+          const result = command.action ? command.action() : command.output;
+          if (result) setTimeout(() => typeOutput(result), 50);
+        } else if (cmd.trim()) {
+          setTimeout(() => typeOutput(`<span style="color:#ff5f56">Command not found: ${cmd}</span>`), 50);
         }
       }
-    };
-    
-    function typeOutput(text) {
-      const line = document.createElement('div');
-      line.className = 'cmd-line';
-      line.innerHTML = text;
-      navOutput.appendChild(line);
-      navOutput.scrollTop = navOutput.scrollHeight;
-    }
-    
-    function executeCommand(cmd) {
-      if (cmd && cmd !== commandHistory[commandHistory.length - 1]) {
-        commandHistory.push(cmd);
-      }
-      historyIndex = commandHistory.length;
-      
-      typeOutput(`<span style="color:#fff">$ ${cmd}</span>`);
-      
-      const command = commands[cmd] || commands[cmd.replace(/\/$/, '')];
-      if (command) {
-        const result = command.action 
-          ? command.action() 
-          : command.output;
-        
-        if (result) {
-          setTimeout(() => typeOutput(result), 50);
-        }
-      } else if (cmd.trim()) {
-        setTimeout(() => {
-          typeOutput(`<span style="color:#ff5f56">Command not found: ${cmd}</span>`);
-        }, 50);
-      }
-    }
-    
-    navInput.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter') {
-        executeCommand(navInput.value.trim());
-        navInput.value = '';
-      } else if (e.key === 'ArrowUp') {
-        e.preventDefault();
-        if (historyIndex > 0) {
-          historyIndex--;
-          navInput.value = commandHistory[historyIndex];
-        }
-      } else if (e.key === 'ArrowDown') {
-        e.preventDefault();
-        if (historyIndex < commandHistory.length - 1) {
-          historyIndex++;
-          navInput.value = commandHistory[historyIndex];
-        } else {
-          historyIndex = commandHistory.length;
+
+      navInput.addEventListener('keydown', e => {
+        if (e.key === 'Enter') {
+          executeCommand(navInput.value.trim());
           navInput.value = '';
+        } else if (e.key === 'ArrowUp') {
+          e.preventDefault();
+          if (historyIndex > 0) navInput.value = commandHistory[--historyIndex];
+        } else if (e.key === 'ArrowDown') {
+          e.preventDefault();
+          if (historyIndex < commandHistory.length - 1) {
+            navInput.value = commandHistory[++historyIndex];
+          } else {
+            historyIndex   = commandHistory.length;
+            navInput.value = '';
+          }
         }
-      }
-    });
-  });
-})();
-</script>
+      });
+    }
 
-<script>
-(function() {
-  'use strict';
-  
-  document.addEventListener('DOMContentLoaded', () => {
-    const lightbox = document.getElementById('imageLightbox');
-    if (!lightbox) return;
-    
-    // ... Lightbox logic preserved ...
-  });
-})();
-</script>
-
-<script>
-(function() {
-  'use strict';
-  
-  function forceImageFill() {
-    const portfolioImages = document.querySelectorAll('.portfolio-img');
-    portfolioImages.forEach(img => {
-      img.style.cssText = `
-        position: absolute !important;
-        top: 0 !important; left: 0 !important;
-        width: 100% !important; height: 100% !important;
-        object-fit: cover !important;
-      `;
-    });
-  }
-  
-  window.addEventListener('load', forceImageFill);
-  setTimeout(forceImageFill, 1000); // Backup
-})();
-</script>
-
-<script>
-(function() {
-  'use strict';
-  
-  document.addEventListener('DOMContentLoaded', () => {
-    const isListPage = document.querySelector('.posts') || document.querySelector('#logs');
+    // ── READING MODE (article pages only) ────────────────────────────────────
+    const isListPage  = document.querySelector('.posts') || document.querySelector('#logs');
     const mainElement = document.querySelector('main');
-    
     if (mainElement && !isListPage) {
       mainElement.classList.add('full-article-content');
       document.body.classList.add('reading-mode');
     }
-  });
+
+    // ── ASSEMBLY SYNTAX HIGHLIGHT ─────────────────────────────────────────────
+    document.querySelectorAll('pre code.language-asm, pre code.language-nasm').forEach(block => {
+      let html = block.textContent;
+      html = html.replace(/\b([re]?[abcd]x|[re]?[sb]p|[re]?[sd]i|r[89]|r1[0-5])\b/gi,
+        '<span style="color:#ff6b9d;font-weight:bold;">$1</span>');
+      html = html.replace(/\b(mov|add|sub|push|pop|call|ret|jmp|cmp|test|lea|xor|and|syscall)\b/gi,
+        '<span style="color:#00ddff;">$1</span>');
+      html = html.replace(/\b(0x[0-9a-f]+)\b/gi,
+        '<span style="color:#00e5ff;">$1</span>');
+      block.innerHTML = html;
+    });
+
+  }); // end DOMContentLoaded
+
 })();
 </script>
 
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-javascript.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-c.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-nasm.min.js"></script>
-
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-  document.querySelectorAll('pre code.language-asm, pre code.language-nasm').forEach(block => {
-    let html = block.textContent;
-    // Registers -> Pink
-    html = html.replace(/\b([re]?[abcd]x|[re]?[sb]p|[re]?[sd]i|r[89]|r1[0-5])\b/gi, 
-      '<span style="color: #ff6b9d; font-weight: bold;">$1</span>');
-    // Instructions -> Blue
-    html = html.replace(/\b(mov|add|sub|push|pop|call|ret|jmp|cmp|test|lea|xor|and|syscall)\b/gi, 
-      '<span style="color: #00ddff;">$1</span>');
-    // Hex -> Cyan
-    html = html.replace(/\b(0x[0-9a-f]+)\b/gi, 
-      '<span style="color: #00e5ff;">$1</span>');
-    block.innerHTML = html;
-  });
-});
-</script>
+<!-- Prism — deferred so it doesn't block render -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-javascript.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-c.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-nasm.min.js" defer></script>
 
 </body>
 </html>
