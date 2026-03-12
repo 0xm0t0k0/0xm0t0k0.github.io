@@ -5,7 +5,7 @@ date: 2026-03-12
 tags: ctf reverse-engineering cryptography picoCTF xor
 ---
 
-# HiddenCipher
+# 0xm0t0k0
 
 **Category:** Reverse Engineering + Cryptography  
 **Flag:** `picoCTF{xor_unpack_4nalys1s_2a9da15c}`
