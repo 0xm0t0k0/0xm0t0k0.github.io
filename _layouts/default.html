@@ -22,8 +22,17 @@
 <div class="noise-overlay"></div>
 <div class="digital-grid"></div>
 <div class="grid-highlight"></div>
-<div class="axis-scanline-x"></div>
-<div class="axis-scanline-y"></div>
+
+<!-- Targeting reticle — replaces axis scanlines + cursor glow -->
+<div class="reticle" id="reticle">
+  <div class="reticle-corner tl"></div>
+  <div class="reticle-corner tr"></div>
+  <div class="reticle-corner bl"></div>
+  <div class="reticle-corner br"></div>
+  <div class="reticle-cross-h"></div>
+  <div class="reticle-cross-v"></div>
+  <div class="reticle-dot"></div>
+</div>
 
 {% if page.url == "/" %}
 <div id="boot-sequence" class="boot">
@@ -55,19 +64,20 @@
 (function () {
   'use strict';
 
-  // ── CURSOR & GRID ──────────────────────────────────────────────────────────
-  const cursor       = document.querySelector('.cursor-light');
+  // ── CURSOR GLOW + TARGETING RETICLE ──────────────────────────────────────
+  // Two separate trackers with different lag coefficients:
+  //   cursor-light (0.3) leads — feels like the screen phosphor bleeding
+  //   reticle      (0.15) trails — feels like it's locking on to a target
+  const cursor      = document.querySelector('.cursor-light');
+  const reticle     = document.querySelector('.reticle');
   const gridHighlight = document.querySelector('.grid-highlight');
-  const axisX        = document.querySelector('.axis-scanline-x');
-  const axisY        = document.querySelector('.axis-scanline-y');
 
   let x = 0, y = 0, targetX = 0, targetY = 0;
+  let rx = 0, ry = 0;
 
   document.addEventListener('mousemove', e => {
     targetX = e.clientX;
     targetY = e.clientY;
-    if (axisX) axisX.style.top  = `${e.clientY}px`;
-    if (axisY) axisY.style.left = `${e.clientX}px`;
     if (gridHighlight) {
       gridHighlight.style.left = `${e.clientX}px`;
       gridHighlight.style.top  = `${e.clientY}px`;
@@ -75,11 +85,18 @@
   });
 
   (function animateCursor() {
-    x += (targetX - x) * 0.3;
-    y += (targetY - y) * 0.3;
+    x  += (targetX - x)  * 0.3;
+    y  += (targetY - y)  * 0.3;
+    rx += (targetX - rx) * 0.15;
+    ry += (targetY - ry) * 0.15;
+
     if (cursor) {
       cursor.style.left = `${x}px`;
       cursor.style.top  = `${y}px`;
+    }
+    if (reticle) {
+      reticle.style.left = `${rx}px`;
+      reticle.style.top  = `${ry}px`;
     }
     requestAnimationFrame(animateCursor);
   })();
